@@ -1,0 +1,10 @@
+{
+  "status": "proposed_baseline_not_implemented",
+  "spatial_preprocessing": "match_upstream_resize_short_edge_448_then_crop_right_bottom_to_multiple_of_14",
+  "template_selection": "minimum_global_rgb_mean_absolute_difference",
+  "difference_map": "mean_channel_absolute_rgb_difference_in_0_1",
+  "smoothing": {"type": "gaussian", "sigma": 1.0},
+  "image_score": {"type": "mean_top_fraction", "fraction": 0.01},
+  "demo_threshold": {"normal_calibration_quantile": 0.95, "quantile_method": "linear"},
+  "notes": "Engineering starting point, not a teacher-mandated formula. Freeze settings before test evaluation."
+}

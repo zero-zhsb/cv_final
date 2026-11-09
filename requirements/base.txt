@@ -1,0 +1,9 @@
+# For future Part 1 / shared evaluation / figures, not required by manifest tools.
+# Keep NumPy 1.x for compatibility with the inspected AnomalyDINO version.
+numpy==1.26.4
+Pillow
+scipy
+scikit-learn
+matplotlib
+opencv-python-headless
+PyYAML

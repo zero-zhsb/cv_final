@@ -1,0 +1,25 @@
+{
+  "project": "P2 Few-Shot Industrial Visual Anomaly Detection",
+  "dataset": "VisA",
+  "split": "1cls",
+  "categories": ["candle", "capsules", "cashew", "chewinggum", "fryum", "pipe_fryum"],
+  "shots": [1, 2, 4, 8],
+  "seeds": [0, 1, 2],
+  "calibration_count": 20,
+  "calibration_quantile": 0.95,
+  "reference_selection": "sorted_eligible_files[seed*shot:(seed+1)*shot]",
+  "part2": {
+    "model_name": "dinov2_vits14",
+    "resolution": 448,
+    "preprocess": "agnostic",
+    "faiss_on_cpu": true,
+    "upstream_commit": "b9d1c2648e3a5247437d4d953d907a8f3d994457"
+  },
+  "metrics": {
+    "primary": "image_auroc",
+    "required": ["image_auroc", "pixel_auroc", "inference_time", "peak_gpu_memory"],
+    "category_average": "unweighted",
+    "include_normal_images_in_pixel_auroc": true,
+    "std_ddof": 0
+  }
+}

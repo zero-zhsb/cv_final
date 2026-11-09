@@ -1,0 +1,53 @@
+# Local configuration and credentials
+.env
+.env.*
+!.env.example
+*.local.json
+*.local.yaml
+*.local.yml
+*.local.txt
+*.pem
+*.key
+id_rsa*
+id_ed25519*
+
+# Environments and generated Python files
+.venv*/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+*.egg-info/
+
+# Server-only data, third-party clones and large artifacts
+/data/
+/datasets/
+/weights/
+/checkpoints/
+/cache/
+/runs/
+/logs/
+/third_party/
+results_*/
+*.pt
+*.pth
+*.ckpt
+*.safetensors
+*.npz
+*.npy
+*.tiff
+*.h5
+*.hdf5
+*.mat
+*.zip
+*.tar
+*.tar.gz
+*.mp4
+*.mov
+
+# Editor and OS
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
