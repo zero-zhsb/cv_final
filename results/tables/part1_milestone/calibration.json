@@ -1,0 +1,102 @@
+[
+  {
+    "configuration": "cashew/shot_1/seed_0",
+    "image_path": "cashew/train/good/000.JPG",
+    "score": 0.6023951172828674
+  },
+  {
+    "configuration": "cashew/shot_1/seed_0",
+    "image_path": "cashew/train/good/001.JPG",
+    "score": 0.3628600835800171
+  },
+  {
+    "configuration": "cashew/shot_1/seed_0",
+    "image_path": "cashew/train/good/002.JPG",
+    "score": 0.46792498230934143
+  },
+  {
+    "configuration": "cashew/shot_1/seed_0",
+    "image_path": "cashew/train/good/003.JPG",
+    "score": 0.4920651912689209
+  },
+  {
+    "configuration": "cashew/shot_1/seed_0",
+    "image_path": "cashew/train/good/004.JPG",
+    "score": 0.34045490622520447
+  },
+  {
+    "configuration": "cashew/shot_1/seed_0",
+    "image_path": "cashew/train/good/005.JPG",
+    "score": 0.5579641461372375
+  },
+  {
+    "configuration": "cashew/shot_1/seed_0",
+    "image_path": "cashew/train/good/007.JPG",
+    "score": 0.4788661599159241
+  },
+  {
+    "configuration": "cashew/shot_1/seed_0",
+    "image_path": "cashew/train/good/008.JPG",
+    "score": 0.4718639552593231
+  },
+  {
+    "configuration": "cashew/shot_1/seed_0",
+    "image_path": "cashew/train/good/009.JPG",
+    "score": 0.46323487162590027
+  },
+  {
+    "configuration": "cashew/shot_1/seed_0",
+    "image_path": "cashew/train/good/010.JPG",
+    "score": 0.35292500257492065
+  },
+  {
+    "configuration": "cashew/shot_1/seed_0",
+    "image_path": "cashew/train/good/011.JPG",
+    "score": 0.44791990518569946
+  },
+  {
+    "configuration": "cashew/shot_1/seed_0",
+    "image_path": "cashew/train/good/014.JPG",
+    "score": 0.6094525456428528
+  },
+  {
+    "configuration": "cashew/shot_1/seed_0",
+    "image_path": "cashew/train/good/015.JPG",
+    "score": 0.4403112232685089
+  },
+  {
+    "configuration": "cashew/shot_1/seed_0",
+    "image_path": "cashew/train/good/016.JPG",
+    "score": 0.5789396166801453
+  },
+  {
+    "configuration": "cashew/shot_1/seed_0",
+    "image_path": "cashew/train/good/017.JPG",
+    "score": 0.5875684022903442
+  },
+  {
+    "configuration": "cashew/shot_1/seed_0",
+    "image_path": "cashew/train/good/018.JPG",
+    "score": 0.4821421802043915
+  },
+  {
+    "configuration": "cashew/shot_1/seed_0",
+    "image_path": "cashew/train/good/019.JPG",
+    "score": 0.5478436350822449
+  },
+  {
+    "configuration": "cashew/shot_1/seed_0",
+    "image_path": "cashew/train/good/020.JPG",
+    "score": 0.45319709181785583
+  },
+  {
+    "configuration": "cashew/shot_1/seed_0",
+    "image_path": "cashew/train/good/021.JPG",
+    "score": 0.6186540722846985
+  },
+  {
+    "configuration": "cashew/shot_1/seed_0",
+    "image_path": "cashew/train/good/022.JPG",
+    "score": 0.5632969737052917
+  }
+]

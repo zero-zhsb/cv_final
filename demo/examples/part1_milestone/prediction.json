@@ -1,0 +1,22 @@
+{
+  "method": "template_difference",
+  "mode": "live inference; no ground truth input",
+  "category": "cashew",
+  "shot": 1,
+  "seed": 0,
+  "manifest_id": "51934290ccd342f9f7fa03f9f56c712494cb7b576b7038516efdb41d43b9b2c5",
+  "reference_images": [
+    "cashew/train/good/024.JPG"
+  ],
+  "score": 0.49833202362060547,
+  "threshold": 0.6099126219749451,
+  "decision": "OK",
+  "inference_ms": 64.08646702766418,
+  "part2_replay": {
+    "mode": "saved Part 2 score replay; NOT live DINO inference",
+    "score": 0.2319623202085495,
+    "threshold": 0.21948908478021623,
+    "decision": "NG",
+    "source_run": "part2_gpu_exact_matrix_v1"
+  }
+}

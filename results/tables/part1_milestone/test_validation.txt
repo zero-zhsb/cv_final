@@ -1,0 +1,26 @@
+test_all_zero_scores_have_half_auc (test_gpu_metrics.GPUAUROCTests) ... skipped 'Explicit CV_TEST_CUDA=1 required for GPU tests'
+test_exhaustive_gpu_neighbors_match_cpu_faiss (test_gpu_metrics.GPUAUROCTests) ... skipped 'Explicit CV_TEST_CUDA=1 required for GPU tests'
+test_gpu_counts_match_sklearn_with_zero_ties (test_gpu_metrics.GPUAUROCTests) ... skipped 'Explicit CV_TEST_CUDA=1 required for GPU tests'
+test_closest_template_identical_and_local_defect (test_part1.TemplateTests) ... ok
+test_compact_map_reconstruction_matches_live_prediction (test_part1.TemplateTests) ... ok
+test_geometry_crops_right_bottom_without_stretching (test_part1.TemplateTests) ... ok
+test_score_floor_minimum_and_invalid (test_part1.TemplateTests) ... ok
+test_part2 (unittest.loader.ModuleSkipped) ... skipped 'Run Part 2 tests inside its requirements/part2.txt environment'
+test_compact_archive_roundtrip_and_full_archive (test_part2_maps_metrics.MapMetricTests) ... ok
+test_constant_scores_give_half_auc (test_part2_maps_metrics.MapMetricTests) ... ok
+test_exact_auc_matches_sklearn_with_ties_across_images (test_part2_maps_metrics.MapMetricTests) ... ok
+test_hierarchical_merges_match_sklearn_over_many_images (test_part2_maps_metrics.MapMetricTests) ... ok
+test_missing_class_is_rejected (test_part2_maps_metrics.MapMetricTests) ... ok
+test_normal_images_participate_in_pixel_auc (test_part2_maps_metrics.MapMetricTests) ... ok
+test_all_72_configurations_exclude_calibration_and_preserve_upstream_slices (test_prepare_manifests.ManifestTests) ... ok
+test_external_symlink_requires_explicit_source_approval (test_prepare_manifests.ManifestTests) ... ok
+test_invalid_category_is_rejected (test_prepare_manifests.ManifestTests) ... ok
+test_missing_mask_is_rejected (test_prepare_manifests.ManifestTests) ... ok
+test_missing_normal_tests_are_rejected (test_prepare_manifests.ManifestTests) ... ok
+test_reference_capacity_is_checked_after_calibration_exclusion (test_prepare_manifests.ManifestTests) ... ok
+test_repeated_generation_is_identical_and_paths_are_relative (test_prepare_manifests.ManifestTests) ... ok
+
+----------------------------------------------------------------------
+Ran 21 tests in 0.516s
+
+OK (skipped=4)

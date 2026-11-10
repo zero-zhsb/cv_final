@@ -1,0 +1,42 @@
+{
+  "status": "completed",
+  "method": "template_difference",
+  "run_id": "part1_cashew_1shot_seed0_v1",
+  "manifest_id": "51934290ccd342f9f7fa03f9f56c712494cb7b576b7038516efdb41d43b9b2c5",
+  "code_commit": "c56d3599e42ce2cab205e2dcb67dafa6b1388eb9",
+  "source_sha256": {
+    "scripts/run_part1.py": "f1114b69c91e7c15b85aac72c1f308510bcf25f6bed8189e9198459e659236b9",
+    "src/part1/inspector.py": "f7d533da8c4514739f847d4051627c7d6511a7563bff53232f6b5e816b81fc28"
+  },
+  "code_dirty": true,
+  "categories": [
+    "cashew"
+  ],
+  "shots": [
+    1
+  ],
+  "seeds": [
+    0
+  ],
+  "resolution": 448,
+  "geometry": "PIL bicubic short edge 448; right/bottom crop to multiple of 14",
+  "difference": "mean absolute RGB in [0,1] against minimum global MAD template",
+  "gaussian_sigma": 1.0,
+  "score": "top 1% cropped-map pixels; floor, minimum one",
+  "device": "cpu",
+  "peak_gpu_memory_mib": null,
+  "cache": "references only; no test feature cache",
+  "partial_smoke_test": false,
+  "scope": "full tests within selected configuration, not full 72-configuration study",
+  "inference_time_scope": "image read, geometry, nearest template, difference, smoothing, score; excludes map rendering/export",
+  "started_at_utc": "2026-11-10T14:12:13.662227+00:00",
+  "configurations": [
+    {
+      "configuration": "cashew/shot_1/seed_0",
+      "memory_bank_ms": 61.67780887335539,
+      "test_count": 150,
+      "peak_gpu_memory_mib": null
+    }
+  ],
+  "finished_at_utc": "2026-11-10T14:12:31.143267+00:00"
+}

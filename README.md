@@ -8,16 +8,17 @@
 - [x] 数据名单生成工具（校准集排除、官方参考图选择规则、掩码检查）。
 - [x] 环境检查工具、输出协议与 GitHub Issue/PR 模板。
 - [x] 使用服务器课程预置 VisA 完成官方划分与共享名单生成。
-- [ ] Part 1 方法、公共评估、演示程序。
+- [x] Part 1 模板差分实现、公共评估入口与单图演示；cashew/1-shot/seed=0 首个里程碑，见 A 的说明。
+- [ ] Part 1 六类别、四 shots、三 seeds 全量实验。
 - [x] Part 2 官方代码接入、名单/校准适配、CPU 小样例与单图官方一致性检查。
 - [x] Part 2 全六类、四 shots、三 seeds 正式实验与 Part 2 精确评估（72/72）。
 - [x] Part 2 结果表、曲线、五个真实失败案例、单图 CLI 演示和 B 的 Pre 讲稿。
 - [ ] Part 1/Part 2 联合演示、两方法对比、正式幻灯片与录屏。
 - [ ] Part 3 改进与最终报告。
 
-**成员 B 的 Part 2 主实验已完成：11,520 条测试预测。** 8-shot 的六类图像 AUROC 为 **96.62±0.57%**，pixel AUROC 为 **98.21±0.02%**（三个 seed）。完整结果及局限见 [Part 2 结果与交接](docs/10_part2_results.md)。Part 1 和 Part 3 尚未完成；Pre 仍需 A 的 Part 1。
+**成员 B 的 Part 2 主实验已完成：11,520 条测试预测。** 8-shot 的六类图像 AUROC 为 **96.62±0.57%**，pixel AUROC 为 **98.21±0.02%**（三个 seed）。完整结果及局限见 [Part 2 结果与交接](docs/10_part2_results.md)。A 当前只完成单类别首个里程碑，不代表 Part 1 全量或 Part 3 已完成。
 
-本次工作位于 **`codex/part2-anomalydino` 分支**；在 GitHub 或服务器切换到该分支查看。数据、权重、完整异常图保留在服务器。
+B 的交付位于 **`codex/part2-anomalydino`**；A 的首个里程碑在其基础上的 **`codex/part1-integration`** 分支。数据、权重、完整异常图保留在各自服务器工作目录。
 
 ## 从哪里开始
 
@@ -33,6 +34,7 @@
 | [成员 B 实际进展](docs/08_member_b_progress.md) | 真实数据路径、环境、可运行命令与验证边界 |
 | [GPU 实验记录](docs/09_gpu_experiments.md) | 完整矩阵命令、compact 异常图、精确评价与效率说明 |
 | [Part 2 结果与交接](docs/10_part2_results.md) | 已完成的成绩、错误分析、服务器复现和 A 的接入步骤 |
+| [A 的首个里程碑](docs/11_member_a_milestone.md) | 独立 venv、cashew 单配置、公共评估、同图演示与复现 |
 | [成员 B Pre 讲稿](presentation/member_b_notes.md) | 方法、实验、结果与答疑 |
 
 ## 第一个里程碑

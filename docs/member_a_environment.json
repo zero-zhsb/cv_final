@@ -1,0 +1,8 @@
+{
+  "python": "3.10.12 (main, Jun 22 2026, 18:55:27) [GCC 11.4.0]",
+  "executable": "/data/disk1/home/zzhang657/cv_final/.venv-a/bin/python",
+  "platform": "Linux-5.15.0-186-generic-x86_64-with-glibc2.35",
+  "data_root": "data/VisA_pytorch/1cls",
+  "gpu_used": false,
+  "data_bytes": 183466514
+}

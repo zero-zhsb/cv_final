@@ -1,0 +1,30 @@
+{
+  "run_id": "part1_cashew_1shot_seed0_v1",
+  "manifest_id": "51934290ccd342f9f7fa03f9f56c712494cb7b576b7038516efdb41d43b9b2c5",
+  "code_commit": "c56d3599e42ce2cab205e2dcb67dafa6b1388eb9",
+  "configuration": "cashew/shot_1/seed_0",
+  "evaluation_source_sha256": {
+    "scripts/evaluate_part2.py": "b965ab75ca3b5110ca7874b482a19d68188a965c6b2547ec7e9b071970fea7c7",
+    "src/part2/maps.py": "46e7ecbab80c03d15bcd628141b166bff76cef32d15b979a14b4cc0011c892b9",
+    "src/part2/metrics.py": "b0fafab4a5e57ebe6a842e376ea251a1e2ccf187c836fc529f609d3800001396",
+    "src/part2/gpu_metrics.py": "d53159b9149492480e4a9840a4b1ee1930b2abb14ebb0c2b68c287d7f9ab2f95"
+  },
+  "category": "cashew",
+  "shot": 1,
+  "seed": 0,
+  "test_count": 150,
+  "normal_count": 50,
+  "anomaly_count": 100,
+  "image_auroc": 0.6534000000000001,
+  "pixel_auroc": 0.7780427208851487,
+  "pixel_backend_details": {
+    "backend": "cpu_exact_hierarchical_histograms"
+  },
+  "mean_inference_ms": 51.16447992001971,
+  "median_inference_ms": 51.03580444119871,
+  "peak_gpu_memory_mib": null,
+  "memory_bank_ms": 61.67780887335539,
+  "pixel_evaluation": "exact float32 original-resolution, all normal+abnormal test images, no per-image normalization",
+  "evaluated_at_utc": "2026-11-10T14:17:30.525924+00:00",
+  "evaluator_peak_rss_mib": 3021.80859375
+}

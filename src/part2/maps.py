@@ -19,6 +19,12 @@ def load_anomaly_map(path: Path) -> np.ndarray:
     with np.load(path, allow_pickle=False) as data:
         if "anomaly_map" in data:
             result = data["anomaly_map"].astype(np.float32)
+        elif "template_map" in data and "image_shape" in data:
+            # Part 1 already smooths its cropped, resized RGB difference map.
+            # Restore original coordinates without DINO's additional sigma=4.
+            height, width = map(int, data["image_shape"][:2])
+            result = cv2.resize(data["template_map"].astype(np.float32),
+                                (width, height), interpolation=cv2.INTER_LINEAR)
         elif "patch_map" in data and "image_shape" in data:
             result = reconstruct_map(data["patch_map"], data["image_shape"])
         else:
