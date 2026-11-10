@@ -10,10 +10,14 @@
 - [x] 使用服务器课程预置 VisA 完成官方划分与共享名单生成。
 - [ ] Part 1 方法、公共评估、演示程序。
 - [x] Part 2 官方代码接入、名单/校准适配、CPU 小样例与单图官方一致性检查。
-- [ ] Part 2 全六类、四 shots、三 seeds 正式实验与公共评估。
-- [ ] 服务器实测结果、Pre 材料与录屏。
+- [x] Part 2 全六类、四 shots、三 seeds 正式实验与 Part 2 精确评估（72/72）。
+- [x] Part 2 结果表、曲线、五个真实失败案例、单图 CLI 演示和 B 的 Pre 讲稿。
+- [ ] Part 1/Part 2 联合演示、两方法对比、正式幻灯片与录屏。
+- [ ] Part 3 改进与最终报告。
 
-**当前包含可运行的 Part 2 适配器与 CPU 小样例，完整项目仍未完成。** 不包含虚构指标、预训练权重或课程 PDF；尚未实现的入口不会伪装成可运行命令。
+**成员 B 的 Part 2 主实验已完成：11,520 条测试预测。** 8-shot 的六类图像 AUROC 为 **96.62±0.57%**，pixel AUROC 为 **98.21±0.02%**（三个 seed）。完整结果及局限见 [Part 2 结果与交接](docs/10_part2_results.md)。Part 1 和 Part 3 尚未完成；Pre 仍需 A 的 Part 1。
+
+本次工作位于 **`codex/part2-anomalydino` 分支**；在 GitHub 或服务器切换到该分支查看。数据、权重、完整异常图保留在服务器。
 
 ## 从哪里开始
 
@@ -28,6 +32,8 @@
 | [来源与适配记录](docs/07_sources_and_adaptations.md) | 课程依据、上游版本与必须记录的修改 |
 | [成员 B 实际进展](docs/08_member_b_progress.md) | 真实数据路径、环境、可运行命令与验证边界 |
 | [GPU 实验记录](docs/09_gpu_experiments.md) | 完整矩阵命令、compact 异常图、精确评价与效率说明 |
+| [Part 2 结果与交接](docs/10_part2_results.md) | 已完成的成绩、错误分析、服务器复现和 A 的接入步骤 |
+| [成员 B Pre 讲稿](presentation/member_b_notes.md) | 方法、实验、结果与答疑 |
 
 ## 第一个里程碑
 
@@ -41,14 +47,14 @@
 configs/             课程设置与方法配置
 manifests/           校准图、参考图、测试图名单（可提交 JSON）
 requirements/        本项目轻量依赖；模型环境另外配置
-scripts/             已实现的环境检查和名单生成工具
-src/                 待实现的公共代码、Part 1 与 Part 2 接入
-demo/                待实现的 Pre 演示
+scripts/             名单、Part 2 推理/评价/汇总/演示工具
+src/                 Part 2 实现；Part 1 和联合接口待 A 接入
+demo/                已验证的 Part 2 单图样例；联合界面待完成
 results/             可提交的指标表与精选可视化
 docs/                详细操作文档
 presentation/        Pre 讲稿与导出文件说明
 report/              最终报告预留
-tests/               数据名单的隔离性与可复现检查
+tests/               数据隔离、Part 2 数值、异常图与评价检查
 .github/             Issue 和 PR 模板
 ```
 
@@ -80,4 +86,4 @@ python scripts/prepare_manifests.py --data-root /srv/cv-final/data/VisA_pytorch/
 
 `scripts/run_part2.py` 读取共享名单，复用固定官方版本的特征提取、PCA masking、旋转与异常图渲染；独立校准，不把校准图加入 reference 或正式测试。默认 CPU、两个线程，以便共享服务器先做小样例功能检查。
 
-实际服务器数据、运行命令与验证范围见 [成员 B 工作记录](docs/08_member_b_progress.md)。正式 GPU 实验须协调使用时段；CPU 冒烟测试不能称为完整复现或作为 GPU 效率结果。Part 1/公共评估仍由 A 负责，Part 2 浮点输出供公共评估核对。
+正式结果和接入步骤见 [Part 2 结果与交接](docs/10_part2_results.md)，早期 CPU 检查见 [成员 B 工作记录](docs/08_member_b_progress.md)。共享 GPU 上本次实验已运行结束。Part 1 与公共演示由 A 接入；Part 2 原始浮点输出和已完成评估可供交叉核对。

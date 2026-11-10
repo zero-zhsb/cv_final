@@ -2,6 +2,8 @@
 
 日期：2026-11-10。用户已确认可以在需要时使用服务器 GPU；按共享设备运行，单个 GPU 推理进程、两个 CPU 数值线程、低 CPU 调度优先级，不停止他人任务。PyTorch 分配器上限为该 GPU 显存的 15%（上限不是预留显存）。
 
+**完成状态：主矩阵推理与评估均为 72/72，11,520 条测试预测互不重复。** 结果和交接见 [最终结果文档](10_part2_results.md)。
+
 ## 第一组完整预检
 
 cashew，1-shot，seed=0，正常测试 50 张、异常测试 100 张：image AUROC **0.929**，pixel AUROC **0.9869356902**。仅该类别该配置，不代表六类或三个 seed 的平均成绩。精确像素评估进程峰值 RSS 约 3.03 GiB。设备上的观测平均推理时间约 219.3 ms/图，不能解释为独占硬件速度。
@@ -24,19 +26,19 @@ source .venv-b/bin/activate
 nice -n 10 python scripts/run_part2.py --data-root /data/disk1/home/sshen560/cv_final_data/VisA_pytorch/1cls --allow-image-root /data/disk1/shared/aiaa3201/project2_anomaly/VisA --shots 1 2 4 8 --seeds 0 1 2 --device cuda:0 --threads 2 --map-storage patch --knn-backend torch-gpu --warmup-iters 25 --gpu-memory-fraction 0.15 --output runs/part2_gpu_exact_matrix_v1
 ```
 
-在另一个远程终端或后台进程中，串行评价已完成的配置：
+在另一个远程终端或后台进程中，评价已完成的配置。最终使用最多两个评价子进程；忙碌时可改为 `--workers 1`：
 
 ```bash
-nice -n 19 python scripts/watch_part2_evaluation.py --run runs/part2_gpu_exact_matrix_v1 --data-root /data/disk1/home/sshen560/cv_final_data/VisA_pytorch/1cls --memory-budget-gib 8 --pixel-device cuda:0
+nice -n 19 python scripts/watch_part2_parallel_evaluation.py --run runs/part2_gpu_exact_matrix_v1 --data-root /data/disk1/home/sshen560/cv_final_data/VisA_pytorch/1cls --workers 2 --pixel-device cuda:0
 ```
 
-这只是本项目进程间的串行工作安排，不是服务器正式排队系统。每个完成配置会原子更新 run.json、阈值和校准记录；完整 CSV 和原始 patch 图在服务器，GitHub 保存统计、来源、代码和代表图片。
+这是本项目的有界进程池，不是服务器正式排队系统。控制器有文件锁，并识别同用户同一 run 的现有评价进程；不要同时启动其他控制器。每个完成配置会原子更新 run.json、阈值和校准记录；GitHub 保存完整预测 CSV、统计、来源、代码和代表图片，原始 patch 图保留在服务器。
 
 ## 精确像素 AUROC 的内存处理
 
 CPU 版 `src/part2/metrics.py` 汇总每幅图的独特 float32 分数及正/负像素计数，按层分批合并后计算完整排序概率，平分同分值。它没有对分数分箱或近似量化；与 sklearn AUROC 在含同分值的多图测试上匹配，默认估算工作内存预算 8 GiB，超限报错而不是静默降采样。
 
-矩阵实际评价改用 `--pixel-device cuda:0`：`gpu_metrics.py` 利用非负有限 float32 位模式的顺序，按每个**精确值**计数，以 int32 累加，不做近似分箱；零值另行计数以避免巨大空区间。评估进程的 PyTorch 显存上限为设备的 10%，与单一推理进程的 15% 上限分别记录。此阶段只有一个推理进程，另有一个显存受限的评估进程。
+矩阵实际评价改用 `--pixel-device cuda:0`：`gpu_metrics.py` 利用非负有限 float32 位模式的顺序，按每个**精确值**计数，以 int32 累加，不做近似分箱；零值另行计数以避免巨大空区间。评估进程的 PyTorch 显存上限为设备的 10%，与单一推理进程的 15% 上限分别记录。初期使用一个评价进程，最终改为最多两个受限的评价进程；这些上限均不是预留或实际显存占用。
 
 已在 5 个完整 candle 配置上将 GPU 与 CPU 精确像素 AUROC 交叉核对，差值均为 0；另有两项显式启用的 GPU 数值测试。candle 约 3 亿像素的 GPU 评估占约 3.3 GiB 显存、0.8 GiB 主存。GPU 后端仅加速指标计数，不改变模型、原始异常图或分数；超出显存范围会报错，不会自动降低分辨率。
 
@@ -48,7 +50,7 @@ CPU FAISS 在 8-shot 下成为主要耗时。`--knn-backend torch-gpu` 使用同
 
 两种 FP32 归约顺序不保证逐位相等。12 张真实图片涵盖三个类别、1/2/8-shot，输入特征与前景 mask 一致；图像分数最大差约 1.33e-7，patch 距离最大差约 1.05e-6。验证门槛为图像分数 1e-6、patch/距离 2e-6。完整 cashew 150 张图核对：图像 AUROC 完全相同 0.929，像素 AUROC 差 1.62e-9。记录见 [样例数值核验](../results/tables/gpu_neighbor_validation.json)、[完整类别核验](../results/tables/knn_backend_full_class_parity.json)。
 
-原 `runs/part2_gpu_matrix_v1` 保留已完成的 **19 个 CPU FAISS 配置**作为参照，在验证后主动停止，状态为 `stopped_for_verified_backend_acceleration`。它不是完整结果。主实验重新在 `runs/part2_gpu_exact_matrix_v1` 统一执行 72 配置，汇总时不把两个后端的成绩拼接。后续可对重叠配置继续做一致性对比。
+原 `runs/part2_gpu_matrix_v1` 保留已完成的 **19 个 CPU FAISS 配置**作为参照，在验证后主动停止，状态为 `stopped_for_verified_backend_acceleration`。它不是完整结果。主实验重新在 `runs/part2_gpu_exact_matrix_v1` 统一执行 72 配置，汇总时不把两个后端的成绩拼接。最终 19 个重叠配置的图像 AUROC 差值全部为 0，pixel AUROC 最大绝对差 6.05e-8，见 [逐配置核对](../results/tables/cpu_gpu_configuration_parity.csv)。
 
 ## 完成后汇总与展示
 
@@ -63,7 +65,7 @@ python scripts/analyze_part2_failures.py --run runs/part2_gpu_exact_matrix_v1 --
 
 ## 效率解释
 
-- 每图 inference_ms 包括图像读取、几何预处理、DINOv2、PCA mask、CPU FAISS，CUDA 前后同步；不包括热力图重建和文件导出。该范围与上游计时边界保持一致。
+- 每图 inference_ms 包括图像读取、几何预处理、DINOv2、PCA mask 和所选后端的精确近邻搜索，CUDA 前后同步；不包括热力图重建和文件导出。主结果的近邻后端为 `torch-gpu`。
 - 每配置单独记录 reference bank 建立时间、峰值 PyTorch allocated GPU 显存。设备 context、CUDA 库和其他进程显存不在该数字中。
 - 共享设备下的时间是当次观察值，不能当成独占 A6000 的性能保证。记录外部负载，正式对比 Part 1 时使用同设备、同计时定义并披露运行条件。
-- 完整矩阵实际进度与最终结果另附；启动任务不等于实验已完成。
+- 本次全部任务已完成，结果见 [最终结果](10_part2_results.md)。推理 commit 固定为 `119b4c77e9c04315d7df284c4f524d35ad4433db`；后续文档和评价调度更新不改写原运行来源。

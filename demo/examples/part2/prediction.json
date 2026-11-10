@@ -1,0 +1,16 @@
+{
+  "method": "AnomalyDINO",
+  "category": "cashew",
+  "shot": 1,
+  "seed": 0,
+  "score": 0.2319624811410904,
+  "threshold": 0.21948903724551203,
+  "decision": "NG",
+  "manifest_id": "51934290ccd342f9f7fa03f9f56c712494cb7b576b7038516efdb41d43b9b2c5",
+  "reference_images": [
+    "cashew/train/good/024.JPG"
+  ],
+  "input_image": "/data/disk1/home/sshen560/cv_final_data/VisA_pytorch/1cls/cashew/test/bad/000.JPG",
+  "device": "cpu",
+  "inference_ms": 1449.0320980548859
+}

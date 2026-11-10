@@ -35,6 +35,9 @@ def main():
     if set(keys) != expected_keys or len(set(keys)) != expected:
         parser.error("Missing or duplicated configuration metrics")
     reports.sort(key=lambda r: (r["category"], r["shot"], r["seed"]))
+    for report in reports:
+        report["knn_backend"] = meta.get("knn_backend", "cpu-faiss")
+        report["peak_pixel_evaluator_gpu_mib"] = report.get("pixel_backend_details", {}).get("peak_evaluator_gpu_mib")
     write_csv(args.output / "part2_gpu_per_configuration.csv", reports)
     category_rows = []
     for category in meta["categories"]:

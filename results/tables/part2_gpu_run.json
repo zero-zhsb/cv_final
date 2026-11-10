@@ -1,0 +1,1432 @@
+{
+  "status": "completed",
+  "method": "anomalydino",
+  "run_id": "part2_gpu_exact_matrix_v1",
+  "manifest_id": "51934290ccd342f9f7fa03f9f56c712494cb7b576b7038516efdb41d43b9b2c5",
+  "code_commit": "119b4c77e9c04315d7df284c4f524d35ad4433db",
+  "source_sha256": {
+    "scripts/run_part2.py": "d4e45a103820bb22b20cc351b2e3c1e22adede13d9401e97edbac6b0c058819c",
+    "src/part2/inspector.py": "234f99addb177667f9c6962e5439f490a86fc6f2284dfde5d9d3cb26efddac7b",
+    "src/part2/maps.py": "c963a219c5cabc740707b0588739564da9b773090df46538b113e30d0c32258b",
+    "src/part2/gpu_index.py": "e6f8f5f4604bdcf1607672fcf6e1853d20d32de86be05c38de0ea49cacf62d20"
+  },
+  "code_dirty": false,
+  "upstream_commit": "b9d1c2648e3a5247437d4d953d907a8f3d994457",
+  "dinov2_commit": "7764ea0f912e53c92e82eb78a2a1631e92725fc8",
+  "weights_sha256": "b938bf1bc15cd2ec0feacfe3a1bb553fe8ea9ca46a7e1d8d00217f29aef60cd9",
+  "device": "cuda:0",
+  "torch": "2.5.1+cu124",
+  "cuda_build": "12.4",
+  "model": "dinov2_vits14",
+  "resolution": 448,
+  "preprocess": "agnostic",
+  "precision": "float32",
+  "faiss": "CPU normalization only",
+  "knn_backend": "torch-gpu",
+  "knn_search": "exhaustive squared L2, k=1, no approximate search",
+  "threads": 2,
+  "map_storage": "patch",
+  "warmup_iters": 25,
+  "gpu_memory_fraction_cap": 0.15,
+  "started_at_utc": "2026-11-10T12:52:20.599563+00:00",
+  "allowed_image_roots": [
+    "/data/disk1/shared/aiaa3201/project2_anomaly/VisA"
+  ],
+  "cache": "none",
+  "categories": [
+    "candle",
+    "capsules",
+    "cashew",
+    "chewinggum",
+    "fryum",
+    "pipe_fryum"
+  ],
+  "shots": [
+    1,
+    2,
+    4,
+    8
+  ],
+  "seeds": [
+    0,
+    1,
+    2
+  ],
+  "partial_smoke_test": false,
+  "inference_time_scope": "synchronized RGB read, transforms, features, PCA mask, configured exact kNN; excludes map rendering/export",
+  "peak_gpu_memory_scope": "peak PyTorch allocated bytes: model, CUDA bank/search if enabled, and inference; excludes driver/context allocations",
+  "notes": "Shared GPU performance must be measured in a coordinated slot. Metrics are a separate evaluation step.",
+  "gpu_observations": [
+    {
+      "phase": "start",
+      "configuration": "candle/shot_1/seed_0",
+      "at_utc": "2026-11-10T12:52:28.460955+00:00",
+      "device_snapshot": "NVIDIA RTX A6000, 20898 MiB, 100 %"
+    },
+    {
+      "phase": "end",
+      "configuration": "candle/shot_1/seed_0",
+      "at_utc": "2026-11-10T12:52:52.673877+00:00",
+      "device_snapshot": "NVIDIA RTX A6000, 21008 MiB, 100 %"
+    },
+    {
+      "phase": "start",
+      "configuration": "candle/shot_1/seed_1",
+      "at_utc": "2026-11-10T12:52:52.708993+00:00",
+      "device_snapshot": "NVIDIA RTX A6000, 21008 MiB, 100 %"
+    },
+    {
+      "phase": "end",
+      "configuration": "candle/shot_1/seed_1",
+      "at_utc": "2026-11-10T12:53:13.087825+00:00",
+      "device_snapshot": "NVIDIA RTX A6000, 21272 MiB, 100 %"
+    },
+    {
+      "phase": "start",
+      "configuration": "candle/shot_1/seed_2",
+      "at_utc": "2026-11-10T12:53:13.119207+00:00",
+      "device_snapshot": "NVIDIA RTX A6000, 21272 MiB, 100 %"
+    },
+    {
+      "phase": "end",
+      "configuration": "candle/shot_1/seed_2",
+      "at_utc": "2026-11-10T12:53:36.087359+00:00",
+      "device_snapshot": "NVIDIA RTX A6000, 24684 MiB, 100 %"
+    },
+    {
+      "phase": "start",
+      "configuration": "candle/shot_2/seed_0",
+      "at_utc": "2026-11-10T12:53:36.122380+00:00",
+      "device_snapshot": "NVIDIA RTX A6000, 24684 MiB, 100 %"
+    },
+    {
+      "phase": "end",
+      "configuration": "candle/shot_2/seed_0",
+      "at_utc": "2026-11-10T12:54:01.861456+00:00",
+      "device_snapshot": "NVIDIA RTX A6000, 24762 MiB, 100 %"
+    },
+    {
+      "phase": "start",
+      "configuration": "candle/shot_2/seed_1",
+      "at_utc": "2026-11-10T12:54:01.889308+00:00",
+      "device_snapshot": "NVIDIA RTX A6000, 24762 MiB, 100 %"
+    },
+    {
+      "phase": "end",
+      "configuration": "candle/shot_2/seed_1",
+      "at_utc": "2026-11-10T12:54:26.221663+00:00",
+      "device_snapshot": "NVIDIA RTX A6000, 21356 MiB, 100 %"
+    },
+    {
+      "phase": "start",
+      "configuration": "candle/shot_2/seed_2",
+      "at_utc": "2026-11-10T12:54:26.258514+00:00",
+      "device_snapshot": "NVIDIA RTX A6000, 21356 MiB, 100 %"
+    },
+    {
+      "phase": "end",
+      "configuration": "candle/shot_2/seed_2",
+      "at_utc": "2026-11-10T12:54:47.611825+00:00",
+      "device_snapshot": "NVIDIA RTX A6000, 24780 MiB, 100 %"
+    },
+    {
+      "phase": "start",
+      "configuration": "candle/shot_4/seed_0",
+      "at_utc": "2026-11-10T12:54:47.647023+00:00",
+      "device_snapshot": "NVIDIA RTX A6000, 24780 MiB, 100 %"
+    },
+    {
+      "phase": "end",
+      "configuration": "candle/shot_4/seed_0",
+      "at_utc": "2026-11-10T12:55:16.287274+00:00",
+      "device_snapshot": "NVIDIA RTX A6000, 24890 MiB, 100 %"
+    },
+    {
+      "phase": "start",
+      "configuration": "candle/shot_4/seed_1",
+      "at_utc": "2026-11-10T12:55:16.321601+00:00",
+      "device_snapshot": "NVIDIA RTX A6000, 24890 MiB, 100 %"
+    },
+    {
+      "phase": "end",
+      "configuration": "candle/shot_4/seed_1",
+      "at_utc": "2026-11-10T12:55:43.794387+00:00",
+      "device_snapshot": "NVIDIA RTX A6000, 21518 MiB, 100 %"
+    },
+    {
+      "phase": "start",
+      "configuration": "candle/shot_4/seed_2",
+      "at_utc": "2026-11-10T12:55:43.830648+00:00",
+      "device_snapshot": "NVIDIA RTX A6000, 21518 MiB, 100 %"
+    },
+    {
+      "phase": "end",
+      "configuration": "candle/shot_4/seed_2",
+      "at_utc": "2026-11-10T12:56:08.284353+00:00",
+      "device_snapshot": "NVIDIA RTX A6000, 24952 MiB, 100 %"
+    },
+    {
+      "phase": "start",
+      "configuration": "candle/shot_8/seed_0",
+      "at_utc": "2026-11-10T12:56:08.316813+00:00",
+      "device_snapshot": "NVIDIA RTX A6000, 24952 MiB, 100 %"
+    },
+    {
+      "phase": "end",
+      "configuration": "candle/shot_8/seed_0",
+      "at_utc": "2026-11-10T12:56:45.615513+00:00",
+      "device_snapshot": "NVIDIA RTX A6000, 25216 MiB, 100 %"
+    },
+    {
+      "phase": "start",
+      "configuration": "candle/shot_8/seed_1",
+      "at_utc": "2026-11-10T12:56:45.662645+00:00",
+      "device_snapshot": "NVIDIA RTX A6000, 25216 MiB, 100 %"
+    },
+    {
+      "phase": "end",
+      "configuration": "candle/shot_8/seed_1",
+      "at_utc": "2026-11-10T12:57:12.077099+00:00",
+      "device_snapshot": "NVIDIA RTX A6000, 5222 MiB, 100 %"
+    },
+    {
+      "phase": "start",
+      "configuration": "candle/shot_8/seed_2",
+      "at_utc": "2026-11-10T12:57:12.113475+00:00",
+      "device_snapshot": "NVIDIA RTX A6000, 5222 MiB, 100 %"
+    },
+    {
+      "phase": "end",
+      "configuration": "candle/shot_8/seed_2",
+      "at_utc": "2026-11-10T12:57:35.372799+00:00",
+      "device_snapshot": "NVIDIA RTX A6000, 1788 MiB, 15 %"
+    },
+    {
+      "phase": "start",
+      "configuration": "capsules/shot_1/seed_0",
+      "at_utc": "2026-11-10T12:57:35.407185+00:00",
+      "device_snapshot": "NVIDIA RTX A6000, 1788 MiB, 15 %"
+    },
+    {
+      "phase": "end",
+      "configuration": "capsules/shot_1/seed_0",
+      "at_utc": "2026-11-10T12:57:53.137609+00:00",
+      "device_snapshot": "NVIDIA RTX A6000, 5220 MiB, 15 %"
+    },
+    {
+      "phase": "start",
+      "configuration": "capsules/shot_1/seed_1",
+      "at_utc": "2026-11-10T12:57:53.175505+00:00",
+      "device_snapshot": "NVIDIA RTX A6000, 5220 MiB, 15 %"
+    },
+    {
+      "phase": "end",
+      "configuration": "capsules/shot_1/seed_1",
+      "at_utc": "2026-11-10T12:58:09.221985+00:00",
+      "device_snapshot": "NVIDIA RTX A6000, 5242 MiB, 14 %"
+    },
+    {
+      "phase": "start",
+      "configuration": "capsules/shot_1/seed_2",
+      "at_utc": "2026-11-10T12:58:09.266419+00:00",
+      "device_snapshot": "NVIDIA RTX A6000, 5242 MiB, 14 %"
+    },
+    {
+      "phase": "end",
+      "configuration": "capsules/shot_1/seed_2",
+      "at_utc": "2026-11-10T12:58:26.797530+00:00",
+      "device_snapshot": "NVIDIA RTX A6000, 1788 MiB, 14 %"
+    },
+    {
+      "phase": "start",
+      "configuration": "capsules/shot_2/seed_0",
+      "at_utc": "2026-11-10T12:58:26.854829+00:00",
+      "device_snapshot": "NVIDIA RTX A6000, 1788 MiB, 26 %"
+    },
+    {
+      "phase": "end",
+      "configuration": "capsules/shot_2/seed_0",
+      "at_utc": "2026-11-10T12:58:41.431149+00:00",
+      "device_snapshot": "NVIDIA RTX A6000, 1788 MiB, 28 %"
+    },
+    {
+      "phase": "start",
+      "configuration": "capsules/shot_2/seed_1",
+      "at_utc": "2026-11-10T12:58:41.477179+00:00",
+      "device_snapshot": "NVIDIA RTX A6000, 1788 MiB, 28 %"
+    },
+    {
+      "phase": "end",
+      "configuration": "capsules/shot_2/seed_1",
+      "at_utc": "2026-11-10T12:58:58.672671+00:00",
+      "device_snapshot": "NVIDIA RTX A6000, 5194 MiB, 15 %"
+    },
+    {
+      "phase": "start",
+      "configuration": "capsules/shot_2/seed_2",
+      "at_utc": "2026-11-10T12:58:58.710623+00:00",
+      "device_snapshot": "NVIDIA RTX A6000, 5194 MiB, 15 %"
+    },
+    {
+      "phase": "end",
+      "configuration": "capsules/shot_2/seed_2",
+      "at_utc": "2026-11-10T12:59:14.450314+00:00",
+      "device_snapshot": "NVIDIA RTX A6000, 5194 MiB, 19 %"
+    },
+    {
+      "phase": "start",
+      "configuration": "capsules/shot_4/seed_0",
+      "at_utc": "2026-11-10T12:59:14.488353+00:00",
+      "device_snapshot": "NVIDIA RTX A6000, 5194 MiB, 19 %"
+    },
+    {
+      "phase": "end",
+      "configuration": "capsules/shot_4/seed_0",
+      "at_utc": "2026-11-10T12:59:34.405924+00:00",
+      "device_snapshot": "NVIDIA RTX A6000, 1788 MiB, 17 %"
+    },
+    {
+      "phase": "start",
+      "configuration": "capsules/shot_4/seed_1",
+      "at_utc": "2026-11-10T12:59:34.445207+00:00",
+      "device_snapshot": "NVIDIA RTX A6000, 1788 MiB, 17 %"
+    },
+    {
+      "phase": "end",
+      "configuration": "capsules/shot_4/seed_1",
+      "at_utc": "2026-11-10T12:59:52.042449+00:00",
+      "device_snapshot": "NVIDIA RTX A6000, 5242 MiB, 24 %"
+    },
+    {
+      "phase": "start",
+      "configuration": "capsules/shot_4/seed_2",
+      "at_utc": "2026-11-10T12:59:52.085477+00:00",
+      "device_snapshot": "NVIDIA RTX A6000, 5242 MiB, 24 %"
+    },
+    {
+      "phase": "end",
+      "configuration": "capsules/shot_4/seed_2",
+      "at_utc": "2026-11-10T13:00:10.791678+00:00",
+      "device_snapshot": "NVIDIA RTX A6000, 1788 MiB, 17 %"
+    },
+    {
+      "phase": "start",
+      "configuration": "capsules/shot_8/seed_0",
+      "at_utc": "2026-11-10T13:00:10.829617+00:00",
+      "device_snapshot": "NVIDIA RTX A6000, 1788 MiB, 17 %"
+    },
+    {
+      "phase": "end",
+      "configuration": "capsules/shot_8/seed_0",
+      "at_utc": "2026-11-10T13:00:32.581816+00:00",
+      "device_snapshot": "NVIDIA RTX A6000, 5512 MiB, 22 %"
+    },
+    {
+      "phase": "start",
+      "configuration": "capsules/shot_8/seed_1",
+      "at_utc": "2026-11-10T13:00:32.631847+00:00",
+      "device_snapshot": "NVIDIA RTX A6000, 5512 MiB, 22 %"
+    },
+    {
+      "phase": "end",
+      "configuration": "capsules/shot_8/seed_1",
+      "at_utc": "2026-11-10T13:00:53.964642+00:00",
+      "device_snapshot": "NVIDIA RTX A6000, 5678 MiB, 31 %"
+    },
+    {
+      "phase": "start",
+      "configuration": "capsules/shot_8/seed_2",
+      "at_utc": "2026-11-10T13:00:54.000639+00:00",
+      "device_snapshot": "NVIDIA RTX A6000, 5678 MiB, 31 %"
+    },
+    {
+      "phase": "end",
+      "configuration": "capsules/shot_8/seed_2",
+      "at_utc": "2026-11-10T13:01:15.154699+00:00",
+      "device_snapshot": "NVIDIA RTX A6000, 2220 MiB, 20 %"
+    },
+    {
+      "phase": "start",
+      "configuration": "cashew/shot_1/seed_0",
+      "at_utc": "2026-11-10T13:01:15.210760+00:00",
+      "device_snapshot": "NVIDIA RTX A6000, 2220 MiB, 20 %"
+    },
+    {
+      "phase": "end",
+      "configuration": "cashew/shot_1/seed_0",
+      "at_utc": "2026-11-10T13:01:30.596660+00:00",
+      "device_snapshot": "NVIDIA RTX A6000, 5664 MiB, 23 %"
+    },
+    {
+      "phase": "start",
+      "configuration": "cashew/shot_1/seed_1",
+      "at_utc": "2026-11-10T13:01:30.641975+00:00",
+      "device_snapshot": "NVIDIA RTX A6000, 5664 MiB, 23 %"
+    },
+    {
+      "phase": "end",
+      "configuration": "cashew/shot_1/seed_1",
+      "at_utc": "2026-11-10T13:01:46.015916+00:00",
+      "device_snapshot": "NVIDIA RTX A6000, 5666 MiB, 14 %"
+    },
+    {
+      "phase": "start",
+      "configuration": "cashew/shot_1/seed_2",
+      "at_utc": "2026-11-10T13:01:46.059562+00:00",
+      "device_snapshot": "NVIDIA RTX A6000, 5666 MiB, 14 %"
+    },
+    {
+      "phase": "end",
+      "configuration": "cashew/shot_1/seed_2",
+      "at_utc": "2026-11-10T13:02:00.629247+00:00",
+      "device_snapshot": "NVIDIA RTX A6000, 2220 MiB, 12 %"
+    },
+    {
+      "phase": "start",
+      "configuration": "cashew/shot_2/seed_0",
+      "at_utc": "2026-11-10T13:02:00.682834+00:00",
+      "device_snapshot": "NVIDIA RTX A6000, 2220 MiB, 12 %"
+    },
+    {
+      "phase": "end",
+      "configuration": "cashew/shot_2/seed_0",
+      "at_utc": "2026-11-10T13:02:15.257117+00:00",
+      "device_snapshot": "NVIDIA RTX A6000, 5656 MiB, 12 %"
+    },
+    {
+      "phase": "start",
+      "configuration": "cashew/shot_2/seed_1",
+      "at_utc": "2026-11-10T13:02:15.296315+00:00",
+      "device_snapshot": "NVIDIA RTX A6000, 5656 MiB, 12 %"
+    },
+    {
+      "phase": "end",
+      "configuration": "cashew/shot_2/seed_1",
+      "at_utc": "2026-11-10T13:02:29.877561+00:00",
+      "device_snapshot": "NVIDIA RTX A6000, 5678 MiB, 23 %"
+    },
+    {
+      "phase": "start",
+      "configuration": "cashew/shot_2/seed_2",
+      "at_utc": "2026-11-10T13:02:29.924072+00:00",
+      "device_snapshot": "NVIDIA RTX A6000, 5678 MiB, 23 %"
+    },
+    {
+      "phase": "end",
+      "configuration": "cashew/shot_2/seed_2",
+      "at_utc": "2026-11-10T13:02:45.784839+00:00",
+      "device_snapshot": "NVIDIA RTX A6000, 1957 MiB, 16 %"
+    },
+    {
+      "phase": "start",
+      "configuration": "cashew/shot_4/seed_0",
+      "at_utc": "2026-11-10T13:02:45.826856+00:00",
+      "device_snapshot": "NVIDIA RTX A6000, 1957 MiB, 16 %"
+    },
+    {
+      "phase": "end",
+      "configuration": "cashew/shot_4/seed_0",
+      "at_utc": "2026-11-10T13:03:00.852005+00:00",
+      "device_snapshot": "NVIDIA RTX A6000, 2220 MiB, 24 %"
+    },
+    {
+      "phase": "start",
+      "configuration": "cashew/shot_4/seed_1",
+      "at_utc": "2026-11-10T13:03:00.889709+00:00",
+      "device_snapshot": "NVIDIA RTX A6000, 2220 MiB, 14 %"
+    },
+    {
+      "phase": "end",
+      "configuration": "cashew/shot_4/seed_1",
+      "at_utc": "2026-11-10T13:03:18.005671+00:00",
+      "device_snapshot": "NVIDIA RTX A6000, 5672 MiB, 14 %"
+    },
+    {
+      "phase": "start",
+      "configuration": "cashew/shot_4/seed_2",
+      "at_utc": "2026-11-10T13:03:18.049674+00:00",
+      "device_snapshot": "NVIDIA RTX A6000, 5672 MiB, 14 %"
+    },
+    {
+      "phase": "end",
+      "configuration": "cashew/shot_4/seed_2",
+      "at_utc": "2026-11-10T13:03:33.793037+00:00",
+      "device_snapshot": "NVIDIA RTX A6000, 5674 MiB, 27 %"
+    },
+    {
+      "phase": "start",
+      "configuration": "cashew/shot_8/seed_0",
+      "at_utc": "2026-11-10T13:03:33.832817+00:00",
+      "device_snapshot": "NVIDIA RTX A6000, 5674 MiB, 27 %"
+    },
+    {
+      "phase": "end",
+      "configuration": "cashew/shot_8/seed_0",
+      "at_utc": "2026-11-10T13:03:51.892690+00:00",
+      "device_snapshot": "NVIDIA RTX A6000, 2220 MiB, 19 %"
+    },
+    {
+      "phase": "start",
+      "configuration": "cashew/shot_8/seed_1",
+      "at_utc": "2026-11-10T13:03:51.940111+00:00",
+      "device_snapshot": "NVIDIA RTX A6000, 2220 MiB, 19 %"
+    },
+    {
+      "phase": "end",
+      "configuration": "cashew/shot_8/seed_1",
+      "at_utc": "2026-11-10T13:04:10.792511+00:00",
+      "device_snapshot": "NVIDIA RTX A6000, 2220 MiB, 16 %"
+    },
+    {
+      "phase": "start",
+      "configuration": "cashew/shot_8/seed_2",
+      "at_utc": "2026-11-10T13:04:10.838153+00:00",
+      "device_snapshot": "NVIDIA RTX A6000, 2220 MiB, 16 %"
+    },
+    {
+      "phase": "end",
+      "configuration": "cashew/shot_8/seed_2",
+      "at_utc": "2026-11-10T13:04:30.624990+00:00",
+      "device_snapshot": "NVIDIA RTX A6000, 5670 MiB, 14 %"
+    },
+    {
+      "phase": "start",
+      "configuration": "chewinggum/shot_1/seed_0",
+      "at_utc": "2026-11-10T13:04:30.670606+00:00",
+      "device_snapshot": "NVIDIA RTX A6000, 5670 MiB, 14 %"
+    },
+    {
+      "phase": "end",
+      "configuration": "chewinggum/shot_1/seed_0",
+      "at_utc": "2026-11-10T13:04:45.894840+00:00",
+      "device_snapshot": "NVIDIA RTX A6000, 2220 MiB, 12 %"
+    },
+    {
+      "phase": "start",
+      "configuration": "chewinggum/shot_1/seed_1",
+      "at_utc": "2026-11-10T13:04:45.942509+00:00",
+      "device_snapshot": "NVIDIA RTX A6000, 2220 MiB, 12 %"
+    },
+    {
+      "phase": "end",
+      "configuration": "chewinggum/shot_1/seed_1",
+      "at_utc": "2026-11-10T13:05:00.645141+00:00",
+      "device_snapshot": "NVIDIA RTX A6000, 5512 MiB, 13 %"
+    },
+    {
+      "phase": "start",
+      "configuration": "chewinggum/shot_1/seed_2",
+      "at_utc": "2026-11-10T13:05:00.687552+00:00",
+      "device_snapshot": "NVIDIA RTX A6000, 5512 MiB, 13 %"
+    },
+    {
+      "phase": "end",
+      "configuration": "chewinggum/shot_1/seed_2",
+      "at_utc": "2026-11-10T13:05:15.157874+00:00",
+      "device_snapshot": "NVIDIA RTX A6000, 5514 MiB, 17 %"
+    },
+    {
+      "phase": "start",
+      "configuration": "chewinggum/shot_2/seed_0",
+      "at_utc": "2026-11-10T13:05:15.200937+00:00",
+      "device_snapshot": "NVIDIA RTX A6000, 5514 MiB, 17 %"
+    },
+    {
+      "phase": "end",
+      "configuration": "chewinggum/shot_2/seed_0",
+      "at_utc": "2026-11-10T13:05:28.732811+00:00",
+      "device_snapshot": "NVIDIA RTX A6000, 2220 MiB, 26 %"
+    },
+    {
+      "phase": "start",
+      "configuration": "chewinggum/shot_2/seed_1",
+      "at_utc": "2026-11-10T13:05:28.775819+00:00",
+      "device_snapshot": "NVIDIA RTX A6000, 2220 MiB, 26 %"
+    },
+    {
+      "phase": "end",
+      "configuration": "chewinggum/shot_2/seed_1",
+      "at_utc": "2026-11-10T13:05:44.206046+00:00",
+      "device_snapshot": "NVIDIA RTX A6000, 5496 MiB, 17 %"
+    },
+    {
+      "phase": "start",
+      "configuration": "chewinggum/shot_2/seed_2",
+      "at_utc": "2026-11-10T13:05:44.248800+00:00",
+      "device_snapshot": "NVIDIA RTX A6000, 5496 MiB, 17 %"
+    },
+    {
+      "phase": "end",
+      "configuration": "chewinggum/shot_2/seed_2",
+      "at_utc": "2026-11-10T13:05:59.358878+00:00",
+      "device_snapshot": "NVIDIA RTX A6000, 5498 MiB, 16 %"
+    },
+    {
+      "phase": "start",
+      "configuration": "chewinggum/shot_4/seed_0",
+      "at_utc": "2026-11-10T13:05:59.401281+00:00",
+      "device_snapshot": "NVIDIA RTX A6000, 5498 MiB, 16 %"
+    },
+    {
+      "phase": "end",
+      "configuration": "chewinggum/shot_4/seed_0",
+      "at_utc": "2026-11-10T13:06:16.299949+00:00",
+      "device_snapshot": "NVIDIA RTX A6000, 2220 MiB, 22 %"
+    },
+    {
+      "phase": "start",
+      "configuration": "chewinggum/shot_4/seed_1",
+      "at_utc": "2026-11-10T13:06:16.346893+00:00",
+      "device_snapshot": "NVIDIA RTX A6000, 2220 MiB, 22 %"
+    },
+    {
+      "phase": "end",
+      "configuration": "chewinggum/shot_4/seed_1",
+      "at_utc": "2026-11-10T13:06:32.306052+00:00",
+      "device_snapshot": "NVIDIA RTX A6000, 5498 MiB, 27 %"
+    },
+    {
+      "phase": "start",
+      "configuration": "chewinggum/shot_4/seed_2",
+      "at_utc": "2026-11-10T13:06:32.350419+00:00",
+      "device_snapshot": "NVIDIA RTX A6000, 5498 MiB, 27 %"
+    },
+    {
+      "phase": "end",
+      "configuration": "chewinggum/shot_4/seed_2",
+      "at_utc": "2026-11-10T13:06:49.782611+00:00",
+      "device_snapshot": "NVIDIA RTX A6000, 1957 MiB, 16 %"
+    },
+    {
+      "phase": "start",
+      "configuration": "chewinggum/shot_8/seed_0",
+      "at_utc": "2026-11-10T13:06:49.829437+00:00",
+      "device_snapshot": "NVIDIA RTX A6000, 1969 MiB, 16 %"
+    },
+    {
+      "phase": "end",
+      "configuration": "chewinggum/shot_8/seed_0",
+      "at_utc": "2026-11-10T13:07:10.090292+00:00",
+      "device_snapshot": "NVIDIA RTX A6000, 5512 MiB, 28 %"
+    },
+    {
+      "phase": "start",
+      "configuration": "chewinggum/shot_8/seed_1",
+      "at_utc": "2026-11-10T13:07:10.137791+00:00",
+      "device_snapshot": "NVIDIA RTX A6000, 5512 MiB, 28 %"
+    },
+    {
+      "phase": "end",
+      "configuration": "chewinggum/shot_8/seed_1",
+      "at_utc": "2026-11-10T13:07:28.253026+00:00",
+      "device_snapshot": "NVIDIA RTX A6000, 5504 MiB, 29 %"
+    },
+    {
+      "phase": "start",
+      "configuration": "chewinggum/shot_8/seed_2",
+      "at_utc": "2026-11-10T13:07:28.297093+00:00",
+      "device_snapshot": "NVIDIA RTX A6000, 5504 MiB, 29 %"
+    },
+    {
+      "phase": "end",
+      "configuration": "chewinggum/shot_8/seed_2",
+      "at_utc": "2026-11-10T13:07:47.967746+00:00",
+      "device_snapshot": "NVIDIA RTX A6000, 5512 MiB, 29 %"
+    },
+    {
+      "phase": "start",
+      "configuration": "fryum/shot_1/seed_0",
+      "at_utc": "2026-11-10T13:07:48.011502+00:00",
+      "device_snapshot": "NVIDIA RTX A6000, 5512 MiB, 29 %"
+    },
+    {
+      "phase": "end",
+      "configuration": "fryum/shot_1/seed_0",
+      "at_utc": "2026-11-10T13:08:03.873624+00:00",
+      "device_snapshot": "NVIDIA RTX A6000, 5778 MiB, 18 %"
+    },
+    {
+      "phase": "start",
+      "configuration": "fryum/shot_1/seed_1",
+      "at_utc": "2026-11-10T13:08:03.918247+00:00",
+      "device_snapshot": "NVIDIA RTX A6000, 5778 MiB, 17 %"
+    },
+    {
+      "phase": "end",
+      "configuration": "fryum/shot_1/seed_1",
+      "at_utc": "2026-11-10T13:08:18.770882+00:00",
+      "device_snapshot": "NVIDIA RTX A6000, 5774 MiB, 15 %"
+    },
+    {
+      "phase": "start",
+      "configuration": "fryum/shot_1/seed_2",
+      "at_utc": "2026-11-10T13:08:18.816317+00:00",
+      "device_snapshot": "NVIDIA RTX A6000, 5774 MiB, 15 %"
+    },
+    {
+      "phase": "end",
+      "configuration": "fryum/shot_1/seed_2",
+      "at_utc": "2026-11-10T13:08:33.144077+00:00",
+      "device_snapshot": "NVIDIA RTX A6000, 5776 MiB, 26 %"
+    },
+    {
+      "phase": "start",
+      "configuration": "fryum/shot_2/seed_0",
+      "at_utc": "2026-11-10T13:08:33.186698+00:00",
+      "device_snapshot": "NVIDIA RTX A6000, 5776 MiB, 26 %"
+    },
+    {
+      "phase": "end",
+      "configuration": "fryum/shot_2/seed_0",
+      "at_utc": "2026-11-10T13:08:50.724174+00:00",
+      "device_snapshot": "NVIDIA RTX A6000, 9096 MiB, 19 %"
+    },
+    {
+      "phase": "start",
+      "configuration": "fryum/shot_2/seed_1",
+      "at_utc": "2026-11-10T13:08:50.780728+00:00",
+      "device_snapshot": "NVIDIA RTX A6000, 9096 MiB, 19 %"
+    },
+    {
+      "phase": "end",
+      "configuration": "fryum/shot_2/seed_1",
+      "at_utc": "2026-11-10T13:09:07.851843+00:00",
+      "device_snapshot": "NVIDIA RTX A6000, 2484 MiB, 14 %"
+    },
+    {
+      "phase": "start",
+      "configuration": "fryum/shot_2/seed_2",
+      "at_utc": "2026-11-10T13:09:07.895699+00:00",
+      "device_snapshot": "NVIDIA RTX A6000, 2484 MiB, 14 %"
+    },
+    {
+      "phase": "end",
+      "configuration": "fryum/shot_2/seed_2",
+      "at_utc": "2026-11-10T13:09:23.327518+00:00",
+      "device_snapshot": "NVIDIA RTX A6000, 9112 MiB, 23 %"
+    },
+    {
+      "phase": "start",
+      "configuration": "fryum/shot_4/seed_0",
+      "at_utc": "2026-11-10T13:09:23.367012+00:00",
+      "device_snapshot": "NVIDIA RTX A6000, 9112 MiB, 23 %"
+    },
+    {
+      "phase": "end",
+      "configuration": "fryum/shot_4/seed_0",
+      "at_utc": "2026-11-10T13:09:41.200925+00:00",
+      "device_snapshot": "NVIDIA RTX A6000, 2484 MiB, 23 %"
+    },
+    {
+      "phase": "start",
+      "configuration": "fryum/shot_4/seed_1",
+      "at_utc": "2026-11-10T13:09:41.246804+00:00",
+      "device_snapshot": "NVIDIA RTX A6000, 2484 MiB, 23 %"
+    },
+    {
+      "phase": "end",
+      "configuration": "fryum/shot_4/seed_1",
+      "at_utc": "2026-11-10T13:09:56.112664+00:00",
+      "device_snapshot": "NVIDIA RTX A6000, 9176 MiB, 18 %"
+    },
+    {
+      "phase": "start",
+      "configuration": "fryum/shot_4/seed_2",
+      "at_utc": "2026-11-10T13:09:56.156857+00:00",
+      "device_snapshot": "NVIDIA RTX A6000, 9176 MiB, 18 %"
+    },
+    {
+      "phase": "end",
+      "configuration": "fryum/shot_4/seed_2",
+      "at_utc": "2026-11-10T13:10:10.963526+00:00",
+      "device_snapshot": "NVIDIA RTX A6000, 9180 MiB, 22 %"
+    },
+    {
+      "phase": "start",
+      "configuration": "fryum/shot_8/seed_0",
+      "at_utc": "2026-11-10T13:10:11.009780+00:00",
+      "device_snapshot": "NVIDIA RTX A6000, 9180 MiB, 22 %"
+    },
+    {
+      "phase": "end",
+      "configuration": "fryum/shot_8/seed_0",
+      "at_utc": "2026-11-10T13:10:31.123543+00:00",
+      "device_snapshot": "NVIDIA RTX A6000, 5840 MiB, 30 %"
+    },
+    {
+      "phase": "start",
+      "configuration": "fryum/shot_8/seed_1",
+      "at_utc": "2026-11-10T13:10:31.180645+00:00",
+      "device_snapshot": "NVIDIA RTX A6000, 5840 MiB, 30 %"
+    },
+    {
+      "phase": "end",
+      "configuration": "fryum/shot_8/seed_1",
+      "at_utc": "2026-11-10T13:10:51.355820+00:00",
+      "device_snapshot": "NVIDIA RTX A6000, 5602 MiB, 28 %"
+    },
+    {
+      "phase": "start",
+      "configuration": "fryum/shot_8/seed_2",
+      "at_utc": "2026-11-10T13:10:51.404072+00:00",
+      "device_snapshot": "NVIDIA RTX A6000, 5602 MiB, 28 %"
+    },
+    {
+      "phase": "end",
+      "configuration": "fryum/shot_8/seed_2",
+      "at_utc": "2026-11-10T13:11:11.527311+00:00",
+      "device_snapshot": "NVIDIA RTX A6000, 5834 MiB, 18 %"
+    },
+    {
+      "phase": "start",
+      "configuration": "pipe_fryum/shot_1/seed_0",
+      "at_utc": "2026-11-10T13:11:11.574168+00:00",
+      "device_snapshot": "NVIDIA RTX A6000, 5834 MiB, 18 %"
+    },
+    {
+      "phase": "end",
+      "configuration": "pipe_fryum/shot_1/seed_0",
+      "at_utc": "2026-11-10T13:11:25.746452+00:00",
+      "device_snapshot": "NVIDIA RTX A6000, 5594 MiB, 13 %"
+    },
+    {
+      "phase": "start",
+      "configuration": "pipe_fryum/shot_1/seed_1",
+      "at_utc": "2026-11-10T13:11:25.793925+00:00",
+      "device_snapshot": "NVIDIA RTX A6000, 5594 MiB, 13 %"
+    },
+    {
+      "phase": "end",
+      "configuration": "pipe_fryum/shot_1/seed_1",
+      "at_utc": "2026-11-10T13:11:39.111466+00:00",
+      "device_snapshot": "NVIDIA RTX A6000, 2484 MiB, 24 %"
+    },
+    {
+      "phase": "start",
+      "configuration": "pipe_fryum/shot_1/seed_2",
+      "at_utc": "2026-11-10T13:11:39.159048+00:00",
+      "device_snapshot": "NVIDIA RTX A6000, 2484 MiB, 24 %"
+    },
+    {
+      "phase": "end",
+      "configuration": "pipe_fryum/shot_1/seed_2",
+      "at_utc": "2026-11-10T13:11:52.452224+00:00",
+      "device_snapshot": "NVIDIA RTX A6000, 9228 MiB, 24 %"
+    },
+    {
+      "phase": "start",
+      "configuration": "pipe_fryum/shot_2/seed_0",
+      "at_utc": "2026-11-10T13:11:52.500108+00:00",
+      "device_snapshot": "NVIDIA RTX A6000, 9230 MiB, 24 %"
+    },
+    {
+      "phase": "end",
+      "configuration": "pipe_fryum/shot_2/seed_0",
+      "at_utc": "2026-11-10T13:12:07.580105+00:00",
+      "device_snapshot": "NVIDIA RTX A6000, 9232 MiB, 17 %"
+    },
+    {
+      "phase": "start",
+      "configuration": "pipe_fryum/shot_2/seed_1",
+      "at_utc": "2026-11-10T13:12:07.634575+00:00",
+      "device_snapshot": "NVIDIA RTX A6000, 9232 MiB, 17 %"
+    },
+    {
+      "phase": "end",
+      "configuration": "pipe_fryum/shot_2/seed_1",
+      "at_utc": "2026-11-10T13:12:22.765733+00:00",
+      "device_snapshot": "NVIDIA RTX A6000, 2484 MiB, 21 %"
+    },
+    {
+      "phase": "start",
+      "configuration": "pipe_fryum/shot_2/seed_2",
+      "at_utc": "2026-11-10T13:12:22.813900+00:00",
+      "device_snapshot": "NVIDIA RTX A6000, 2484 MiB, 21 %"
+    },
+    {
+      "phase": "end",
+      "configuration": "pipe_fryum/shot_2/seed_2",
+      "at_utc": "2026-11-10T13:12:34.837624+00:00",
+      "device_snapshot": "NVIDIA RTX A6000, 9244 MiB, 27 %"
+    },
+    {
+      "phase": "start",
+      "configuration": "pipe_fryum/shot_4/seed_0",
+      "at_utc": "2026-11-10T13:12:34.887820+00:00",
+      "device_snapshot": "NVIDIA RTX A6000, 9244 MiB, 27 %"
+    },
+    {
+      "phase": "end",
+      "configuration": "pipe_fryum/shot_4/seed_0",
+      "at_utc": "2026-11-10T13:12:50.060099+00:00",
+      "device_snapshot": "NVIDIA RTX A6000, 9248 MiB, 16 %"
+    },
+    {
+      "phase": "start",
+      "configuration": "pipe_fryum/shot_4/seed_1",
+      "at_utc": "2026-11-10T13:12:50.112923+00:00",
+      "device_snapshot": "NVIDIA RTX A6000, 9248 MiB, 16 %"
+    },
+    {
+      "phase": "end",
+      "configuration": "pipe_fryum/shot_4/seed_1",
+      "at_utc": "2026-11-10T13:13:05.077997+00:00",
+      "device_snapshot": "NVIDIA RTX A6000, 2484 MiB, 22 %"
+    },
+    {
+      "phase": "start",
+      "configuration": "pipe_fryum/shot_4/seed_2",
+      "at_utc": "2026-11-10T13:13:05.129139+00:00",
+      "device_snapshot": "NVIDIA RTX A6000, 2484 MiB, 22 %"
+    },
+    {
+      "phase": "end",
+      "configuration": "pipe_fryum/shot_4/seed_2",
+      "at_utc": "2026-11-10T13:13:20.593907+00:00",
+      "device_snapshot": "NVIDIA RTX A6000, 9236 MiB, 26 %"
+    },
+    {
+      "phase": "start",
+      "configuration": "pipe_fryum/shot_8/seed_0",
+      "at_utc": "2026-11-10T13:13:20.648114+00:00",
+      "device_snapshot": "NVIDIA RTX A6000, 9236 MiB, 26 %"
+    },
+    {
+      "phase": "end",
+      "configuration": "pipe_fryum/shot_8/seed_0",
+      "at_utc": "2026-11-10T13:13:38.975393+00:00",
+      "device_snapshot": "NVIDIA RTX A6000, 2484 MiB, 24 %"
+    },
+    {
+      "phase": "start",
+      "configuration": "pipe_fryum/shot_8/seed_1",
+      "at_utc": "2026-11-10T13:13:39.031560+00:00",
+      "device_snapshot": "NVIDIA RTX A6000, 2484 MiB, 24 %"
+    },
+    {
+      "phase": "end",
+      "configuration": "pipe_fryum/shot_8/seed_1",
+      "at_utc": "2026-11-10T13:13:56.822273+00:00",
+      "device_snapshot": "NVIDIA RTX A6000, 9244 MiB, 31 %"
+    },
+    {
+      "phase": "start",
+      "configuration": "pipe_fryum/shot_8/seed_2",
+      "at_utc": "2026-11-10T13:13:56.869017+00:00",
+      "device_snapshot": "NVIDIA RTX A6000, 9244 MiB, 31 %"
+    },
+    {
+      "phase": "end",
+      "configuration": "pipe_fryum/shot_8/seed_2",
+      "at_utc": "2026-11-10T13:14:15.085112+00:00",
+      "device_snapshot": "NVIDIA RTX A6000, 5590 MiB, 16 %"
+    }
+  ],
+  "configurations": [
+    {
+      "configuration": "candle/shot_1/seed_0",
+      "memory_bank_ms": 1386.7420968599617,
+      "test_count": 200,
+      "finished_at_utc": "2026-11-10T12:52:52.673570+00:00",
+      "peak_gpu_memory_mib": 127.57568359375
+    },
+    {
+      "configuration": "candle/shot_1/seed_1",
+      "memory_bank_ms": 848.0549519881606,
+      "test_count": 200,
+      "finished_at_utc": "2026-11-10T12:53:13.087501+00:00",
+      "peak_gpu_memory_mib": 132.58251953125
+    },
+    {
+      "configuration": "candle/shot_1/seed_2",
+      "memory_bank_ms": 2056.2391821295023,
+      "test_count": 200,
+      "finished_at_utc": "2026-11-10T12:53:36.087054+00:00",
+      "peak_gpu_memory_mib": 132.58251953125
+    },
+    {
+      "configuration": "candle/shot_2/seed_0",
+      "memory_bank_ms": 3962.069097207859,
+      "test_count": 200,
+      "finished_at_utc": "2026-11-10T12:54:01.861231+00:00",
+      "peak_gpu_memory_mib": 157.99169921875
+    },
+    {
+      "configuration": "candle/shot_2/seed_1",
+      "memory_bank_ms": 5477.329198969528,
+      "test_count": 200,
+      "finished_at_utc": "2026-11-10T12:54:26.221262+00:00",
+      "peak_gpu_memory_mib": 171.15087890625
+    },
+    {
+      "configuration": "candle/shot_2/seed_2",
+      "memory_bank_ms": 1681.6000088583678,
+      "test_count": 200,
+      "finished_at_utc": "2026-11-10T12:54:47.611319+00:00",
+      "peak_gpu_memory_mib": 171.15087890625
+    },
+    {
+      "configuration": "candle/shot_4/seed_0",
+      "memory_bank_ms": 8662.042057141662,
+      "test_count": 200,
+      "finished_at_utc": "2026-11-10T12:55:16.286923+00:00",
+      "peak_gpu_memory_mib": 223.71923828125
+    },
+    {
+      "configuration": "candle/shot_4/seed_1",
+      "memory_bank_ms": 5877.040443010628,
+      "test_count": 200,
+      "finished_at_utc": "2026-11-10T12:55:43.794201+00:00",
+      "peak_gpu_memory_mib": 250.03759765625
+    },
+    {
+      "configuration": "candle/shot_4/seed_2",
+      "memory_bank_ms": 4874.558859970421,
+      "test_count": 200,
+      "finished_at_utc": "2026-11-10T12:56:08.284167+00:00",
+      "peak_gpu_memory_mib": 250.03759765625
+    },
+    {
+      "configuration": "candle/shot_8/seed_0",
+      "memory_bank_ms": 15861.597164068371,
+      "test_count": 200,
+      "finished_at_utc": "2026-11-10T12:56:45.615336+00:00",
+      "peak_gpu_memory_mib": 357.17431640625
+    },
+    {
+      "configuration": "candle/shot_8/seed_1",
+      "memory_bank_ms": 8380.457923049107,
+      "test_count": 200,
+      "finished_at_utc": "2026-11-10T12:57:12.076718+00:00",
+      "peak_gpu_memory_mib": 410.81103515625
+    },
+    {
+      "configuration": "candle/shot_8/seed_2",
+      "memory_bank_ms": 5069.27481899038,
+      "test_count": 200,
+      "finished_at_utc": "2026-11-10T12:57:35.372488+00:00",
+      "peak_gpu_memory_mib": 410.81103515625
+    },
+    {
+      "configuration": "capsules/shot_1/seed_0",
+      "memory_bank_ms": 830.4560498800129,
+      "test_count": 160,
+      "finished_at_utc": "2026-11-10T12:57:53.137220+00:00",
+      "peak_gpu_memory_mib": 234.58447265625
+    },
+    {
+      "configuration": "capsules/shot_1/seed_1",
+      "memory_bank_ms": 670.7126828841865,
+      "test_count": 160,
+      "finished_at_utc": "2026-11-10T12:58:09.221667+00:00",
+      "peak_gpu_memory_mib": 155.83837890625
+    },
+    {
+      "configuration": "capsules/shot_1/seed_2",
+      "memory_bank_ms": 792.9457637947053,
+      "test_count": 160,
+      "finished_at_utc": "2026-11-10T12:58:26.797197+00:00",
+      "peak_gpu_memory_mib": 155.83837890625
+    },
+    {
+      "configuration": "capsules/shot_2/seed_0",
+      "memory_bank_ms": 1514.2668911721557,
+      "test_count": 160,
+      "finished_at_utc": "2026-11-10T12:58:41.430943+00:00",
+      "peak_gpu_memory_mib": 188.57275390625
+    },
+    {
+      "configuration": "capsules/shot_2/seed_1",
+      "memory_bank_ms": 1112.0668549556285,
+      "test_count": 160,
+      "finished_at_utc": "2026-11-10T12:58:58.672323+00:00",
+      "peak_gpu_memory_mib": 200.45166015625
+    },
+    {
+      "configuration": "capsules/shot_2/seed_2",
+      "memory_bank_ms": 1392.5161401275545,
+      "test_count": 160,
+      "finished_at_utc": "2026-11-10T12:59:14.450076+00:00",
+      "peak_gpu_memory_mib": 200.45166015625
+    },
+    {
+      "configuration": "capsules/shot_4/seed_0",
+      "memory_bank_ms": 2851.613439852372,
+      "test_count": 160,
+      "finished_at_utc": "2026-11-10T12:59:34.405602+00:00",
+      "peak_gpu_memory_mib": 272.54541015625
+    },
+    {
+      "configuration": "capsules/shot_4/seed_1",
+      "memory_bank_ms": 2562.0194459334016,
+      "test_count": 160,
+      "finished_at_utc": "2026-11-10T12:59:52.042195+00:00",
+      "peak_gpu_memory_mib": 308.63916015625
+    },
+    {
+      "configuration": "capsules/shot_4/seed_2",
+      "memory_bank_ms": 2745.9006200078875,
+      "test_count": 160,
+      "finished_at_utc": "2026-11-10T13:00:10.791358+00:00",
+      "peak_gpu_memory_mib": 308.63916015625
+    },
+    {
+      "configuration": "capsules/shot_8/seed_0",
+      "memory_bank_ms": 4727.071197004989,
+      "test_count": 160,
+      "finished_at_utc": "2026-11-10T13:00:32.581526+00:00",
+      "peak_gpu_memory_mib": 452.82666015625
+    },
+    {
+      "configuration": "capsules/shot_8/seed_1",
+      "memory_bank_ms": 6097.726539941505,
+      "test_count": 160,
+      "finished_at_utc": "2026-11-10T13:00:53.964378+00:00",
+      "peak_gpu_memory_mib": 525.01416015625
+    },
+    {
+      "configuration": "capsules/shot_8/seed_2",
+      "memory_bank_ms": 4267.804634990171,
+      "test_count": 160,
+      "finished_at_utc": "2026-11-10T13:01:15.154340+00:00",
+      "peak_gpu_memory_mib": 525.01416015625
+    },
+    {
+      "configuration": "cashew/shot_1/seed_0",
+      "memory_bank_ms": 667.8771800361574,
+      "test_count": 150,
+      "finished_at_utc": "2026-11-10T13:01:30.596291+00:00",
+      "peak_gpu_memory_mib": 262.17236328125
+    },
+    {
+      "configuration": "cashew/shot_1/seed_1",
+      "memory_bank_ms": 666.1936000455171,
+      "test_count": 150,
+      "finished_at_utc": "2026-11-10T13:01:46.015038+00:00",
+      "peak_gpu_memory_mib": 130.58056640625
+    },
+    {
+      "configuration": "cashew/shot_1/seed_2",
+      "memory_bank_ms": 670.0621719937772,
+      "test_count": 150,
+      "finished_at_utc": "2026-11-10T13:02:00.628949+00:00",
+      "peak_gpu_memory_mib": 130.58056640625
+    },
+    {
+      "configuration": "cashew/shot_2/seed_0",
+      "memory_bank_ms": 1223.6306329723448,
+      "test_count": 150,
+      "finished_at_utc": "2026-11-10T13:02:15.256805+00:00",
+      "peak_gpu_memory_mib": 156.11376953125
+    },
+    {
+      "configuration": "cashew/shot_2/seed_1",
+      "memory_bank_ms": 1217.7939009852707,
+      "test_count": 150,
+      "finished_at_utc": "2026-11-10T13:02:29.877266+00:00",
+      "peak_gpu_memory_mib": 168.89697265625
+    },
+    {
+      "configuration": "cashew/shot_2/seed_2",
+      "memory_bank_ms": 1381.7117980215698,
+      "test_count": 150,
+      "finished_at_utc": "2026-11-10T13:02:45.784497+00:00",
+      "peak_gpu_memory_mib": 168.89697265625
+    },
+    {
+      "configuration": "cashew/shot_4/seed_0",
+      "memory_bank_ms": 2652.816212037578,
+      "test_count": 150,
+      "finished_at_utc": "2026-11-10T13:03:00.851755+00:00",
+      "peak_gpu_memory_mib": 219.96337890625
+    },
+    {
+      "configuration": "cashew/shot_4/seed_1",
+      "memory_bank_ms": 2611.8634189479053,
+      "test_count": 150,
+      "finished_at_utc": "2026-11-10T13:03:18.005305+00:00",
+      "peak_gpu_memory_mib": 245.52978515625
+    },
+    {
+      "configuration": "cashew/shot_4/seed_2",
+      "memory_bank_ms": 2380.6169440504164,
+      "test_count": 150,
+      "finished_at_utc": "2026-11-10T13:03:33.792747+00:00",
+      "peak_gpu_memory_mib": 245.52978515625
+    },
+    {
+      "configuration": "cashew/shot_8/seed_0",
+      "memory_bank_ms": 4607.128094183281,
+      "test_count": 150,
+      "finished_at_utc": "2026-11-10T13:03:51.892413+00:00",
+      "peak_gpu_memory_mib": 347.66259765625
+    },
+    {
+      "configuration": "cashew/shot_8/seed_1",
+      "memory_bank_ms": 4914.657887071371,
+      "test_count": 150,
+      "finished_at_utc": "2026-11-10T13:04:10.792180+00:00",
+      "peak_gpu_memory_mib": 398.79541015625
+    },
+    {
+      "configuration": "cashew/shot_8/seed_2",
+      "memory_bank_ms": 5229.582569096237,
+      "test_count": 150,
+      "finished_at_utc": "2026-11-10T13:04:30.624689+00:00",
+      "peak_gpu_memory_mib": 398.79541015625
+    },
+    {
+      "configuration": "chewinggum/shot_1/seed_0",
+      "memory_bank_ms": 632.3609780520201,
+      "test_count": 150,
+      "finished_at_utc": "2026-11-10T13:04:45.894546+00:00",
+      "peak_gpu_memory_mib": 223.06689453125
+    },
+    {
+      "configuration": "chewinggum/shot_1/seed_1",
+      "memory_bank_ms": 638.3766320068389,
+      "test_count": 150,
+      "finished_at_utc": "2026-11-10T13:05:00.644840+00:00",
+      "peak_gpu_memory_mib": 135.08837890625
+    },
+    {
+      "configuration": "chewinggum/shot_1/seed_2",
+      "memory_bank_ms": 614.4778761081398,
+      "test_count": 150,
+      "finished_at_utc": "2026-11-10T13:05:15.157565+00:00",
+      "peak_gpu_memory_mib": 135.08837890625
+    },
+    {
+      "configuration": "chewinggum/shot_2/seed_0",
+      "memory_bank_ms": 1383.77930293791,
+      "test_count": 150,
+      "finished_at_utc": "2026-11-10T13:05:28.732615+00:00",
+      "peak_gpu_memory_mib": 163.62548828125
+    },
+    {
+      "configuration": "chewinggum/shot_2/seed_1",
+      "memory_bank_ms": 1115.6415899749845,
+      "test_count": 150,
+      "finished_at_utc": "2026-11-10T13:05:44.205796+00:00",
+      "peak_gpu_memory_mib": 177.91259765625
+    },
+    {
+      "configuration": "chewinggum/shot_2/seed_2",
+      "memory_bank_ms": 1228.3420951571316,
+      "test_count": 150,
+      "finished_at_utc": "2026-11-10T13:05:59.358589+00:00",
+      "peak_gpu_memory_mib": 177.91259765625
+    },
+    {
+      "configuration": "chewinggum/shot_4/seed_0",
+      "memory_bank_ms": 2576.3835578691214,
+      "test_count": 150,
+      "finished_at_utc": "2026-11-10T13:06:16.299561+00:00",
+      "peak_gpu_memory_mib": 234.98681640625
+    },
+    {
+      "configuration": "chewinggum/shot_4/seed_1",
+      "memory_bank_ms": 2223.8131328485906,
+      "test_count": 150,
+      "finished_at_utc": "2026-11-10T13:06:32.305701+00:00",
+      "peak_gpu_memory_mib": 263.56103515625
+    },
+    {
+      "configuration": "chewinggum/shot_4/seed_2",
+      "memory_bank_ms": 2690.6088199466467,
+      "test_count": 150,
+      "finished_at_utc": "2026-11-10T13:06:49.782214+00:00",
+      "peak_gpu_memory_mib": 263.56103515625
+    },
+    {
+      "configuration": "chewinggum/shot_8/seed_0",
+      "memory_bank_ms": 5628.727009054273,
+      "test_count": 150,
+      "finished_at_utc": "2026-11-10T13:07:10.089918+00:00",
+      "peak_gpu_memory_mib": 377.70947265625
+    },
+    {
+      "configuration": "chewinggum/shot_8/seed_1",
+      "memory_bank_ms": 4784.659611061215,
+      "test_count": 150,
+      "finished_at_utc": "2026-11-10T13:07:28.252389+00:00",
+      "peak_gpu_memory_mib": 434.85791015625
+    },
+    {
+      "configuration": "chewinggum/shot_8/seed_2",
+      "memory_bank_ms": 4890.173336025327,
+      "test_count": 150,
+      "finished_at_utc": "2026-11-10T13:07:47.967399+00:00",
+      "peak_gpu_memory_mib": 434.85791015625
+    },
+    {
+      "configuration": "fryum/shot_1/seed_0",
+      "memory_bank_ms": 663.1994289346039,
+      "test_count": 150,
+      "finished_at_utc": "2026-11-10T13:08:03.873308+00:00",
+      "peak_gpu_memory_mib": 242.60791015625
+    },
+    {
+      "configuration": "fryum/shot_1/seed_1",
+      "memory_bank_ms": 673.0703979264945,
+      "test_count": 150,
+      "finished_at_utc": "2026-11-10T13:08:18.770587+00:00",
+      "peak_gpu_memory_mib": 146.35791015625
+    },
+    {
+      "configuration": "fryum/shot_1/seed_2",
+      "memory_bank_ms": 653.6738038994372,
+      "test_count": 150,
+      "finished_at_utc": "2026-11-10T13:08:33.143834+00:00",
+      "peak_gpu_memory_mib": 146.35791015625
+    },
+    {
+      "configuration": "fryum/shot_2/seed_0",
+      "memory_bank_ms": 1524.656895082444,
+      "test_count": 150,
+      "finished_at_utc": "2026-11-10T13:08:50.723796+00:00",
+      "peak_gpu_memory_mib": 182.40478515625
+    },
+    {
+      "configuration": "fryum/shot_2/seed_1",
+      "memory_bank_ms": 1517.1425701119006,
+      "test_count": 150,
+      "finished_at_utc": "2026-11-10T13:09:07.851522+00:00",
+      "peak_gpu_memory_mib": 200.45166015625
+    },
+    {
+      "configuration": "fryum/shot_2/seed_2",
+      "memory_bank_ms": 1353.0848110094666,
+      "test_count": 150,
+      "finished_at_utc": "2026-11-10T13:09:23.327311+00:00",
+      "peak_gpu_memory_mib": 200.45166015625
+    },
+    {
+      "configuration": "fryum/shot_4/seed_0",
+      "memory_bank_ms": 2764.2195308580995,
+      "test_count": 150,
+      "finished_at_utc": "2026-11-10T13:09:41.200631+00:00",
+      "peak_gpu_memory_mib": 272.54541015625
+    },
+    {
+      "configuration": "fryum/shot_4/seed_1",
+      "memory_bank_ms": 2634.2650591395795,
+      "test_count": 150,
+      "finished_at_utc": "2026-11-10T13:09:56.112410+00:00",
+      "peak_gpu_memory_mib": 308.63916015625
+    },
+    {
+      "configuration": "fryum/shot_4/seed_2",
+      "memory_bank_ms": 2198.3781908638775,
+      "test_count": 150,
+      "finished_at_utc": "2026-11-10T13:10:10.963238+00:00",
+      "peak_gpu_memory_mib": 308.63916015625
+    },
+    {
+      "configuration": "fryum/shot_8/seed_0",
+      "memory_bank_ms": 5316.308458102867,
+      "test_count": 150,
+      "finished_at_utc": "2026-11-10T13:10:31.123247+00:00",
+      "peak_gpu_memory_mib": 452.82666015625
+    },
+    {
+      "configuration": "fryum/shot_8/seed_1",
+      "memory_bank_ms": 5339.5513070281595,
+      "test_count": 150,
+      "finished_at_utc": "2026-11-10T13:10:51.355440+00:00",
+      "peak_gpu_memory_mib": 525.01416015625
+    },
+    {
+      "configuration": "fryum/shot_8/seed_2",
+      "memory_bank_ms": 5332.4655189644545,
+      "test_count": 150,
+      "finished_at_utc": "2026-11-10T13:11:11.526984+00:00",
+      "peak_gpu_memory_mib": 525.01416015625
+    },
+    {
+      "configuration": "pipe_fryum/shot_1/seed_0",
+      "memory_bank_ms": 585.0144301075488,
+      "test_count": 150,
+      "finished_at_utc": "2026-11-10T13:11:25.746172+00:00",
+      "peak_gpu_memory_mib": 264.17431640625
+    },
+    {
+      "configuration": "pipe_fryum/shot_1/seed_1",
+      "memory_bank_ms": 604.1523299645633,
+      "test_count": 150,
+      "finished_at_utc": "2026-11-10T13:11:39.111186+00:00",
+      "peak_gpu_memory_mib": 133.33447265625
+    },
+    {
+      "configuration": "pipe_fryum/shot_1/seed_2",
+      "memory_bank_ms": 584.3120808713138,
+      "test_count": 150,
+      "finished_at_utc": "2026-11-10T13:11:52.451960+00:00",
+      "peak_gpu_memory_mib": 133.33447265625
+    },
+    {
+      "configuration": "pipe_fryum/shot_2/seed_0",
+      "memory_bank_ms": 1203.215336194262,
+      "test_count": 150,
+      "finished_at_utc": "2026-11-10T13:12:07.579739+00:00",
+      "peak_gpu_memory_mib": 162.36962890625
+    },
+    {
+      "configuration": "pipe_fryum/shot_2/seed_1",
+      "memory_bank_ms": 1334.20500298962,
+      "test_count": 150,
+      "finished_at_utc": "2026-11-10T13:12:22.765420+00:00",
+      "peak_gpu_memory_mib": 176.40478515625
+    },
+    {
+      "configuration": "pipe_fryum/shot_2/seed_2",
+      "memory_bank_ms": 1162.3226180672646,
+      "test_count": 150,
+      "finished_at_utc": "2026-11-10T13:12:34.837369+00:00",
+      "peak_gpu_memory_mib": 176.40478515625
+    },
+    {
+      "configuration": "pipe_fryum/shot_4/seed_0",
+      "memory_bank_ms": 2375.5275669973344,
+      "test_count": 150,
+      "finished_at_utc": "2026-11-10T13:12:50.059819+00:00",
+      "peak_gpu_memory_mib": 228.47509765625
+    },
+    {
+      "configuration": "pipe_fryum/shot_4/seed_1",
+      "memory_bank_ms": 2384.655890055001,
+      "test_count": 150,
+      "finished_at_utc": "2026-11-10T13:13:05.077701+00:00",
+      "peak_gpu_memory_mib": 254.54541015625
+    },
+    {
+      "configuration": "pipe_fryum/shot_4/seed_2",
+      "memory_bank_ms": 2368.8910792116076,
+      "test_count": 150,
+      "finished_at_utc": "2026-11-10T13:13:20.593619+00:00",
+      "peak_gpu_memory_mib": 254.54541015625
+    },
+    {
+      "configuration": "pipe_fryum/shot_8/seed_0",
+      "memory_bank_ms": 4800.5124211777,
+      "test_count": 150,
+      "finished_at_utc": "2026-11-10T13:13:38.975080+00:00",
+      "peak_gpu_memory_mib": 362.68603515625
+    },
+    {
+      "configuration": "pipe_fryum/shot_8/seed_1",
+      "memory_bank_ms": 4786.383141065016,
+      "test_count": 150,
+      "finished_at_utc": "2026-11-10T13:13:56.822056+00:00",
+      "peak_gpu_memory_mib": 416.82666015625
+    },
+    {
+      "configuration": "pipe_fryum/shot_8/seed_2",
+      "memory_bank_ms": 4903.543778927997,
+      "test_count": 150,
+      "finished_at_utc": "2026-11-10T13:14:15.084829+00:00",
+      "peak_gpu_memory_mib": 416.82666015625
+    }
+  ],
+  "finished_at_utc": "2026-11-10T13:14:15.136641+00:00"
+}
