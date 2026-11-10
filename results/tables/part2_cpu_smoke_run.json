@@ -1,0 +1,49 @@
+{
+  "status": "completed",
+  "method": "anomalydino",
+  "run_id": "cashew_cpu_smoke_v3",
+  "manifest_id": "51934290ccd342f9f7fa03f9f56c712494cb7b576b7038516efdb41d43b9b2c5",
+  "code_commit": "2c4f85a4f98f361b898aba4a33472bf32a6b7a9c",
+  "source_sha256": {
+    "scripts/run_part2.py": "dec8d6add3a6e8a387fb487eae9f4003e156c91e0e78ebdcd9ef19409ede8310",
+    "src/part2/inspector.py": "9debaf0e5f46e7605b07bd3650f6c92a6187381073d349c9f5dcc9a34e94e78f"
+  },
+  "code_dirty": true,
+  "upstream_commit": "b9d1c2648e3a5247437d4d953d907a8f3d994457",
+  "dinov2_commit": "7764ea0f912e53c92e82eb78a2a1631e92725fc8",
+  "weights_sha256": "b938bf1bc15cd2ec0feacfe3a1bb553fe8ea9ca46a7e1d8d00217f29aef60cd9",
+  "device": "cpu",
+  "torch": "2.5.1+cu124",
+  "cuda_build": "12.4",
+  "model": "dinov2_vits14",
+  "resolution": 448,
+  "preprocess": "agnostic",
+  "precision": "float32",
+  "faiss": "cpu",
+  "threads": 2,
+  "allowed_image_roots": [
+    "/data/disk1/shared/aiaa3201/project2_anomaly/VisA"
+  ],
+  "cache": "none",
+  "categories": [
+    "cashew"
+  ],
+  "shots": [
+    1
+  ],
+  "seeds": [
+    0
+  ],
+  "partial_smoke_test": true,
+  "inference_time_scope": "synchronized RGB read, transforms, features, PCA mask, CPU FAISS; excludes map rendering/export",
+  "peak_gpu_memory_scope": "model, reference bank construction and inference; CPU FAISS is not GPU memory",
+  "notes": "Shared GPU performance must be measured in a coordinated slot. Metrics are a separate evaluation step.",
+  "configurations": [
+    {
+      "configuration": "cashew/shot_1/seed_0",
+      "memory_bank_ms": 9912.406767951325,
+      "test_count": 4,
+      "peak_gpu_memory_mib": null
+    }
+  ]
+}

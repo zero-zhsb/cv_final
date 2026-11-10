@@ -1,0 +1,5 @@
+run_id,method,manifest_id,category,shot,seed,image_path,mask_path,label,score,map_path,threshold,decision,inference_ms
+cashew_cpu_smoke_v3,anomalydino,51934290ccd342f9f7fa03f9f56c712494cb7b576b7038516efdb41d43b9b2c5,cashew,1,0,cashew/test/good/006.JPG,,0,0.16829168796539307,maps/cashew/shot_1/seed_0/good/006.npz,0.2194885875284672,OK,1392.2100272029638
+cashew_cpu_smoke_v3,anomalydino,51934290ccd342f9f7fa03f9f56c712494cb7b576b7038516efdb41d43b9b2c5,cashew,1,0,cashew/test/good/012.JPG,,0,0.14100889265537261,maps/cashew/shot_1/seed_0/good/012.npz,0.2194885875284672,OK,1395.129012176767
+cashew_cpu_smoke_v3,anomalydino,51934290ccd342f9f7fa03f9f56c712494cb7b576b7038516efdb41d43b9b2c5,cashew,1,0,cashew/test/bad/000.JPG,cashew/ground_truth/bad/000.png,1,0.2319624811410904,maps/cashew/shot_1/seed_0/bad/000.npz,0.2194885875284672,NG,1375.9308899752796
+cashew_cpu_smoke_v3,anomalydino,51934290ccd342f9f7fa03f9f56c712494cb7b576b7038516efdb41d43b9b2c5,cashew,1,0,cashew/test/bad/001.JPG,cashew/ground_truth/bad/001.png,1,0.2097577840089798,maps/cashew/shot_1/seed_0/bad/001.npz,0.2194885875284672,OK,1395.3775649424642

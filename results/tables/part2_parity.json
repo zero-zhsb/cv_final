@@ -1,0 +1,11 @@
+{
+  "status": "passed",
+  "scope": "one real normal cashew test image, 1-shot seed=0, CPU only; not a benchmark",
+  "manifest_id": "51934290ccd342f9f7fa03f9f56c712494cb7b576b7038516efdb41d43b9b2c5",
+  "reference": "cashew/train/good/024.JPG",
+  "image": "cashew/test/good/006.JPG",
+  "adapter_score": 0.16829168796539307,
+  "official_score": 0.16829168796539307,
+  "maximum_map_absolute_error": 7.450488392901633e-09,
+  "maximum_patch_absolute_error": 0.0
+}

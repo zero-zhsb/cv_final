@@ -22,14 +22,16 @@
 
 官方 AnomalyDINO `run_anomalydino.py` 支持 `--resolution`、`--shots`、`--num_seeds`、`--preprocess`、`--eval_segm` 和 `--faiss_on_cpu`。`src/detection.py` 的 seed 选择是排序切片；`src/backbones.py` 使用短边缩放和 patch 倍数裁剪。本仓库文档据此给出适配说明。
 
-## 必须交付的适配（尚未实现）
+## 课程适配状态
 
-- [ ] 限制为规定六类。
-- [ ] 在 reference 选择前排除 calibration。
-- [ ] 两方法读取共享 JSON，导出实际名单。
-- [ ] 独立处理校准图，不混入记忆库和正式测试指标。
-- [ ] 导出公共格式的原始 score/map。
+- [x] Part 2 限制为共享 manifest 允许的六类。
+- [x] 在 reference 选择前排除 calibration。
+- [x] Part 2 读取共享 JSON，导出实际名单；Part 1 待 A 接入。
+- [x] 独立处理校准图，不混入记忆库和正式测试行。
+- [x] 导出公共格式的原始 score/map。
 - [ ] 完成公共评估与上游结果核对、完整时间/显存测量。
-- [ ] 提交自己编写的适配源码/上游 diff 和版本信息。
+- [x] 提交自己编写的适配源码和版本信息，不修改上游 detector。
+
+适配器复用上游 backbone 的 prepare_image / extract_features / PCA masking，以及 utils 的 rotation / dists2map。仅覆盖模型加载来源，使用本地固定 DINOv2 源码与权重；近邻循环与导出由本项目实现。单张真实图与官方 detector 的对比见 [parity 记录](../results/tables/part2_parity.json)，不可据此宣称所有配置完全复现或达到论文成绩。
 
 新增第三方代码、图、权重、数据或组件时，补充来源、许可证、修改点与论文引用。当前仓库没有拷入第三方方法代码，也没有假定可以为其重新授权。

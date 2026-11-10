@@ -1,0 +1,17 @@
+{
+  "python": "3.10.12",
+  "platform": "Linux-5.15.0-186-generic-x86_64-with-glibc2.35",
+  "packages": {
+    "torch": "2.5.1",
+    "torchvision": "0.20.1",
+    "numpy": "1.26.4",
+    "Pillow": "11.0.0",
+    "scikit-learn": "1.5.2",
+    "faiss-cpu": "1.8.0.post1",
+    "faiss-gpu": null
+  },
+  "nvidia_smi": "NVIDIA RTX A6000, 570.211.01, 49140 MiB",
+  "torch_cuda_build": "12.4",
+  "cuda_available": true,
+  "gpu_count": 1
+}

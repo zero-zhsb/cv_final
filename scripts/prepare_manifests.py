@@ -19,12 +19,16 @@ def image_files(folder: Path) -> list[Path]:
     )
 
 
-def build_manifest(data_root: Path, protocol: dict) -> dict:
+def build_manifest(data_root: Path, protocol: dict, allowed_image_roots=()) -> dict:
     root = data_root.resolve(strict=True)
+    allowed = [Path(p).resolve(strict=True) for p in allowed_image_roots]
 
     def relative(path: Path) -> str:
-        # Reject symlinks escaping the data root; no machine-specific absolute paths.
-        return path.resolve(strict=True).relative_to(root).as_posix()
+        # Explicitly allow a read-only course data root for lightweight symlink views.
+        resolved = path.resolve(strict=True)
+        if not any(resolved.is_relative_to(base) for base in [root, *allowed]):
+            raise ValueError(f"Image escapes approved data roots: {path}")
+        return path.absolute().relative_to(root).as_posix()
 
     categories = protocol["categories"]
     shots, seeds = protocol["shots"], protocol["seeds"]
@@ -74,8 +78,8 @@ def build_manifest(data_root: Path, protocol: dict) -> dict:
                 raise ValueError(f"{category}: expected one mask matching stem {image.stem!r}, got {len(candidates)}")
             tests.append({"image_path": relative(image), "mask_path": relative(candidates[0]), "label": 1})
         # Verify sets after path resolution, not just distinct filename strings.
-        train_paths = [relative(p) for p in training]
-        test_paths = [item["image_path"] for item in tests]
+        train_paths = [str(p.resolve()) for p in training]
+        test_paths = [str((root / item["image_path"]).resolve()) for item in tests]
         if len(set(train_paths)) != len(train_paths) or len(set(test_paths)) != len(test_paths):
             raise ValueError(f"{category}: duplicate resolved image paths")
         if set(train_paths) & set(test_paths):
@@ -102,12 +106,13 @@ def main() -> None:
     parser.add_argument("--protocol", type=Path, default=DEFAULT_PROTOCOL)
     parser.add_argument("--output", type=Path, default=Path("manifests/visa_1cls.json"))
     parser.add_argument("--overwrite", action="store_true", help="Explicitly replace an existing manifest")
+    parser.add_argument("--allow-image-root", type=Path, action="append", default=[], help="Explicit read-only source root for symlinked images; repeatable")
     args = parser.parse_args()
     try:
         if args.output.exists() and not args.overwrite:
             raise ValueError(f"Output exists: {args.output}; use a new filename or --overwrite")
         protocol = json.loads(args.protocol.read_text(encoding="utf-8"))
-        result = build_manifest(args.data_root, protocol)
+        result = build_manifest(args.data_root, protocol, args.allow_image_root)
         args.output.parent.mkdir(parents=True, exist_ok=True)
         args.output.write_text(json.dumps(result, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     except (OSError, ValueError, KeyError, TypeError) as exc:

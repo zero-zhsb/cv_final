@@ -73,6 +73,21 @@ class ManifestTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "directory names"):
             MODULE.build_manifest(self.root, protocol)
 
+    def test_external_symlink_requires_explicit_source_approval(self):
+        with tempfile.TemporaryDirectory() as external:
+            source = Path(external) / "normal.jpg"
+            source.touch()
+            target = self.root / "candle/train/good/043.jpg"
+            target.unlink()
+            try:
+                target.symlink_to(source)
+            except OSError:
+                self.skipTest("Creating symlinks requires privileges on this platform")
+            with self.assertRaisesRegex(ValueError, "approved data roots"):
+                MODULE.build_manifest(self.root, self.protocol)
+            result = MODULE.build_manifest(self.root, self.protocol, [Path(external)])
+            self.assertIn("candle/train/good/043.jpg", result["categories"]["candle"]["eligible_normal"])
+
 
 if __name__ == "__main__":
     unittest.main()

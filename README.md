@@ -7,12 +7,13 @@
 - [x] 仓库结构、课程要求、A/B 分工、服务器步骤与 Pre 验收文档。
 - [x] 数据名单生成工具（校准集排除、官方参考图选择规则、掩码检查）。
 - [x] 环境检查工具、输出协议与 GitHub Issue/PR 模板。
-- [ ] 真实 VisA 数据准备及名单生成。
+- [x] 使用服务器课程预置 VisA 完成官方划分与共享名单生成。
 - [ ] Part 1 方法、公共评估、演示程序。
-- [ ] Part 2 官方代码接入、课程协议适配与完整实验。
+- [x] Part 2 官方代码接入、名单/校准适配、CPU 小样例与单图官方一致性检查。
+- [ ] Part 2 全六类、四 shots、三 seeds 正式实验与公共评估。
 - [ ] 服务器实测结果、Pre 材料与录屏。
 
-**当前是可协作的项目骨架，不是已经完成的检测系统。** 不包含虚构指标、预训练权重或课程 PDF；尚未实现的入口不会伪装成可运行命令。
+**当前包含可运行的 Part 2 适配器与 CPU 小样例，完整项目仍未完成。** 不包含虚构指标、预训练权重或课程 PDF；尚未实现的入口不会伪装成可运行命令。
 
 ## 从哪里开始
 
@@ -25,6 +26,7 @@
 | [Pre 展示清单](docs/05_pre_checklist.md) | 必备结果、建议讲解顺序、现场演示和备份 |
 | [GitHub 协作](docs/06_github_workflow.md) | 分支、PR、任务清单与版本冻结 |
 | [来源与适配记录](docs/07_sources_and_adaptations.md) | 课程依据、上游版本与必须记录的修改 |
+| [成员 B 实际进展](docs/08_member_b_progress.md) | 真实数据路径、环境、可运行命令与验证边界 |
 
 ## 第一个里程碑
 
@@ -55,7 +57,7 @@ tests/               数据名单的隔离性与可复现检查
 
 ```bash
 python scripts/check_environment.py
-python -m unittest discover -s tests -v
+python -m unittest discover -s tests -p test_prepare_manifests.py -v
 python scripts/prepare_manifests.py --help
 ```
 
@@ -72,3 +74,9 @@ python scripts/prepare_manifests.py --data-root /srv/cv-final/data/VisA_pytorch/
 成员 A：数据、Part 1、公共评估、演示与对应文档。成员 B：模型环境、Part 2、实验汇总、效率测试与对应文档。双方共同核对协议、复现和讲解。真实姓名与工作记录由本人在 PR 中填写。
 
 官方资源：[AnomalyDINO](https://github.com/dammsi/AnomalyDINO)、[VisA / spot-diff](https://github.com/amazon-science/spot-diff)、[DINOv2](https://github.com/facebookresearch/dinov2)。第三方代码需保留许可证与来源。
+
+## 成员 B 实施入口
+
+`scripts/run_part2.py` 读取共享名单，复用固定官方版本的特征提取、PCA masking、旋转与异常图渲染；独立校准，不把校准图加入 reference 或正式测试。默认 CPU、两个线程，以便共享服务器先做小样例功能检查。
+
+实际服务器数据、运行命令与验证范围见 [成员 B 工作记录](docs/08_member_b_progress.md)。正式 GPU 实验须协调使用时段；CPU 冒烟测试不能称为完整复现或作为 GPU 效率结果。Part 1/公共评估仍由 A 负责，Part 2 浮点输出供公共评估核对。
