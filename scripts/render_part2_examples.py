@@ -3,6 +3,8 @@ from __future__ import annotations
 import argparse
 import csv
 from pathlib import Path
+import sys
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 
 def main():
@@ -17,14 +19,14 @@ def main():
     import matplotlib.pyplot as plt
     import numpy as np
     from PIL import Image
+    from src.part2.maps import load_anomaly_map
     with (args.run / "predictions.csv").open(newline="", encoding="utf-8") as handle:
         rows = list(csv.DictReader(handle))[:args.count]
     if not rows:
         parser.error("No predictions")
     arrays = []
     for row in rows:
-        with np.load(args.run / row["map_path"]) as data:
-            arrays.append(data["anomaly_map"])
+        arrays.append(load_anomaly_map(args.run / row["map_path"]))
     # One scale across this preview set; raw saved maps remain untouched.
     minimum = min(float(x.min()) for x in arrays)
     maximum = max(float(x.max()) for x in arrays)

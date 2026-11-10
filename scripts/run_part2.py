@@ -9,6 +9,7 @@ import os
 from pathlib import Path
 import subprocess
 import sys
+from datetime import datetime, timezone
 
 # Set before importing numerical libraries; these apply only to this process.
 os.environ.setdefault("OMP_NUM_THREADS", "2")
@@ -50,6 +51,9 @@ def main():
     parser.add_argument("--seeds", type=int, nargs="+", default=[0])
     parser.add_argument("--device", default="cpu", choices=["cpu", "cuda:0"])
     parser.add_argument("--threads", type=int, default=2)
+    parser.add_argument("--map-storage", choices=["full", "patch"], default="full")
+    parser.add_argument("--warmup-iters", type=int, default=25)
+    parser.add_argument("--gpu-memory-fraction", type=float, default=0.15, help="Per-process PyTorch allocator cap; does not reserve this fraction")
     parser.add_argument("--allow-image-root", type=Path, action="append", default=[], help="Approved read-only image root when prepared data uses symlinks")
     parser.add_argument("--limit-per-class", type=int, help="Smoke test only: at most N normal + N abnormal test images; no AUROC claim")
     args = parser.parse_args()
@@ -57,11 +61,15 @@ def main():
         parser.error("Output exists; choose a new run directory")
     if args.threads < 1 or (args.limit_per_class is not None and args.limit_per_class < 1):
         parser.error("Threads and limits must be positive")
+    if args.warmup_iters < 0 or not 0 < args.gpu_memory_fraction <= 1:
+        parser.error("Invalid warmup count or GPU memory fraction")
     for name in ["OMP_NUM_THREADS", "MKL_NUM_THREADS", "OPENBLAS_NUM_THREADS"]:
         os.environ[name] = str(args.threads)
     import numpy as np
     import torch
     from src.part2.inspector import AnomalyDINOInspector, UPSTREAM_COMMIT
+    if args.device.startswith("cuda"):
+        torch.cuda.set_per_process_memory_fraction(args.gpu_memory_fraction, args.device)
     def checked_image(relative):
         return manifest_path(args.data_root, relative, args.allow_image_root)
     manifest = json.loads(args.manifest.read_text(encoding="utf-8"))
@@ -98,13 +106,16 @@ def main():
     args.output.mkdir(parents=True)
     metadata = {"status": "running", "method": "anomalydino", "run_id": args.output.name,
                 "manifest_id": manifest_id, "code_commit": git_commit(ROOT),
-                "source_sha256": {str(path.relative_to(ROOT)): digest(path) for path in [ROOT / "scripts/run_part2.py", ROOT / "src/part2/inspector.py"]},
+                "source_sha256": {str(path.relative_to(ROOT)): digest(path) for path in [ROOT / "scripts/run_part2.py", ROOT / "src/part2/inspector.py", ROOT / "src/part2/maps.py"]},
                 "code_dirty": bool(subprocess.check_output(["git", "-C", str(ROOT), "status", "--porcelain"], text=True).strip()),
                 "upstream_commit": UPSTREAM_COMMIT, "dinov2_commit": git_commit(args.dinov2_repo),
                 "weights_sha256": digest(args.weights), "device": args.device,
                 "torch": torch.__version__, "cuda_build": torch.version.cuda,
                 "model": "dinov2_vits14", "resolution": 448, "preprocess": "agnostic",
                 "precision": "float32", "faiss": "cpu", "threads": args.threads,
+                "map_storage": args.map_storage, "warmup_iters": args.warmup_iters,
+                "gpu_memory_fraction_cap": args.gpu_memory_fraction if args.device.startswith("cuda") else None,
+                "started_at_utc": datetime.now(timezone.utc).isoformat(),
                 "allowed_image_roots": [str(p.resolve()) for p in args.allow_image_root],
                 "cache": "none", "categories": categories, "shots": args.shots, "seeds": args.seeds,
                 "partial_smoke_test": args.limit_per_class is not None,
@@ -112,8 +123,24 @@ def main():
                 "peak_gpu_memory_scope": "model, reference bank construction and inference; CPU FAISS is not GPU memory",
                 "notes": "Shared GPU performance must be measured in a coordinated slot. Metrics are a separate evaluation step."}
     run_path = args.output / "run.json"
+    def write_json(path, value):
+        temporary = path.with_suffix(path.suffix + ".tmp")
+        temporary.write_text(json.dumps(value, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+        temporary.replace(path)
     def save_status():
-        run_path.write_text(json.dumps(metadata, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+        write_json(run_path, metadata)
+    def observe_gpu(phase, configuration):
+        if not args.device.startswith("cuda"):
+            return
+        observation = {"phase": phase, "configuration": configuration,
+                       "at_utc": datetime.now(timezone.utc).isoformat()}
+        try:
+            result = subprocess.run(["nvidia-smi", "--query-gpu=name,memory.used,utilization.gpu", "--format=csv,noheader"],
+                                    capture_output=True, text=True, timeout=5)
+            observation["device_snapshot"] = result.stdout.strip()
+        except (OSError, subprocess.TimeoutExpired):
+            observation["device_snapshot"] = "unavailable"
+        metadata.setdefault("gpu_observations", []).append(observation)
     save_status()
     try:
         inspector = AnomalyDINOInspector(args.upstream, args.dinov2_repo, args.weights, args.device, threads=args.threads)
@@ -131,18 +158,19 @@ def main():
                     for seed in args.seeds:
                         key = f"{category}/shot_{shot}/seed_{seed}"
                         print(f"START {key}: {len(tests)} test images", flush=True)
+                        observe_gpu("start", key)
                         if args.device.startswith("cuda"):
                             torch.cuda.reset_peak_memory_stats(args.device)
                         refs = item["references"][str(shot)][str(seed)]
                         # Warm up with a reference without accessing calibration/test labels.
-                        for _ in range(2):
+                        for _ in range(args.warmup_iters):
                             tensor, _ = inspector.backbone.prepare_image(str(checked_image(refs[0])))
                             inspector.backbone.extract_features(tensor)
                         inspector.fit_references([checked_image(p) for p in refs], seed)
                         state = np.random.get_state()
                         scores = []
                         for path in item["calibration"]:
-                            prediction = inspector.predict(checked_image(path))
+                            prediction = inspector.predict(checked_image(path), render_map=False)
                             scores.append(prediction["score"])
                             calibration_rows.append({"configuration": key, "image_path": path, "score": prediction["score"]})
                         # Calibration must not change the randomized PCA sequence for test maps.
@@ -150,11 +178,14 @@ def main():
                         threshold = float(np.quantile(scores, 0.95, method="linear"))
                         thresholds[key] = {"threshold": threshold, "references": refs, "calibration": item["calibration"]}
                         for index, sample in enumerate(tests):
-                            prediction = inspector.predict(checked_image(sample["image_path"]))
+                            prediction = inspector.predict(checked_image(sample["image_path"]), render_map=args.map_storage == "full")
                             relative = Path("maps") / key / Path(sample["image_path"]).parent.name / (Path(sample["image_path"]).stem + ".npz")
                             output_map = args.output / relative
                             output_map.parent.mkdir(parents=True, exist_ok=True)
-                            np.savez_compressed(output_map, anomaly_map=prediction["anomaly_map"], patch_map=prediction["patch_map"])
+                            archive = {"patch_map": prediction["patch_map"], "image_shape": np.asarray(prediction["image_shape"], dtype=np.int32)}
+                            if args.map_storage == "full":
+                                archive["anomaly_map"] = prediction["anomaly_map"]
+                            np.savez_compressed(output_map, **archive)
                             writer.writerow({"run_id": args.output.name, "method": "anomalydino", "manifest_id": manifest_id,
                                 "category": category, "shot": shot, "seed": seed, "image_path": sample["image_path"],
                                 "mask_path": sample["mask_path"] or "", "label": sample["label"], "score": prediction["score"],
@@ -164,11 +195,16 @@ def main():
                             if index % 25 == 0:
                                 print(f"PROGRESS {key} {index+1}/{len(tests)}", flush=True)
                         configurations.append({"configuration": key, "memory_bank_ms": inspector.bank_ms,
-                            "test_count": len(tests), "peak_gpu_memory_mib": torch.cuda.max_memory_allocated(args.device) / 1024**2 if args.device.startswith("cuda") else None})
-            (args.output / "thresholds.json").write_text(json.dumps(thresholds, indent=2) + "\n")
-            (args.output / "calibration.json").write_text(json.dumps(calibration_rows, indent=2) + "\n")
+                            "test_count": len(tests), "finished_at_utc": datetime.now(timezone.utc).isoformat(),
+                            "peak_gpu_memory_mib": torch.cuda.max_memory_allocated(args.device) / 1024**2 if args.device.startswith("cuda") else None})
+                        metadata["configurations"] = configurations
+                        observe_gpu("end", key)
+                        write_json(args.output / "thresholds.json", thresholds)
+                        write_json(args.output / "calibration.json", calibration_rows)
+                        save_status()
             metadata["configurations"] = configurations
         metadata["status"] = "completed"
+        metadata["finished_at_utc"] = datetime.now(timezone.utc).isoformat()
     except Exception as exc:
         metadata["status"] = "failed"
         metadata["error"] = f"{type(exc).__name__}: {exc}"

@@ -27,6 +27,7 @@
 | [GitHub 协作](docs/06_github_workflow.md) | 分支、PR、任务清单与版本冻结 |
 | [来源与适配记录](docs/07_sources_and_adaptations.md) | 课程依据、上游版本与必须记录的修改 |
 | [成员 B 实际进展](docs/08_member_b_progress.md) | 真实数据路径、环境、可运行命令与验证边界 |
+| [GPU 实验记录](docs/09_gpu_experiments.md) | 完整矩阵命令、compact 异常图、精确评价与效率说明 |
 
 ## 第一个里程碑
 

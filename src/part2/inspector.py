@@ -98,7 +98,7 @@ class AnomalyDINOInspector:
         self.synchronize()
         self.bank_ms = (time.perf_counter() - start) * 1000
 
-    def predict(self, path: Path) -> dict:
+    def predict(self, path: Path, render_map: bool = True) -> dict:
         if self.index is None:
             raise RuntimeError("Build the reference bank before prediction")
         self.synchronize()
@@ -119,7 +119,7 @@ class AnomalyDINOInspector:
         inference_ms = (time.perf_counter() - start) * 1000
         patch_map = output.reshape(grid)
         # Match the upstream rendering path: resize to original shape, sigma=4.
-        anomaly_map = self.utils.dists2map(patch_map, image.shape).astype(np.float32)
+        anomaly_map = self.utils.dists2map(patch_map, image.shape).astype(np.float32) if render_map else None
         return {"score": image_score(output), "anomaly_map": anomaly_map,
                 "patch_map": patch_map.astype(np.float32), "inference_ms": inference_ms,
-                "spatial_shape": list(tensor.shape[1:])}
+                "image_shape": list(image.shape[:2]), "spatial_shape": list(tensor.shape[1:])}
