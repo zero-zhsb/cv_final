@@ -34,7 +34,24 @@ nice -n 19 python scripts/watch_part2_evaluation.py --run runs/part2_gpu_matrix_
 
 ## 精确像素 AUROC 的内存处理
 
-`src/part2/metrics.py` 汇总每幅图的独特 float32 分数及正/负像素计数，合并排序后计算完整的正负样本排序概率，平分同分值。它没有对分数分箱或近似量化；与 sklearn AUROC 在含同分值的多图测试上匹配。通过逐图统计减少背景重复值占用；默认估算工作内存预算 8 GiB，超限报错而不是静默降采样。
+CPU 版 `src/part2/metrics.py` 汇总每幅图的独特 float32 分数及正/负像素计数，按层分批合并后计算完整排序概率，平分同分值。它没有对分数分箱或近似量化；与 sklearn AUROC 在含同分值的多图测试上匹配，默认估算工作内存预算 8 GiB，超限报错而不是静默降采样。
+
+矩阵实际评价改用 `--pixel-device cuda:0`：`gpu_metrics.py` 利用非负有限 float32 位模式的顺序，按每个**精确值**计数，以 int32 累加，不做近似分箱；零值另行计数以避免巨大空区间。评估进程的 PyTorch 显存上限为设备的 10%，与单一推理进程的 15% 上限分别记录。此阶段只有一个推理进程，另有一个显存受限的评估进程。
+
+已在 5 个完整 candle 配置上将 GPU 与 CPU 精确像素 AUROC 交叉核对，差值均为 0；另有两项显式启用的 GPU 数值测试。candle 约 3 亿像素的 GPU 评估占约 3.3 GiB 显存、0.8 GiB 主存。GPU 后端仅加速指标计数，不改变模型、原始异常图或分数；超出显存范围会报错，不会自动降低分辨率。
+
+完整命令是在上述 watcher 命令末尾加入 `--pixel-device cuda:0`。普通单元测试不默认使用 GPU，只有设置 `CV_TEST_CUDA=1` 才运行 GPU 检查。
+
+## 完成后汇总与展示
+
+```bash
+python scripts/summarize_part2.py --run runs/part2_gpu_matrix_v1 --output results/tables --figures results/figures/part2_gpu
+python scripts/analyze_part2_failures.py --run runs/part2_gpu_matrix_v1 --data-root /data/disk1/home/sshen560/cv_final_data/VisA_pytorch/1cls --output results/figures/part2_gpu_failures --shot 8 --seed 0 --count 5
+```
+
+这两个程序要求推理和相应完整结果已完成，拒绝把小样例当完整成绩。汇总提供 72 配置、24 类别/shot 与 4 个整体 shot 结果、原始预测 CSV、曲线。困难案例从固定 8-shot/seed=0 的真实阈值错误中按类别分散选择，不修改方法参数。
+
+单图演示入口 `scripts/predict_part2.py` 读取已校准配置，只接收产品图片，不需要真值；输出 score、OK/NG、原始异常图和可视化。A 可调用该接口制作正式 demo，不能把 Part 2 接口当成已经完成的 Part 1。
 
 ## 效率解释
 

@@ -49,6 +49,18 @@ class MapMetricTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             metric.compute()
 
+    def test_hierarchical_merges_match_sklearn_over_many_images(self):
+        rng = np.random.default_rng(7)
+        metric = PixelAUROC()
+        masks, maps = [], []
+        for _ in range(67):
+            values = np.round(rng.normal(size=(13, 17)), 2).astype(np.float32)
+            mask = rng.random(values.shape) < 0.02
+            metric.add(values, mask)
+            masks.append(mask.reshape(-1)); maps.append(values.reshape(-1))
+        expected = roc_auc_score(np.concatenate(masks), np.concatenate(maps))
+        self.assertAlmostEqual(metric.compute(), expected, places=13)
+
 
 if __name__ == "__main__":
     unittest.main()

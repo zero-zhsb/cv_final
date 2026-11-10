@@ -50,7 +50,7 @@ runs/<run_id>/
 | threshold / decision | 配置专用校准阈值与 OK/NG |
 | inference_ms | 实测每图延迟，run.json 说明是否含 I/O、特征、可视化 |
 
-`.npz` 的 `anomaly_map` 应为 float32、二维、有限、明确坐标系的未逐图归一化数据。评估前尺寸应与定义的真值坐标一致；展示彩色 PNG 独立保存，不能反向从 PNG 计算 AUROC。原始 patch 图可另存，不覆盖主评估图。
+完整存储时，`.npz` 的 `anomaly_map` 为 float32、二维、有限、明确坐标系的未逐图归一化数据。GPU 完整矩阵为节省磁盘使用 `map_storage=patch`：归档包含 `patch_map` 与 `image_shape`，通过 `src.part2.maps.load_anomaly_map` 按官方步骤恢复同一原图分辨率 float32 图；已在真实样例上验证逐像素一致。A 的公共评估应调用该加载器，不假设每个归档必含 `anomaly_map`。评估前尺寸与真值坐标一致；展示彩色 PNG 独立保存，不能反向从 PNG 计算 AUROC。
 
 校准分数单独保存，不能混入 predictions 的正式测试行。不同方法/类别/shot/seed 使用自己的阈值，并关联同一套 reference。校准图仅用于演示阈值，不用于选 smoothing、feature、mask 或模型权重。
 

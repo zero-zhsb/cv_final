@@ -23,6 +23,7 @@ def main():
     parser.add_argument("--manifest", type=Path, default=ROOT / "manifests/visa_1cls.json")
     parser.add_argument("--configuration", help="For example: cashew/shot_1/seed_0")
     parser.add_argument("--memory-budget-gib", type=float, default=8)
+    parser.add_argument("--pixel-device", choices=["cpu", "cuda:0"], default="cpu")
     args = parser.parse_args()
     import numpy as np
     from PIL import Image
@@ -52,40 +53,51 @@ def main():
         expected = {r["image_path"]: r for r in manifest["categories"][category]["tests"]}
         if len(rows) != len(expected) or {r["image_path"] for r in rows} != set(expected):
             raise ValueError(f"Incomplete or duplicated test predictions: {key}")
-        metric = PixelAUROC(args.memory_budget_gib)
         labels, scores, latencies = [], [], []
-        for index, row in enumerate(rows):
+        for row in rows:
             source = expected[row["image_path"]]
             if int(row["label"]) != source["label"] or (row["mask_path"] or None) != source["mask_path"]:
                 raise ValueError("Prediction labels/masks differ from shared manifest")
-            archive_path = (args.run / row["map_path"]).resolve(strict=True)
-            archive_path.relative_to(args.run.resolve())
-            anomaly_map = load_anomaly_map(archive_path)
-            with Image.open(args.data_root / row["image_path"]) as image:
-                image_shape = (image.height, image.width)
-            if anomaly_map.shape != image_shape:
-                raise ValueError("Anomaly map is not at original image resolution")
-            if source["mask_path"]:
-                with Image.open(args.data_root / source["mask_path"]) as mask_image:
-                    mask = np.asarray(mask_image)
-                    if mask.ndim != 2:
-                        raise ValueError("Expected a two-dimensional binary ground-truth mask")
-                    mask = mask > 0
-            else:
-                mask = np.zeros(image_shape, dtype=bool)
-            metric.add(anomaly_map, mask)
             labels.append(source["label"]); scores.append(float(row["score"]))
             latencies.append(float(row["inference_ms"]))
-            if index % 50 == 0:
-                print(f"EVAL {key}: {index+1}/{len(rows)}", flush=True)
+        def pairs():
+            for index, row in enumerate(rows):
+                source = expected[row["image_path"]]
+                archive_path = (args.run / row["map_path"]).resolve(strict=True)
+                archive_path.relative_to(args.run.resolve())
+                anomaly_map = load_anomaly_map(archive_path)
+                with Image.open(args.data_root / row["image_path"]) as image:
+                    image_shape = (image.height, image.width)
+                if anomaly_map.shape != image_shape:
+                    raise ValueError("Anomaly map is not at original image resolution")
+                if source["mask_path"]:
+                    with Image.open(args.data_root / source["mask_path"]) as mask_image:
+                        mask = np.asarray(mask_image)
+                        if mask.ndim != 2:
+                            raise ValueError("Expected a two-dimensional binary ground-truth mask")
+                        mask = mask > 0
+                else:
+                    mask = np.zeros(image_shape, dtype=bool)
+                if index % 50 == 0:
+                    print(f"EVAL {key}: {index+1}/{len(rows)}", flush=True)
+                yield anomaly_map, mask
+        if args.pixel_device == "cpu":
+            metric = PixelAUROC(args.memory_budget_gib)
+            for anomaly_map, mask in pairs():
+                metric.add(anomaly_map, mask)
+            pixel_auc, backend = metric.compute(), {"backend": "cpu_exact_hierarchical_histograms"}
+        else:
+            from src.part2.gpu_metrics import gpu_pixel_auc
+            pixel_auc, backend = gpu_pixel_auc(pairs, args.pixel_device)
         if not np.isfinite(scores).all() or not np.isfinite(latencies).all():
             raise ValueError("Non-finite image scores or timing")
         result = {"run_id": metadata["run_id"], "manifest_id": metadata["manifest_id"],
                   "code_commit": metadata["code_commit"], "configuration": key,
-                  "evaluation_source_sha256": {str(p.relative_to(ROOT)): hashlib.sha256(p.read_bytes()).hexdigest() for p in [Path(__file__).resolve(), ROOT / "src/part2/maps.py", ROOT / "src/part2/metrics.py"]},
+                  "evaluation_source_sha256": {str(p.relative_to(ROOT)): hashlib.sha256(p.read_bytes()).hexdigest() for p in [Path(__file__).resolve(), ROOT / "src/part2/maps.py", ROOT / "src/part2/metrics.py", ROOT / "src/part2/gpu_metrics.py"]},
                   "category": category, "shot": int(rows[0]["shot"]), "seed": int(rows[0]["seed"]),
                   "test_count": len(rows), "normal_count": labels.count(0), "anomaly_count": labels.count(1),
-                  "image_auroc": float(roc_auc_score(labels, scores)), "pixel_auroc": metric.compute(),
+                  "image_auroc": float(roc_auc_score(labels, scores)), "pixel_auroc": pixel_auc,
+                  "pixel_backend_details": backend,
                   "mean_inference_ms": float(np.mean(latencies)), "median_inference_ms": float(np.median(latencies)),
                   "peak_gpu_memory_mib": configuration["peak_gpu_memory_mib"],
                   "memory_bank_ms": configuration["memory_bank_ms"],

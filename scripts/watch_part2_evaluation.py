@@ -15,6 +15,7 @@ def main():
     parser.add_argument("--run", required=True, type=Path)
     parser.add_argument("--data-root", required=True, type=Path)
     parser.add_argument("--memory-budget-gib", type=float, default=8)
+    parser.add_argument("--pixel-device", choices=["cpu", "cuda:0"], default="cpu")
     args = parser.parse_args()
     root = Path(__file__).resolve().parents[1]
     while True:
@@ -28,10 +29,10 @@ def main():
             (args.run / "evaluation_status.json").write_text(json.dumps({"status": "running", "configuration": key}))
             subprocess.run(["nice", "-n", "19", sys.executable, str(root / "scripts/evaluate_part2.py"),
                 "--run", str(args.run), "--data-root", str(args.data_root), "--configuration", key,
-                "--memory-budget-gib", str(args.memory_budget_gib)], check=True)
+                "--memory-budget-gib", str(args.memory_budget_gib), "--pixel-device", args.pixel_device], check=True)
             reports = [json.loads(p.read_text()) for p in sorted((args.run / "metrics").glob("*.json"))]
             buffer = io.StringIO()
-            writer = csv.DictWriter(buffer, fieldnames=list(reports[0]))
+            writer = csv.DictWriter(buffer, fieldnames=list(dict.fromkeys(k for r in reports for k in r)))
             writer.writeheader(); writer.writerows(reports)
             temporary = args.run / "summary_configurations.csv.tmp"
             temporary.write_text(buffer.getvalue())
