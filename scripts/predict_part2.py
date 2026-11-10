@@ -49,7 +49,10 @@ def main():
         parser.error("Choose a new output directory")
     if args.device.startswith("cuda"):
         torch.cuda.set_per_process_memory_fraction(0.15, args.device)
-    inspector = AnomalyDINOInspector(ROOT / "third_party/AnomalyDINO", ROOT / "third_party/dinov2", ROOT / "weights/dinov2_vits14_pretrain.pth", args.device)
+    backend = meta.get("knn_backend", "cpu-faiss")
+    if backend == "torch-gpu" and args.device == "cpu":
+        parser.error("The calibrated run uses GPU neighbors; select --device cuda:0")
+    inspector = AnomalyDINOInspector(ROOT / "third_party/AnomalyDINO", ROOT / "third_party/dinov2", ROOT / "weights/dinov2_vits14_pretrain.pth", args.device, knn_backend=backend)
     inspector.fit_references([args.data_root / path for path in calibration["references"]], args.seed)
     prediction = inspector.predict(args.image)
     score, threshold = prediction["score"], calibration["threshold"]

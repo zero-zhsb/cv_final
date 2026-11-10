@@ -52,6 +52,7 @@ def main():
     parser.add_argument("--device", default="cpu", choices=["cpu", "cuda:0"])
     parser.add_argument("--threads", type=int, default=2)
     parser.add_argument("--map-storage", choices=["full", "patch"], default="full")
+    parser.add_argument("--knn-backend", choices=["cpu-faiss", "torch-gpu"], default="cpu-faiss")
     parser.add_argument("--warmup-iters", type=int, default=25)
     parser.add_argument("--gpu-memory-fraction", type=float, default=0.15, help="Per-process PyTorch allocator cap; does not reserve this fraction")
     parser.add_argument("--allow-image-root", type=Path, action="append", default=[], help="Approved read-only image root when prepared data uses symlinks")
@@ -63,6 +64,8 @@ def main():
         parser.error("Threads and limits must be positive")
     if args.warmup_iters < 0 or not 0 < args.gpu_memory_fraction <= 1:
         parser.error("Invalid warmup count or GPU memory fraction")
+    if args.knn_backend == "torch-gpu" and not args.device.startswith("cuda"):
+        parser.error("torch-gpu search requires --device cuda:0")
     for name in ["OMP_NUM_THREADS", "MKL_NUM_THREADS", "OPENBLAS_NUM_THREADS"]:
         os.environ[name] = str(args.threads)
     import numpy as np
@@ -106,21 +109,22 @@ def main():
     args.output.mkdir(parents=True)
     metadata = {"status": "running", "method": "anomalydino", "run_id": args.output.name,
                 "manifest_id": manifest_id, "code_commit": git_commit(ROOT),
-                "source_sha256": {str(path.relative_to(ROOT)): digest(path) for path in [ROOT / "scripts/run_part2.py", ROOT / "src/part2/inspector.py", ROOT / "src/part2/maps.py"]},
+                "source_sha256": {str(path.relative_to(ROOT)): digest(path) for path in [ROOT / "scripts/run_part2.py", ROOT / "src/part2/inspector.py", ROOT / "src/part2/maps.py", ROOT / "src/part2/gpu_index.py"]},
                 "code_dirty": bool(subprocess.check_output(["git", "-C", str(ROOT), "status", "--porcelain"], text=True).strip()),
                 "upstream_commit": UPSTREAM_COMMIT, "dinov2_commit": git_commit(args.dinov2_repo),
                 "weights_sha256": digest(args.weights), "device": args.device,
                 "torch": torch.__version__, "cuda_build": torch.version.cuda,
                 "model": "dinov2_vits14", "resolution": 448, "preprocess": "agnostic",
-                "precision": "float32", "faiss": "cpu", "threads": args.threads,
+                "precision": "float32", "faiss": "cpu" if args.knn_backend == "cpu-faiss" else "CPU normalization only",
+                "knn_backend": args.knn_backend, "knn_search": "exhaustive squared L2, k=1, no approximate search", "threads": args.threads,
                 "map_storage": args.map_storage, "warmup_iters": args.warmup_iters,
                 "gpu_memory_fraction_cap": args.gpu_memory_fraction if args.device.startswith("cuda") else None,
                 "started_at_utc": datetime.now(timezone.utc).isoformat(),
                 "allowed_image_roots": [str(p.resolve()) for p in args.allow_image_root],
                 "cache": "none", "categories": categories, "shots": args.shots, "seeds": args.seeds,
                 "partial_smoke_test": args.limit_per_class is not None,
-                "inference_time_scope": "synchronized RGB read, transforms, features, PCA mask, CPU FAISS; excludes map rendering/export",
-                "peak_gpu_memory_scope": "model, reference bank construction and inference; CPU FAISS is not GPU memory",
+                "inference_time_scope": "synchronized RGB read, transforms, features, PCA mask, configured exact kNN; excludes map rendering/export",
+                "peak_gpu_memory_scope": "peak PyTorch allocated bytes: model, CUDA bank/search if enabled, and inference; excludes driver/context allocations",
                 "notes": "Shared GPU performance must be measured in a coordinated slot. Metrics are a separate evaluation step."}
     run_path = args.output / "run.json"
     def write_json(path, value):
@@ -143,7 +147,7 @@ def main():
         metadata.setdefault("gpu_observations", []).append(observation)
     save_status()
     try:
-        inspector = AnomalyDINOInspector(args.upstream, args.dinov2_repo, args.weights, args.device, threads=args.threads)
+        inspector = AnomalyDINOInspector(args.upstream, args.dinov2_repo, args.weights, args.device, threads=args.threads, knn_backend=args.knn_backend)
         fields = ["run_id", "method", "manifest_id", "category", "shot", "seed", "image_path", "mask_path", "label", "score", "map_path", "threshold", "decision", "inference_ms"]
         with (args.output / "predictions.csv").open("w", newline="", encoding="utf-8") as handle:
             writer = csv.DictWriter(handle, fieldnames=fields)

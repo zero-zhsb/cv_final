@@ -1,0 +1,10 @@
+{
+  "status": "passed",
+  "cpu_run": "cashew_gpu_full_v1",
+  "gpu_run": "cashew_gpu_exact_full_v1",
+  "image_auroc_absolute_difference": 0.0,
+  "pixel_auroc_absolute_difference": 1.616862310704903e-09,
+  "cpu_faiss_observed_ms": 219.2589326404656,
+  "gpu_exact_observed_ms": 84.07038438444336,
+  "scope": "all 150 cashew test images; same data, reference, calibration and model"
+}

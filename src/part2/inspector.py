@@ -35,7 +35,8 @@ def image_score(patch_distances: np.ndarray) -> float:
 
 class AnomalyDINOInspector:
     def __init__(self, upstream: Path, dinov2_repo: Path, weights: Path,
-                 device: str = "cpu", resolution: int = 448, threads: int = 2):
+                 device: str = "cpu", resolution: int = 448, threads: int = 2,
+                 knn_backend: str = "cpu-faiss"):
         if device.startswith("cuda") and not torch.cuda.is_available():
             raise RuntimeError("CUDA was requested but is not available")
         torch.set_num_threads(threads)
@@ -61,6 +62,9 @@ class AnomalyDINOInspector:
                 return model.to(inner.device)
         self.backbone = LocalBackbone("dinov2_vits14", device, smaller_edge_size=resolution)
         self.device = device
+        self.knn_backend = knn_backend
+        if knn_backend not in {"cpu-faiss", "torch-gpu"} or (knn_backend == "torch-gpu" and not device.startswith("cuda")):
+            raise ValueError("GPU search requires CUDA; choose cpu-faiss or torch-gpu")
         self.index = None
         self.bank_ms = None
 
@@ -93,8 +97,12 @@ class AnomalyDINOInspector:
                 reference_features.append(features[mask])
         bank = np.concatenate(reference_features).astype(np.float32)
         faiss.normalize_L2(bank)
-        self.index = faiss.IndexFlatL2(bank.shape[1])
-        self.index.add(bank)
+        if self.knn_backend == "cpu-faiss":
+            self.index = faiss.IndexFlatL2(bank.shape[1])
+            self.index.add(bank)
+        else:
+            from src.part2.gpu_index import ExactGPUIndex
+            self.index = ExactGPUIndex(bank, self.device)
         self.synchronize()
         self.bank_ms = (time.perf_counter() - start) * 1000
 
@@ -108,8 +116,6 @@ class AnomalyDINOInspector:
         features = self.backbone.extract_features(tensor)
         mask = self.backbone.compute_background_mask(features, grid, threshold=10, masking_type=True)
         mask = np.asarray(mask, dtype=bool).reshape(-1)
-        if not mask.any():
-            raise RuntimeError(f"Official PCA foreground mask is empty: {path}")
         foreground = np.ascontiguousarray(features[mask], dtype=np.float32)
         faiss.normalize_L2(foreground)
         distances, _ = self.index.search(foreground, k=1)

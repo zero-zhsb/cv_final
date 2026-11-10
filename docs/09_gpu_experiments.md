@@ -10,7 +10,7 @@ cashew，1-shot，seed=0，正常测试 50 张、异常测试 100 张：image AU
 
 - 六类 VisA，1/2/4/8-shot，seed 0/1/2，共 72 个类别配置、11,520 张配置内测试预测。
 - 完全复用已提交的 manifest，每配置额外 20 张正常校准图不计入测试，也不加入 reference。
-- 固定官方 AnomalyDINO 与 DINOv2 来源；float32，resolution=448，agnostic，CPU FAISS，无特征缓存。
+- 固定官方 AnomalyDINO 与 DINOv2 来源；float32，resolution=448，agnostic，无特征缓存。默认 CPU FAISS 后端保留；主矩阵使用核验过的 GPU 全量精确 L2 后端，见下文。
 - 正式运行使用 `--map-storage patch`：保存原始 float32 patch 图和原图尺寸。加载时先转换回上游使用的 float64，按官方 resize + sigma=4 平滑，再转 float32，**不下采样评估图、不逐图归一化**。
 - 在 5 张真实 cashew 已保存完整图上验证，compact 重建与原导出 float32 图逐像素完全一致；另有数值与 roundtrip 测试。
 - 每配置完整性检查通过后才计算 AUROC，正常测试图也参加像素评价。图像/像素 AUROC 按类别计算；最终先按 seed 对六类等权平均，再对三个 seed 算 mean±std（ddof=0）。
@@ -21,13 +21,13 @@ cashew，1-shot，seed=0，正常测试 50 张、异常测试 100 张：image AU
 
 ```bash
 source .venv-b/bin/activate
-nice -n 10 python scripts/run_part2.py --data-root /data/disk1/home/sshen560/cv_final_data/VisA_pytorch/1cls --allow-image-root /data/disk1/shared/aiaa3201/project2_anomaly/VisA --shots 1 2 4 8 --seeds 0 1 2 --device cuda:0 --threads 2 --map-storage patch --warmup-iters 25 --gpu-memory-fraction 0.15 --output runs/part2_gpu_matrix_v1
+nice -n 10 python scripts/run_part2.py --data-root /data/disk1/home/sshen560/cv_final_data/VisA_pytorch/1cls --allow-image-root /data/disk1/shared/aiaa3201/project2_anomaly/VisA --shots 1 2 4 8 --seeds 0 1 2 --device cuda:0 --threads 2 --map-storage patch --knn-backend torch-gpu --warmup-iters 25 --gpu-memory-fraction 0.15 --output runs/part2_gpu_exact_matrix_v1
 ```
 
 在另一个远程终端或后台进程中，串行评价已完成的配置：
 
 ```bash
-nice -n 19 python scripts/watch_part2_evaluation.py --run runs/part2_gpu_matrix_v1 --data-root /data/disk1/home/sshen560/cv_final_data/VisA_pytorch/1cls --memory-budget-gib 8
+nice -n 19 python scripts/watch_part2_evaluation.py --run runs/part2_gpu_exact_matrix_v1 --data-root /data/disk1/home/sshen560/cv_final_data/VisA_pytorch/1cls --memory-budget-gib 8 --pixel-device cuda:0
 ```
 
 这只是本项目进程间的串行工作安排，不是服务器正式排队系统。每个完成配置会原子更新 run.json、阈值和校准记录；完整 CSV 和原始 patch 图在服务器，GitHub 保存统计、来源、代码和代表图片。
@@ -40,13 +40,21 @@ CPU 版 `src/part2/metrics.py` 汇总每幅图的独特 float32 分数及正/负
 
 已在 5 个完整 candle 配置上将 GPU 与 CPU 精确像素 AUROC 交叉核对，差值均为 0；另有两项显式启用的 GPU 数值测试。candle 约 3 亿像素的 GPU 评估占约 3.3 GiB 显存、0.8 GiB 主存。GPU 后端仅加速指标计数，不改变模型、原始异常图或分数；超出显存范围会报错，不会自动降低分辨率。
 
-完整命令是在上述 watcher 命令末尾加入 `--pixel-device cuda:0`。普通单元测试不默认使用 GPU，只有设置 `CV_TEST_CUDA=1` 才运行 GPU 检查。
+普通单元测试不默认使用 GPU，只有设置 `CV_TEST_CUDA=1` 才运行 GPU 检查。
+
+## 近邻搜索加速及数值核验
+
+CPU FAISS 在 8-shot 下成为主要耗时。`--knn-backend torch-gpu` 使用同一组经 CPU FAISS 归一化的 float32 特征，在 CUDA 上分块穷举全部 reference patch，计算 squared L2、取 k=1。TF32 关闭、搜索块 8192；模型特征、前景 mask、正常参考图、旋转和评分规则保持相同。
+
+两种 FP32 归约顺序不保证逐位相等。12 张真实图片涵盖三个类别、1/2/8-shot，输入特征与前景 mask 一致；图像分数最大差约 1.33e-7，patch 距离最大差约 1.05e-6。验证门槛为图像分数 1e-6、patch/距离 2e-6。完整 cashew 150 张图核对：图像 AUROC 完全相同 0.929，像素 AUROC 差 1.62e-9。记录见 [样例数值核验](../results/tables/gpu_neighbor_validation.json)、[完整类别核验](../results/tables/knn_backend_full_class_parity.json)。
+
+原 `runs/part2_gpu_matrix_v1` 保留已完成的 **19 个 CPU FAISS 配置**作为参照，在验证后主动停止，状态为 `stopped_for_verified_backend_acceleration`。它不是完整结果。主实验重新在 `runs/part2_gpu_exact_matrix_v1` 统一执行 72 配置，汇总时不把两个后端的成绩拼接。后续可对重叠配置继续做一致性对比。
 
 ## 完成后汇总与展示
 
 ```bash
-python scripts/summarize_part2.py --run runs/part2_gpu_matrix_v1 --output results/tables --figures results/figures/part2_gpu
-python scripts/analyze_part2_failures.py --run runs/part2_gpu_matrix_v1 --data-root /data/disk1/home/sshen560/cv_final_data/VisA_pytorch/1cls --output results/figures/part2_gpu_failures --shot 8 --seed 0 --count 5
+python scripts/summarize_part2.py --run runs/part2_gpu_exact_matrix_v1 --output results/tables --figures results/figures/part2_gpu
+python scripts/analyze_part2_failures.py --run runs/part2_gpu_exact_matrix_v1 --data-root /data/disk1/home/sshen560/cv_final_data/VisA_pytorch/1cls --output results/figures/part2_gpu_failures --shot 8 --seed 0 --count 5
 ```
 
 这两个程序要求推理和相应完整结果已完成，拒绝把小样例当完整成绩。汇总提供 72 配置、24 类别/shot 与 4 个整体 shot 结果、原始预测 CSV、曲线。困难案例从固定 8-shot/seed=0 的真实阈值错误中按类别分散选择，不修改方法参数。

@@ -9,6 +9,25 @@ except ModuleNotFoundError as exc:
 
 
 class Part2Tests(unittest.TestCase):
+    def test_empty_foreground_matches_official_zero_map_behavior(self):
+        from types import SimpleNamespace
+        from pathlib import Path
+        from src.part2.inspector import AnomalyDINOInspector
+        inspector = AnomalyDINOInspector.__new__(AnomalyDINOInspector)
+        inspector.device = "cpu"
+        inspector.index = faiss.IndexFlatL2(3)
+        inspector.index.add(np.eye(3, dtype=np.float32))
+        inspector.read_rgb = lambda _: np.zeros((28, 28, 3), dtype=np.uint8)
+        inspector.backbone = SimpleNamespace(
+            prepare_image=lambda _: (np.zeros((3, 28, 28), dtype=np.float32), (2, 2)),
+            extract_features=lambda _: np.zeros((4, 3), dtype=np.float32),
+            compute_background_mask=lambda *a, **kw: np.zeros(4, dtype=bool))
+        inspector.utils = SimpleNamespace(dists2map=lambda patch, shape: np.zeros(shape[:2]))
+        result = inspector.predict(Path("unused"))
+        self.assertEqual(result["score"], 0.0)
+        self.assertFalse(result["patch_map"].any())
+        self.assertFalse(result["anomaly_map"].any())
+
     def test_fewer_than_100_patches_uses_maximum(self):
         self.assertEqual(image_score(np.array([0.0, 0.5, 2.0])), 2.0)
 
