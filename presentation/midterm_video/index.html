@@ -13,7 +13,7 @@ button{background:#203b61;color:white;border:1px solid #6a86aa;border-radius:6px
 <div id="note">静态真实结果素材 · 没有配音或新推理 · ←/→ 翻页，空格计时，F 全屏，R 重置<br>全屏时控制条自动隐藏；鼠标移到底部可显示。</div>
 <nav><button id="prev">上一页</button><button id="play">播放时间线</button><button id="next">下一页</button><button id="full">全屏 F</button><button id="normal">正常样例 08</button><span id="state"></span></nav>
 <script>
-const cards=[{"src": "01_problem.png", "seconds": 25, "title": "Problem"}, {"src": "02_method.png", "seconds": 40, "title": "Current approach"}, {"src": "03_part1.png", "seconds": 55, "title": "Baseline implementation"}, {"src": "04_part2.png", "seconds": 60, "title": "Feature-based implementation"}, {"src": "05_preliminary_comparison.png", "seconds": 25, "title": "Preliminary comparison"}, {"src": "06_part2_progress.png", "seconds": 20, "title": "Broader Part 2 progress"}, {"src": "07_limitations_plan.png", "seconds": 55, "title": "Limitations"}];
+const cards=[{"src": "01_problem.png", "seconds": 25, "title": "Problem"}, {"src": "02_method.png", "seconds": 40, "title": "Current approach"}, {"src": "03_part1.png", "seconds": 55, "title": "Baseline implementation"}, {"src": "04_part2.png", "seconds": 60, "title": "Feature-based implementation"}, {"src": "05_full_comparison.png", "seconds": 25, "title": "Full six-category comparison"}, {"src": "06_few_shot_comparison.png", "seconds": 20, "title": "Both methods across shot counts"}, {"src": "07_limitations_plan.png", "seconds": 55, "title": "Limitations"}];
 let i=0,elapsed=0,playing=false,last=performance.now(),optional=false;
 const img=document.querySelector('#card'),state=document.querySelector('#state'),play=document.querySelector('#play');
 for(const c of cards){const p=new Image();p.src='assets/'+c.src}

@@ -1,23 +1,23 @@
 1
-00:00:00,000 --> 00:00:06,616
+00:00:00,000 --> 00:00:06,738
 Our project studies few-shot industrial anomaly
 detection. In manufacturing, normal product
 images are easier to
 
 2
-00:00:06,696 --> 00:00:13,313
+00:00:06,818 --> 00:00:13,556
 collect than examples of every possible defect.
 We use the VisA dataset to ask whether
 
 3
-00:00:13,393 --> 00:00:20,009
+00:00:13,636 --> 00:00:20,375
 a few normal reference images can help detect and
 locate an anomaly in a new
 
 4
-00:00:20,089 --> 00:00:24,920
-product image. The outlines on the right show the
-annotated defects.
+00:00:20,455 --> 00:00:24,920
+product image. The product on the right contains
+genuine defects.
 
 5
 00:00:25,000 --> 00:00:31,442
@@ -56,183 +56,184 @@ do not train the methods using
 defect labels.
 
 12
-00:01:05,000 --> 00:01:12,630
-Part One is implemented and has completed all one
-hundred and fifty test images in
+00:01:05,000 --> 00:01:13,008
+Part One has now completed the full study: six
+categories, four shot counts and three
 
 13
-00:01:12,710 --> 00:01:20,341
-our first cashew configuration, using one
-reference image and seed zero. It outputs the
-selected
+00:01:13,088 --> 00:01:21,096
+seeds, giving seventy-two configurations. Its RGB
+template method remains unchanged. This slide
+illustrates one configuration,
 
 14
-00:01:20,421 --> 00:01:28,051
-template, an anomaly map, a continuous score, and
-an OK or NG decision. Here is
+00:01:21,176 --> 00:01:29,185
+cashew with one reference and seed zero. The
+method outputs a normal template, anomaly map,
 
 15
-00:01:28,131 --> 00:01:35,761
-a genuine failure. This defective image receives
-a score of about zero point four nine
+00:01:29,265 --> 00:01:37,273
+continuous score and OK or NG decision. This
+defective image receives a score of about
 
 16
-00:01:35,841 --> 00:01:43,471
-eight, below its calibrated threshold of about
-zero point six one. It is therefore classified
+00:01:37,353 --> 00:01:45,361
+zero point four nine eight, below its calibrated
+threshold of about zero point six one,
 
 17
-00:01:43,551 --> 00:01:51,182
-as OK. Strong responses appear around the product
-outline, rather than only at the annotated
+00:01:45,441 --> 00:01:53,449
+so the output is OK. Strong responses appear
+around the outline. Normal appearance or position
 
 18
-00:01:51,262 --> 00:01:58,892
-defects. This suggests sensitivity to normal
-appearance or position changes, although
-confirming the cause requires
+00:01:53,529 --> 00:01:59,920
+differences may interfere with detection,
+although this explanation still requires
+controlled testing.
 
 19
-00:01:58,972 --> 00:01:59,920
-further experiments.
-
-20
 00:02:00,000 --> 00:02:07,358
 Part Two has been deployed on the server GPU
 using AnomalyDINO. DINOv2 remains frozen; we
 
-21
+20
 00:02:07,438 --> 00:02:14,796
 extract local patch features rather than training
 the backbone. Normal reference features form a
 memory
 
-22
+21
 00:02:14,876 --> 00:02:22,234
 bank, and exact nearest-neighbor distances
 produce anomaly scores and maps for test images.
 This card
 
-23
+22
 00:02:22,314 --> 00:02:29,672
 shows genuine saved outputs from our primary GPU
 experiment, for the same image, reference, shot
 
-24
+23
 00:02:29,752 --> 00:02:37,110
 count, and seed as Part One. Its score is about
 zero point two three two,
 
-25
+24
 00:02:37,190 --> 00:02:44,548
 above its own threshold of about zero point two
 one nine, so the output is
 
-26
+25
 00:02:44,628 --> 00:02:51,986
 NG. This image is correctly detected. However,
 the methods have different score ranges and
 heatmap
 
-27
+26
 00:02:52,066 --> 00:02:59,424
 scales. We compare their decisions and evaluation
 metrics, rather than raw score magnitudes or
 color
 
-28
+27
 00:02:59,504 --> 00:02:59,920
 brightness.
 
+28
+00:03:00,000 --> 00:03:05,689
+Both methods have now completed the same full
+evaluation protocol. At eight shots, six-category
+mean
+
 29
-00:03:00,000 --> 00:03:06,170
-The first comparison uses exactly the same one
-hundred and fifty cashew test images. Image
+00:03:05,769 --> 00:03:11,458
+image AUROC is sixty point eight zero percent for
+template difference and ninety-six point six
 
 30
-00:03:06,250 --> 00:03:12,420
-AUROC is sixty-five point three four percent for
-Part One and ninety-two point nine zero
+00:03:11,538 --> 00:03:17,228
+two percent for AnomalyDINO, a gap of thirty-five
+point eight two percentage points. The table
 
 31
-00:03:12,500 --> 00:03:18,670
-percent for Part Two. Pixel AUROC also improves
-in this configuration. These are preliminary
-single-category
+00:03:17,308 --> 00:03:22,997
+also reports pixel AUROC and standard deviations
+across three seeds. These are full-study results,
+not
 
 32
-00:03:18,750 --> 00:03:24,920
-results, not averages across all six categories.
-We are not claiming a controlled speed
-comparison.
+00:03:23,077 --> 00:03:24,920
+just the illustrative cashew example.
 
 33
-00:03:25,000 --> 00:03:30,580
-Separately, Part Two has completed seventy-two
-configurations across six categories, four shot
-counts, and three
+00:03:25,000 --> 00:03:30,277
+Across the four shot counts, template image AUROC
+increases from fifty-three point one seven to
 
 34
-00:03:30,660 --> 00:03:36,241
-seeds. Overall image AUROC rises from ninety-four
-point six one percent at one shot to
+00:03:30,357 --> 00:03:35,634
+sixty point eight zero percent. AnomalyDINO
+increases from ninety-four point six one to
+ninety-six point
 
 35
-00:03:36,321 --> 00:03:41,901
-ninety-six point six two percent at eight shots.
-Error bars show standard deviation across seeds.
+00:03:35,714 --> 00:03:40,991
+six two percent. Each method has seventy-two
+configurations and eleven thousand five hundred
+and twenty
 
 36
-00:03:41,981 --> 00:03:44,920
-The full Part One comparison remains future work.
+00:03:41,071 --> 00:03:44,920
+test predictions. The feature method remains
+stronger in the aggregate results.
 
 37
-00:03:45,000 --> 00:03:51,499
-The method still misses defects. This different
-cashew image contains several tiny annotated
-defects, but
+00:03:45,000 --> 00:03:51,616
+Both methods still miss some defects. This
+different cashew image contains several tiny
+annotated defects.
 
 38
-00:03:51,579 --> 00:03:58,078
-the eight-shot configuration outputs OK because
-its score is below the threshold. Patch
-granularity may
+00:03:51,696 --> 00:03:58,313
+In the eight-shot, seed-zero configuration, both
+methods output OK. The enlarged ground truth
+makes the
 
 39
-00:03:58,158 --> 00:04:04,657
-weaken small-defect signals, but the
-visualization alone does not establish that
-explanation. This example motivates
+00:03:58,393 --> 00:04:05,009
+small regions visible. Patch granularity may
+weaken Part Two鈥檚 small-defect signals, but the
+visualization alone
 
 40
-00:04:04,737 --> 00:04:09,920
-our next experiments rather than a claim that the
-problem is solved.
+00:04:05,089 --> 00:04:09,920
+cannot prove that explanation. This failure
+motivates our Part Three experiment.
 
 41
-00:04:10,000 --> 00:04:16,001
-Our next steps are to complete the full Part One
-baseline study and test multi-scale
+00:04:10,000 --> 00:04:16,258
+With both baseline studies complete, our next
+step is Part Three. We plan to fuse
 
 42
-00:04:16,081 --> 00:04:22,082
-feature fusion for small defects. We will compare
-the proposed change with unchanged Part Two
+00:04:16,338 --> 00:04:22,596
+features from multiple DINOv2 layers while
+retaining the frozen backbone and input
+resolution of four
 
 43
-00:04:22,162 --> 00:04:28,163
-using the same references, seeds, and evaluation
-protocol. Alongside detection and localization
-AUROC, we will
+00:04:22,676 --> 00:04:28,934
+hundred and forty-eight. We will compare with
+unchanged Part Two using identical references,
+seeds, preprocessing
 
 44
-00:04:28,243 --> 00:04:34,244
-measure latency and memory to assess the
-computational trade-off. These improvements are
-planned, not yet
+00:04:29,014 --> 00:04:35,272
+and evaluation. Alongside image and pixel AUROC,
+we will measure latency, memory, and any increase
 
 45
-00:04:34,324 --> 00:04:39,920
-validated. Our current checkpoint demonstrates
-working implementations, reproducible preliminary
-results, and specific remaining limitations.
+00:04:35,352 --> 00:04:39,920
+in background false positives. The fusion is
+planned, not yet validated.

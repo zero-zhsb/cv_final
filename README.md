@@ -1,5 +1,7 @@
 # CV Final · Few-Shot Industrial Visual Anomaly Detection
 
+**最新录制版本：Part 1 和 Part 2 均已完成 72 配置全量实验。** 请使用 [完整对比 PPT 与讲稿](presentation/midterm_ppt/README.md) 和 [新版 4:40 视频素材](presentation/midterm_video/README.md)。第 5 页为 8-shot 六类总体比较，第 6 页为两方法完整 few-shot 曲线；旧 cashew 单配置仅用于方法示例。Part 3 仍为后续计划。
+
 **期中视频素材已整理：** [素材包入口](presentation/midterm_video/README.md)，含 8 张 1080p 图卡、中英文讲稿、字幕草案、280 秒时间线和离线 HTML 翻页页。本次 Canvas 要求为不超过 5 分钟的阶段进展视频，无需先完成 Part 1 全量实验或联合实时界面。本次素材在 `codex/midterm-video-materials` 分支。
 
 两人课程项目：先完成 **Part 1（模板差分）与 Part 2（AnomalyDINO）**，用于 Pre 展示；后续再完成 Part 3 的一个改进。代码与实验记录在 GitHub 协作，数据、权重和实验任务在服务器上运行。

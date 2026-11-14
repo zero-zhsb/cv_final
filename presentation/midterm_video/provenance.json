@@ -103,6 +103,9 @@
     "defect_mask.png": "009d05a0dac67979906d1dd1aab424c13cd89f272eb2a07a6790699e0f4fb7d0",
     "defect_part1.npz": "4bf314508aa7fe7dd57f6f881e704326bbde51de8f986193a4a54f558313b93e",
     "defect_part2.npz": "e82095330ab97ebd2890a5df7735d67d130fde9669e3acc61b0527e1001d8ebe",
+    "evidence_failure.png": "7e5f72655d77745cae505bf80fa8214f692d23a989e5f2c27c890f4f7bc97591",
+    "evidence_part1.png": "841294de6bd77f9d985a441ad6104094bff1dfba390a658dd5903e93ce608aa8",
+    "evidence_part2.png": "26d952120c960a990e3f4d038f42745332d982056019114ec5abe0036a91e65c",
     "failure.JPG": "d9eb3cf8ff878eac084c0d9e4bad90322ea3fae7eddeafb4fbf99ddd8a55de15",
     "failure_mask.png": "a4298126929487e5e26c34a008b3bbbc5ffde843a096defaf28e0d0a47cdae49",
     "failure_part2.npz": "d378b7458e7e1583d51bb42e30fcd56478cfa33b0a77ead4fad630fbc85e9c10",
@@ -111,5 +114,21 @@
     "normal_part2.npz": "5cc5ba0694ab5dc6c9e8e9337fadd37cf3a67e2854ee512a8fcf42b7d1aec0cf",
     "reference.JPG": "739d3d9841a58b4dc4b8c3b45fc6abfa64fb74329132c734c79158a5f3ea6862",
     "selection.json": "4eeb7685e53a5a08a1f695a900bb9fe6e1998920b25d5bcc2657e5fc76b245ef"
-  }
+  },
+  "version": "full-part1-and-part2-comparison",
+  "authoritative_deck": "presentation/midterm_ppt/CV_Midterm_FullComparison_Final.pptx",
+  "deck_sha256": "18d153f040877d1b2a133f685ad57198ea4bb0c6600c48cc34c2613be638e371",
+  "part1_full_source_commit": "616701a98692ad0be3cecf904d1c1149dd4ec962",
+  "part1_full_run": "part1_full_stream_cuda_v1",
+  "part1_full_audit": {
+    "same_reference_manifest": true,
+    "identical_test_mask_label_ids": true,
+    "configuration_count": 72,
+    "prediction_count": 11520,
+    "timing_limit": "CPU Part 1 vs historical GPU Part 2; observed latency only, not a controlled speed ratio",
+    "pixel_auc": "exact nonnegative float32 key counts; original image resolution; normals included"
+  },
+  "full_comparison_csv": "results/tables/part1_full/comparison.csv",
+  "full_comparison_csv_sha256": "f03014806bd7b143bf1d16244fa030054e27cfbff107abfd83633408309b1f31",
+  "qualitative_note": "The cashew 1-shot example remains an illustrative case; the main table and trend use complete six-category results. Both methods miss cashew bad/075.JPG at 8-shot seed 0."
 }

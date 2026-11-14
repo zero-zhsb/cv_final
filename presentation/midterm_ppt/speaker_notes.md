@@ -1,123 +1,112 @@
 # Slide 1
 
-A: 0–25 sec
+A: 0-25 sec
 
 ENGLISH
 Our project studies few-shot industrial anomaly detection. In manufacturing, normal product images are easier to collect than examples of every possible defect. We use the VisA dataset to ask whether a few normal reference images can help detect and locate an anomaly in a new product image. The product on the right contains genuine defects.
 
 中文
-我们研究少样本工业异常检测。在实际生产中，正常产品图片容易获得，但缺陷样本往往稀少。我们希望只用少量正常参考图，判断一张新图片是否异常，并标出可疑位置。这里以 VisA 数据集的腰果产品为例，右侧轮廓标出了真实缺陷。
+我们研究少样本工业异常检测。在实际生产中，正常产品图片容易获得，但缺陷样本往往稀少。我们希望只用少量正常参考图，判断一张新图片是否异常，并标出可疑位置。这里使用 VisA 数据集，右侧产品图片就包含真实缺陷。
 
-动作：先指正常图，再指右侧缺陷标注。
+动作：指向产品表面的异常区域。新版 PPT 封面只有这一张产品图，不再指“左侧正常图”或不存在的轮廓标注。
 
-Dataset: VisA https://github.com/amazon-science/spot-diff
-Methods: AnomalyDINO https://github.com/dammsi/AnomalyDINO and DINOv2 https://github.com/facebookresearch/dinov2
-Evidence: repository results/tables and presentation/midterm_video/provenance.json, source commit a3e03fb891155d5ca043b9f3bbf79144d52f4569.
-
+Sources: results/tables/part1_full (source commit 616701a), results/tables/part2_gpu_*, docs/13_member_a_full_results.md. Both methods completed 72 configurations and 11520 predictions with identical test identities. Part 1 inference remains CPU, CUDA accelerates exact pixel evaluation only. Original course protocol remains unchanged.
+Dataset: https://github.com/amazon-science/spot-diff
+Methods: https://github.com/dammsi/AnomalyDINO and https://github.com/facebookresearch/dinov2
 
 # Slide 2
 
-A: 25–65 sec
+A: 25-65 sec
 
 ENGLISH
 We have implemented two approaches. Part One is a template-difference baseline. It selects the nearest normal template and computes an RGB difference map. Part Two uses frozen DINOv2 features and a memory bank of normal image patches. A test patch is scored by its distance from the nearest normal feature. Both methods use the same reference and test manifest. We reserve twenty additional normal training images per category for threshold calibration only. These images are excluded from the reference bank and test set. We do not train the methods using defect labels.
 
 中文
-我们先实现两条技术路线。Part 1 是基础模板差分：从正常参考图中选择最相近的模板，再计算 RGB 差异，生成异常图和图像分数。Part 2 使用冻结的 DINOv2 提取局部特征，把正常参考图的特征组成记忆库，再根据最近邻距离判断测试区域是否可疑。两种方法使用相同的参考图和测试名单。另外，每类保留二十张正常训练图，只用于校准 OK、NG 阈值，不加入参考库，也不进入测试集。
+我们实现了两条技术路线。Part 1 是模板差分：选择最接近测试图片的正常模板，计算 RGB 差异，生成异常图和图像分数。Part 2 使用冻结的 DINOv2 提取局部特征，建立正常特征库，再通过最近邻距离判断测试区域是否可疑。两种方法使用相同的参考图和测试名单。每类额外保留二十张正常训练图，只用于校准 OK、NG 阈值，不进入参考库和测试集。
 
-动作：沿两条流程箭头依次指示；无需讲全部参数。
-
-Dataset: VisA https://github.com/amazon-science/spot-diff
-Methods: AnomalyDINO https://github.com/dammsi/AnomalyDINO and DINOv2 https://github.com/facebookresearch/dinov2
-Evidence: repository results/tables and presentation/midterm_video/provenance.json, source commit a3e03fb891155d5ca043b9f3bbf79144d52f4569.
-
+Sources: results/tables/part1_full (source commit 616701a), results/tables/part2_gpu_*, docs/13_member_a_full_results.md. Both methods completed 72 configurations and 11520 predictions with identical test identities. Part 1 inference remains CPU, CUDA accelerates exact pixel evaluation only. Original course protocol remains unchanged.
+Dataset: https://github.com/amazon-science/spot-diff
+Methods: https://github.com/dammsi/AnomalyDINO and https://github.com/facebookresearch/dinov2
 
 # Slide 3
 
-A: 65–120 sec
+A: 65-120 sec
 
 ENGLISH
-Part One is implemented and has completed all one hundred and fifty test images in our first cashew configuration, using one reference image and seed zero. It outputs the selected template, an anomaly map, a continuous score, and an OK or NG decision. Here is a genuine failure. This defective image receives a score of about zero point four nine eight, below its calibrated threshold of about zero point six one. It is therefore classified as OK. Strong responses appear around the product outline, rather than only at the annotated defects. This suggests sensitivity to normal appearance or position changes, although confirming the cause requires further experiments.
+Part One has now completed the full study: six categories, four shot counts and three seeds, giving seventy-two configurations. Its RGB template method remains unchanged. This slide illustrates one configuration, cashew with one reference and seed zero. The method outputs a normal template, anomaly map, continuous score and OK or NG decision. This defective image receives a score of about zero point four nine eight, below its calibrated threshold of about zero point six one, so the output is OK. Strong responses appear around the outline. Normal appearance or position differences may interfere with detection, although this explanation still requires controlled testing.
 
 中文
-我们已经实现并运行了 Part 1。当前完成的首个配置是腰果类别、一个正常参考样本、seed 为零，覆盖完整的一百五十张测试图。方法会输出参考模板、差分热力图、连续分数和最终判断。这张真实缺陷图片的分数约为零点四九八，低于正常校准得到的零点六一阈值，因此被判为 OK，是一次漏检。从热力图可以看到，较强响应集中在产品轮廓附近，而不只在真正缺陷处。这说明直接像素差分存在局限；正常形状或位置变化可能干扰判断，具体原因仍需要对照实验。
+Part 1 现在已经完成全量实验，覆盖六类别、四种参考图数量和三个 seed，共七十二个配置。模板差分方法本身保持不变。这里仍用腰果类别、一个参考样本、seed 为零的配置解释它的工作方式。方法输出正常模板、热力图、连续分数和判断结果。这张异常图片的分数约为零点四九八，低于零点六一的校准阈值，因此输出 OK，是一次漏检。热力图的较强响应集中在轮廓附近，正常外观或位置差异可能干扰检测，但具体原因还需要对照实验验证。
 
-动作：可替换前 5–10 秒为真实运行录屏；在输出后指示分数与阈值。若插入正常例 08，缩短本段讲解，不增加时长。
+动作：先说明“全量已完成”，再解释此图仅是一个具体配置，不把单图结论当作总体结果。
 
-Dataset: VisA https://github.com/amazon-science/spot-diff
-Methods: AnomalyDINO https://github.com/dammsi/AnomalyDINO and DINOv2 https://github.com/facebookresearch/dinov2
-Evidence: repository results/tables and presentation/midterm_video/provenance.json, source commit a3e03fb891155d5ca043b9f3bbf79144d52f4569.
-
+Sources: results/tables/part1_full (source commit 616701a), results/tables/part2_gpu_*, docs/13_member_a_full_results.md. Both methods completed 72 configurations and 11520 predictions with identical test identities. Part 1 inference remains CPU, CUDA accelerates exact pixel evaluation only. Original course protocol remains unchanged.
+Dataset: https://github.com/amazon-science/spot-diff
+Methods: https://github.com/dammsi/AnomalyDINO and https://github.com/facebookresearch/dinov2
 
 # Slide 4
 
-B: 120–180 sec
+B: 120-180 sec
 
 ENGLISH
 Part Two has been deployed on the server GPU using AnomalyDINO. DINOv2 remains frozen; we extract local patch features rather than training the backbone. Normal reference features form a memory bank, and exact nearest-neighbor distances produce anomaly scores and maps for test images. This card shows genuine saved outputs from our primary GPU experiment, for the same image, reference, shot count, and seed as Part One. Its score is about zero point two three two, above its own threshold of about zero point two one nine, so the output is NG. This image is correctly detected. However, the methods have different score ranges and heatmap scales. We compare their decisions and evaluation metrics, rather than raw score magnitudes or color brightness.
 
 中文
-Part 2 已经接入 AnomalyDINO，并在服务器 GPU 上完成运行。我们不训练 DINOv2，而是用它提取局部 patch 特征，建立正常特征库。对于新的测试图，每个局部区域与正常特征进行精确最近邻比较，得到异常距离，再生成整体分数和热力图。这里展示同一张图片，以及相同的正常参考图、shot 和 seed。分数约为零点二三二，超过该方法自己校准的零点二一九阈值，因此输出 NG。这个样例被正确检出，但不能据此说所有图片都能正确判断。两种方法的分数范围和色标不同，不能直接比较颜色亮度或原始分数大小。
+Part 2 已经接入 AnomalyDINO，并在服务器 GPU 上完成运行。我们保持 DINOv2 参数冻结，用它提取局部 patch 特征，建立正常特征库。测试图中的每个局部区域与正常特征进行精确最近邻比较，得到异常距离，再生成整体分数和热力图。这里展示同一张图片，使用相同的正常参考图、shot 和 seed。分数约为零点二三二，超过该方法校准的零点二一九阈值，因此输出 NG，正确检出异常。两种方法的分数范围和色标不同，不能直接比较原始分数或颜色亮度，应结合判断结果和统一指标评价。
 
-动作：指真实掩码和对应区域，再指出 score、threshold、NG；画面为 GPU 主运行保存结果。
-
-Dataset: VisA https://github.com/amazon-science/spot-diff
-Methods: AnomalyDINO https://github.com/dammsi/AnomalyDINO and DINOv2 https://github.com/facebookresearch/dinov2
-Evidence: repository results/tables and presentation/midterm_video/provenance.json, source commit a3e03fb891155d5ca043b9f3bbf79144d52f4569.
+Sources: results/tables/part1_full (source commit 616701a), results/tables/part2_gpu_*, docs/13_member_a_full_results.md. Both methods completed 72 configurations and 11520 predictions with identical test identities. Part 1 inference remains CPU, CUDA accelerates exact pixel evaluation only. Original course protocol remains unchanged.
+Dataset: https://github.com/amazon-science/spot-diff
+Methods: https://github.com/dammsi/AnomalyDINO and https://github.com/facebookresearch/dinov2
+Display: heatmap colors and raw score scales are method-specific. These are saved outputs from actual inference.
 
 
 # Slide 5
 
-B: 180–205 sec
+B: 180-205 sec
 
 ENGLISH
-The first comparison uses exactly the same one hundred and fifty cashew test images. Image AUROC is sixty-five point three four percent for Part One and ninety-two point nine zero percent for Part Two. Pixel AUROC also improves in this configuration. These are preliminary single-category results, not averages across all six categories. We are not claiming a controlled speed comparison.
+Both methods have now completed the same full evaluation protocol. At eight shots, six-category mean image AUROC is sixty point eight zero percent for template difference and ninety-six point six two percent for AnomalyDINO, a gap of thirty-five point eight two percentage points. The table also reports pixel AUROC and standard deviations across three seeds. These are full-study results, not just the illustrative cashew example.
 
 中文
-初步比较使用完全相同的一百五十张腰果测试图，包括五十张正常图和一百张异常图。Part 1 的图像和像素 AUROC 分别为百分之六十五点三四和七十七点八零，Part 2 为九十二点九零和九十八点六九。这只是一个类别、一个配置的结果，不代表六类总体比较。
+两种方法现在都完成了同一协议下的全量实验。八样本配置中，六类平均图像 AUROC 分别为百分之六十点八零和九十六点六二，相差三十五点八二个百分点。表中同时给出像素 AUROC 和跨三个 seed 的标准差。这是六类总体比较，不再只是前面腰果样例所在的单配置结果。
 
-Dataset: VisA https://github.com/amazon-science/spot-diff
-Methods: AnomalyDINO https://github.com/dammsi/AnomalyDINO and DINOv2 https://github.com/facebookresearch/dinov2
-Evidence: repository results/tables and presentation/midterm_video/provenance.json, source commit a3e03fb891155d5ca043b9f3bbf79144d52f4569.
-
+Sources: results/tables/part1_full (source commit 616701a), results/tables/part2_gpu_*, docs/13_member_a_full_results.md. Both methods completed 72 configurations and 11520 predictions with identical test identities. Part 1 inference remains CPU, CUDA accelerates exact pixel evaluation only. Original course protocol remains unchanged.
+Dataset: https://github.com/amazon-science/spot-diff
+Methods: https://github.com/dammsi/AnomalyDINO and https://github.com/facebookresearch/dinov2
 
 # Slide 6
 
-B: 205–225 sec
+B: 205-225 sec
 
 ENGLISH
-Separately, Part Two has completed seventy-two configurations across six categories, four shot counts, and three seeds. The chart shows category macro means across seeds. Eight-shot image AUROC reaches ninety-six point six two percent. The adjacent values report the standard deviation across seeds. The full Part One comparison remains future work.
+Across the four shot counts, template image AUROC increases from fifty-three point one seven to sixty point eight zero percent. AnomalyDINO increases from ninety-four point six one to ninety-six point six two percent. Each method has seventy-two configurations and eleven thousand five hundred and twenty test predictions. The feature method remains stronger in the aggregate results.
 
 中文
-Part 2 已完成六类别、四种 shot 和三个 seed，总共 72 个配置。图中为类别宏平均后再跨 seed 的均值，旁边列出八样本配置的标准差。Part 1 全量比较仍待补齐。
+随着参考图从一张增加到八张，模板法的平均图像 AUROC 从百分之五十三点一七提高到六十点八零，AnomalyDINO 从九十四点六一提高到九十六点六二。每种方法都覆盖七十二个配置，各有一万一千五百二十条测试预测。总体上，特征方法保持更好的检测表现。
 
-Dataset: VisA https://github.com/amazon-science/spot-diff
-Methods: AnomalyDINO https://github.com/dammsi/AnomalyDINO and DINOv2 https://github.com/facebookresearch/dinov2
-Evidence: repository results/tables and presentation/midterm_video/provenance.json, source commit a3e03fb891155d5ca043b9f3bbf79144d52f4569.
-
+Sources: results/tables/part1_full (source commit 616701a), results/tables/part2_gpu_*, docs/13_member_a_full_results.md. Both methods completed 72 configurations and 11520 predictions with identical test identities. Part 1 inference remains CPU, CUDA accelerates exact pixel evaluation only. Original course protocol remains unchanged.
+Dataset: https://github.com/amazon-science/spot-diff
+Methods: https://github.com/dammsi/AnomalyDINO and https://github.com/facebookresearch/dinov2
 
 # Slide 7
 
-B: 225–250 sec
+B: 225-250 sec
 
 ENGLISH
-The method still misses defects. This different cashew image contains several tiny annotated defects, but the eight-shot configuration outputs OK because its score is below the threshold. Patch granularity may weaken small-defect signals, but the visualization alone does not establish that explanation. This example motivates our next experiments rather than a claim that the problem is solved.
+Both methods still miss some defects. This different cashew image contains several tiny annotated defects. In the eight-shot, seed-zero configuration, both methods output OK. The enlarged ground truth makes the small regions visible. Patch granularity may weaken Part Two’s small-defect signals, but the visualization alone cannot prove that explanation. This failure motivates our Part Three experiment.
 
 中文
-方法仍存在失败。这是另一张腰果图片，在八样本配置下，真值包含几个很小的缺陷，但分数低于阈值，最终输出 OK。我们怀疑局部特征的空间粒度可能影响细小缺陷的检测，不过热力图本身不能证明这个原因。
+但两种方法仍然存在失败。这是另一张腰果图片，包含几处非常小的真实缺陷。我们放大了真值掩码。在八样本、seed 为零的配置下，两种方法都输出 OK。Part 2 的 patch 特征空间粒度可能削弱小缺陷信号，但可视化本身不能证明原因，这个问题将作为 Part 3 的研究切入点。
 
-动作：指三处白色真值小点，再指错误判断。强调该图是 8-shot，和前面的 1-shot 对比不同。
-
-A: 250–280 sec
+A: 250-280 sec
 
 ENGLISH
-Our next steps are to complete the full Part One baseline study and test features from multiple DINOv2 layers while keeping the input resolution at four hundred and forty-eight. We will keep the backbone frozen and compare with unchanged Part Two using identical references, seeds, preprocessing and evaluation. Alongside detection and localization AUROC, we will measure latency and memory. These improvements are planned, not yet validated.
+With both baseline studies complete, our next step is Part Three. We plan to fuse features from multiple DINOv2 layers while retaining the frozen backbone and input resolution of four hundred and forty-eight. We will compare with unchanged Part Two using identical references, seeds, preprocessing and evaluation. Alongside image and pixel AUROC, we will measure latency, memory, and any increase in background false positives. The fusion is planned, not yet validated.
 
 中文
-下一步先补齐 Part 1 的完整实验。针对小缺陷，计划固定 448 输入分辨率，融合 DINOv2 的多个层级特征。保持骨干冻结，使用相同参考图、seed、预处理与评价协议，与不变的 Part 2 做受控对照，同时记录检测、定位、时间和显存。这是尚未验证的计划。
+两套基线实验完成后，下一步重点是 Part 3。我们计划固定四百四十八的输入分辨率，冻结 DINOv2，融合多个层级的特征。使用相同参考图、seed、预处理和评价协议，与不变的 Part 2 做受控对照。同时报告检测、定位、延迟和显存，并检查背景误报是否增加。这项改进仍是计划，目前尚未验证效果。
 
-Dataset: VisA https://github.com/amazon-science/spot-diff
-Methods: AnomalyDINO https://github.com/dammsi/AnomalyDINO and DINOv2 https://github.com/facebookresearch/dinov2
-Evidence: repository results/tables and presentation/midterm_video/provenance.json, source commit a3e03fb891155d5ca043b9f3bbf79144d52f4569.
-
-Part 3 source: course Project 2 PDF, pp.2 and 4. Direction A permits multiple DINOv2 layers or image scales. Proposed implementation keeps input 448 and backbone frozen. Hypothesis only: patch granularity may contribute to misses.
+Sources: results/tables/part1_full (source commit 616701a), results/tables/part2_gpu_*, docs/13_member_a_full_results.md. Both methods completed 72 configurations and 11520 predictions with identical test identities. Part 1 inference remains CPU, CUDA accelerates exact pixel evaluation only. Original course protocol remains unchanged.
+Dataset: https://github.com/amazon-science/spot-diff
+Methods: https://github.com/dammsi/AnomalyDINO and https://github.com/facebookresearch/dinov2
+Visual: the ground-truth mask detail is enlarged from the full official mask to make all three tiny defects visible. Input and overlay remain full-frame.

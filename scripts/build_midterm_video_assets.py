@@ -74,6 +74,8 @@ def decision_line(fig, row, outcome):
 
 
 def main():
+    if (ROOT / "results/tables/part1_full/overall_by_shot.csv").exists():
+        raise SystemExit("Full-comparison assets now come from the authoritative PPT: run node scripts/export_midterm_video_from_ppt.mjs, then python scripts/package_midterm_video.py")
     fig=canvas(1, 'Few-shot industrial anomaly detection', 'Can a few normal examples reveal an unseen product defect?')
     panel(fig,[.055,.23,.4,.55],rgb('normal.JPG'),'Normal product')
     ax=panel(fig,[.545,.23,.4,.55],rgb('defect.JPG'),'Defective product + ground-truth outline')

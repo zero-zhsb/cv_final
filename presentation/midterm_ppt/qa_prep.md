@@ -50,7 +50,7 @@
 
 ### 8. How do you ensure a fair comparison?【A/B，高频】
 
-**English:** The preliminary comparison uses identical reference filenames, test images and masks, the same input geometry and a shared evaluation implementation. We verified all one hundred and fifty test identities. Part One and Part Two use their own calibrated thresholds.
+**English:** The full comparison uses identical reference filenames, test images and masks, and the same input geometry and AUROC definition. We verified all eleven thousand five hundred and twenty prediction identities. Pixel evaluation is exact at the original resolution for both methods. Part One and Part Two use their own calibrated thresholds.
 
 中文：输入短边 448，右/下裁到 14 的倍数；方法各自必要的特征归一化/差分处理不同，需要披露。两方法 CPU/GPU 及运行时负载不同，所以不能宣称受控速度优势。Part 3 将固定预处理、448 输入、参考名单和评价协议。证据：[比较表](../../results/tables/part1_part2_cashew_milestone.csv)、[A 里程碑](../../docs/11_member_a_milestone.md)。
 
@@ -82,15 +82,15 @@
 
 ### 13. What is actually completed at this checkpoint?【A/B，高频】
 
-**English:** Part One is implemented and evaluated on the full cashew one-shot, seed-zero test set. Part Two has completed the full seventy-two-configuration study. We also have single-image inference tools. Part Three and the full Part One study remain planned work.
+**English:** Both Part One and Part Two have completed all seventy-two configurations, with eleven thousand five hundred and twenty test predictions per method. We also have single-image inference tools. Part Three remains planned work.
 
-中文：Part 1 当前是完整 150 张测试图的一个配置，不是只跑一张，也不是全部 72 配置。Part 3 仍是计划。此回答对应已核实的本次交付；如果组员新增实验，录制前按新证据更新。
+中文：Part 1 的全量结果已由 616701a 发布，并核验 72 配置和 11,520 条预测与 Part 2 身份一致。此前 cashew 单配置结果仍用于说明方法，但已不代表当前完成范围。Part 3 仍是计划。
 
-### 14. What do the 65.34% and 92.90% numbers mean?【A/B，高频】
+### 14. What do the 60.80% and 96.62% numbers mean?【A/B，高频】
 
-**English:** They are image AUROC values for the same cashew one-shot, seed-zero configuration. Part One reaches sixty-five point three four percent, and Part Two reaches ninety-two point nine zero percent. The difference is twenty-seven point five six percentage points.
+**English:** They are six-category mean image AUROC values at eight shots, averaged over three seeds. Part One reaches sixty point eight zero percent and Part Two reaches ninety-six point six two percent. The difference is thirty-five point eight two percentage points.
 
-中文：不是 accuracy，也不是六类平均。“提高 27.56 个百分点”不同于“相对提高 27.56%”。定位 pixel AUROC 是 77.80% 与 98.69%。
+中文：它们是六类总体 AUROC，不是 accuracy。差 35.82 个百分点，不能说成相对提升 35.82%。对应 pixel AUROC 为 76.91±0.33% 与 98.21±0.02%。此前 65.34%/92.90% 仍是 cashew/1-shot/seed=0 的有效例子，不能混淆。
 
 ### 15. Why use AUROC rather than only accuracy?【A/B】
 

@@ -46,6 +46,10 @@ def main():
     for source,target in [('part1_part2_cashew_milestone.csv','preliminary_comparison.csv'),
                           ('part2_gpu_overall_by_shot.csv','part2_overall_by_shot.csv')]:
         shutil.copyfile(ROOT/'results/tables'/source,BASE/'data'/target)
+    for source,target in [('part1_full/overall_by_shot.csv','part1_overall_by_shot.csv'),
+                          ('part1_full/comparison.csv','full_comparison.csv'),
+                          ('part1_full/audit.json','full_comparison_audit.json')]:
+        shutil.copyfile(ROOT/'results/tables'/source,BASE/'data'/target)
     cards=[]
     for s in segs:
         if cards and cards[-1]['src']==s['asset']:cards[-1]['seconds']+=s['end']-s['start']
@@ -81,12 +85,20 @@ setInterval(()=>{const now=performance.now();if(playing){elapsed+=(now-last)/100
     (BASE/'index.html').write_text(html,encoding='utf-8')
     # Portable package includes small selected raw arrays, not the full dataset/model.
     deliver=ROOT.parent/'deliverables';deliver.mkdir(exist_ok=True)
-    target=deliver/'cv_midterm_video_materials.zip'
+    target=deliver/'cv_midterm_full_comparison_materials.zip'
     with zipfile.ZipFile(target,'w',compression=zipfile.ZIP_DEFLATED) as z:
         for p in sorted(BASE.rglob('*')):
             if p.is_file() and p.name!='.gitignore':z.write(p,'midterm_video/'+p.relative_to(BASE).as_posix())
-        for path in ['scripts/build_midterm_video_assets.py','scripts/package_midterm_video.py']:
+        for path in ['scripts/package_midterm_video.py']:
             z.write(ROOT/path,'repository_helpers/'+path)
+        z.write(ROOT/'scripts/export_midterm_video_from_ppt.mjs','repository_helpers/scripts/export_midterm_video_from_ppt.mjs')
+        z.write(ROOT/'presentation/midterm_ppt/CV_Midterm_FullComparison_Final.pptx','midterm_video/CV_Midterm_FullComparison_Final.pptx')
+        z.write(ROOT/'presentation/midterm_ppt/speaker_notes_full.md','midterm_video/speaker_notes_full.md')
+        z.write(ROOT/'presentation/midterm_ppt/talk_track_full.md','midterm_video/talk_track_full.md')
+        for name in ['qa_prep.md','qa_quick_card.md']:
+            content=(ROOT/'presentation/midterm_ppt'/name).read_text(encoding='utf-8')
+            content=content.replace('](../../','](https://github.com/zero-zhsb/cv_final/blob/codex/midterm-video-materials/')
+            z.writestr('midterm_video/'+name,content)
     print(json.dumps({'english_words':total,'planned_seconds':280,'subtitle_cues':counter,'zip':str(target),'zip_bytes':target.stat().st_size},indent=2))
 
 
