@@ -1,0 +1,42 @@
+{
+  "manifest_id": "51934290ccd342f9f7fa03f9f56c712494cb7b576b7038516efdb41d43b9b2c5",
+  "split_sha256": "a48557e6033318cb90556f706196bc9d247a776a23ea51aecee5a80dd0332995",
+  "source_sha256": {
+    "scripts/run_part1_matrix.py": "307e3f1f975a77aef106c3dc329548aa9133abc872e1a4375c5e43ecf6a2c120",
+    "src/part1/inspector.py": "f7d533da8c4514739f847d4051627c7d6511a7563bff53232f6b5e816b81fc28",
+    "src/data/visa.py": "8830dc91d86f835ef2755d788e11ea5c2a24574c6e834da3ff3b20aa77a276d2",
+    "src/evaluation/float_keys.py": "991f6b8cd614c362445ba9f84a549cd741a92e5e92ac89aa2266cb00e5e510f6"
+  },
+  "categories": [
+    "candle",
+    "capsules",
+    "cashew",
+    "chewinggum",
+    "fryum",
+    "pipe_fryum"
+  ],
+  "shots": [
+    1,
+    2,
+    4,
+    8
+  ],
+  "seeds": [
+    0,
+    1,
+    2
+  ],
+  "pixel_backend": "cuda",
+  "method": "template_difference",
+  "status": "completed",
+  "device": "cpu",
+  "run_id": "part1_full_stream_cuda_v1",
+  "code_commit": "a3e03fb891155d5ca043b9f3bbf79144d52f4569",
+  "code_dirty": true,
+  "map_storage": "none; deterministic second-pass reconstruction; selected visualizations separately",
+  "inference_time_scope": "uncached first pass: RGB read, transform, nearest template, difference, smoothing and score; excludes map resize and evaluation",
+  "pixel_evaluation": "exact float32 original resolution; all normal+abnormal tests; no per-image normalization",
+  "threads": 2,
+  "started_at_utc": "2026-11-14T07:56:12.510687+00:00",
+  "configurations": 72
+}
