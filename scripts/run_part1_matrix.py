@@ -33,12 +33,13 @@ def main():
     parser.add_argument("--categories", nargs="+")
     parser.add_argument("--shots", type=int, nargs="+", default=[1, 2, 4, 8])
     parser.add_argument("--seeds", type=int, nargs="+", default=[0, 1, 2])
+    parser.add_argument("--pixel-backend", choices=["cpu", "cuda"], default="cpu")
     args = parser.parse_args()
     import cv2
     import numpy as np
     from sklearn.metrics import roc_auc_score
     from src.data.visa import VisAReader
-    from src.evaluation.float_keys import FloatKeyAUROC, bounds
+    from src.evaluation.float_keys import FloatKeyAUROC, CUDAFloatKeyAUROC, bounds
     from src.part1.inspector import TemplateInspector
     cv2.setNumThreads(2)
     manifest = json.loads((ROOT / "manifests/visa_1cls.json").read_text())
@@ -50,7 +51,8 @@ def main():
     files = [Path(__file__), ROOT / "src/part1/inspector.py", ROOT / "src/data/visa.py", ROOT / "src/evaluation/float_keys.py"]
     source_hashes = {str(p.relative_to(ROOT)): hashlib.sha256(p.read_bytes()).hexdigest() for p in files}
     identity = {"manifest_id": manifest["manifest_id"], "split_sha256": reader.split_sha256,
-                "source_sha256": source_hashes, "categories": categories, "shots": args.shots, "seeds": args.seeds}
+                "source_sha256": source_hashes, "categories": categories, "shots": args.shots, "seeds": args.seeds,
+                "pixel_backend": args.pixel_backend}
     args.output.mkdir(parents=True, exist_ok=True)
     config_path = args.output / "configuration.json"
     if config_path.exists() and json.loads(config_path.read_text()) != identity:
@@ -102,7 +104,7 @@ def main():
                                  "inference_ms": result["inference_ms"], "nearest_reference": nearest})
                 with (folder / "predictions.csv").open("w", newline="") as handle:
                     writer = csv.DictWriter(handle, fieldnames=list(rows[0])); writer.writeheader(); writer.writerows(rows)
-                metric = FloatKeyAUROC(low, high)
+                metric = (CUDAFloatKeyAUROC if args.pixel_backend == "cuda" else FloatKeyAUROC)(low, high)
                 for sample, row in zip(item["tests"], rows):
                     prediction = inspector.predict(reader.path(sample["image_path"]), render_map=True)
                     if prediction["score"] != row["score"]:
@@ -115,7 +117,10 @@ def main():
                           "pixel_auroc": metric.compute(), "mean_inference_ms": float(np.mean([r["inference_ms"] for r in rows])),
                           "memory_bank_ms": inspector.bank_ms, "peak_gpu_memory_mib": None,
                           "pixel_histogram_mib": metric.total.nbytes * 2 / 1024**2,
+                          "pixel_backend": args.pixel_backend,
                           "process_peak_rss_mib": resource.getrusage(resource.RUSAGE_SELF).ru_maxrss / 1024}
+                if args.pixel_backend == "cuda":
+                    metric.close()
                 del metric
                 save(metric_file, result); all_metrics.append(result)
                 save(args.output / "status.json", {"completed": len(all_metrics), "expected": len(categories)*len(args.shots)*len(args.seeds), "last": result})
