@@ -1,0 +1,3 @@
+method,configuration,manifest_id,test_count,image_auroc,pixel_auroc,mean_inference_ms,peak_gpu_memory_mib,source_run,timing_note
+template_difference,cashew/shot_1/seed_0,51934290ccd342f9f7fa03f9f56c712494cb7b576b7038516efdb41d43b9b2c5,150,0.6534000000000001,0.7780427208851487,51.16447992001971,,part1_cashew_1shot_seed0_v1,"CPU template vs historical GPU DINO; shared host, different load; descriptive only"
+anomalydino,cashew/shot_1/seed_0,51934290ccd342f9f7fa03f9f56c712494cb7b576b7038516efdb41d43b9b2c5,150,0.929,0.9869356885792085,74.08083970813702,262.17236328125,part2_gpu_exact_matrix_v1,"CPU template vs historical GPU DINO; shared host, different load; descriptive only"

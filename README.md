@@ -1,5 +1,7 @@
 # CV Final · Few-Shot Industrial Visual Anomaly Detection
 
+**期中视频素材已整理：** [素材包入口](presentation/midterm_video/README.md)，含 8 张 1080p 图卡、中英文讲稿、字幕草案、280 秒时间线和离线 HTML 翻页页。本次 Canvas 要求为不超过 5 分钟的阶段进展视频，无需先完成 Part 1 全量实验或联合实时界面。本次素材在 `codex/midterm-video-materials` 分支。
+
 两人课程项目：先完成 **Part 1（模板差分）与 Part 2（AnomalyDINO）**，用于 Pre 展示；后续再完成 Part 3 的一个改进。代码与实验记录在 GitHub 协作，数据、权重和实验任务在服务器上运行。
 
 ## 当前状态

@@ -1,0 +1,115 @@
+{
+  "assets_are": "Static visualization of genuine saved outputs, not screen recordings",
+  "source_branch": "codex/part1-integration",
+  "source_commit": "a3e03fb891155d5ca043b9f3bbf79144d52f4569",
+  "part1_run": "part1_cashew_1shot_seed0_v1",
+  "part2_run": "part2_gpu_exact_matrix_v1",
+  "manifest_id": "51934290ccd342f9f7fa03f9f56c712494cb7b576b7038516efdb41d43b9b2c5",
+  "selection": [
+    {
+      "name": "normal",
+      "part1": {
+        "run_id": "part1_cashew_1shot_seed0_v1",
+        "method": "template_difference",
+        "manifest_id": "51934290ccd342f9f7fa03f9f56c712494cb7b576b7038516efdb41d43b9b2c5",
+        "category": "cashew",
+        "shot": "1",
+        "seed": "0",
+        "image_path": "cashew/test/good/006.JPG",
+        "mask_path": "",
+        "label": "0",
+        "score": "0.45387956500053406",
+        "map_path": "maps/cashew/shot_1/seed_0/good/006.npz",
+        "threshold": "0.6099126219749451",
+        "decision": "OK",
+        "inference_ms": "49.49880996719003",
+        "nearest_reference": "cashew/train/good/024.JPG"
+      },
+      "part2": {
+        "run_id": "part2_gpu_exact_matrix_v1",
+        "method": "anomalydino",
+        "manifest_id": "51934290ccd342f9f7fa03f9f56c712494cb7b576b7038516efdb41d43b9b2c5",
+        "category": "cashew",
+        "shot": "1",
+        "seed": "0",
+        "image_path": "cashew/test/good/006.JPG",
+        "mask_path": "",
+        "label": "0",
+        "score": "0.16829089522361756",
+        "map_path": "maps/cashew/shot_1/seed_0/good/006.npz",
+        "threshold": "0.21948908478021623",
+        "decision": "OK",
+        "inference_ms": "72.77167891152203"
+      }
+    },
+    {
+      "name": "defect",
+      "part1": {
+        "run_id": "part1_cashew_1shot_seed0_v1",
+        "method": "template_difference",
+        "manifest_id": "51934290ccd342f9f7fa03f9f56c712494cb7b576b7038516efdb41d43b9b2c5",
+        "category": "cashew",
+        "shot": "1",
+        "seed": "0",
+        "image_path": "cashew/test/bad/000.JPG",
+        "mask_path": "cashew/ground_truth/bad/000.png",
+        "label": "1",
+        "score": "0.49833202362060547",
+        "map_path": "maps/cashew/shot_1/seed_0/bad/000.npz",
+        "threshold": "0.6099126219749451",
+        "decision": "OK",
+        "inference_ms": "51.21540813706815",
+        "nearest_reference": "cashew/train/good/024.JPG"
+      },
+      "part2": {
+        "run_id": "part2_gpu_exact_matrix_v1",
+        "method": "anomalydino",
+        "manifest_id": "51934290ccd342f9f7fa03f9f56c712494cb7b576b7038516efdb41d43b9b2c5",
+        "category": "cashew",
+        "shot": "1",
+        "seed": "0",
+        "image_path": "cashew/test/bad/000.JPG",
+        "mask_path": "cashew/ground_truth/bad/000.png",
+        "label": "1",
+        "score": "0.2319623202085495",
+        "map_path": "maps/cashew/shot_1/seed_0/bad/000.npz",
+        "threshold": "0.21948908478021623",
+        "decision": "NG",
+        "inference_ms": "70.1402360573411"
+      }
+    },
+    {
+      "name": "failure",
+      "part2": {
+        "run_id": "part2_gpu_exact_matrix_v1",
+        "method": "anomalydino",
+        "manifest_id": "51934290ccd342f9f7fa03f9f56c712494cb7b576b7038516efdb41d43b9b2c5",
+        "category": "cashew",
+        "shot": "8",
+        "seed": "0",
+        "image_path": "cashew/test/bad/075.JPG",
+        "mask_path": "cashew/ground_truth/bad/075.png",
+        "label": "1",
+        "score": "0.10876101553440094",
+        "map_path": "maps/cashew/shot_8/seed_0/bad/075.npz",
+        "threshold": "0.17079482406377794",
+        "decision": "OK",
+        "inference_ms": "72.14417983777821"
+      }
+    }
+  ],
+  "raw_sha256": {
+    "defect.JPG": "f28c4dad19810bc27bd38389a430dcc77c4aace06a5350e74c66c9ccb38affbd",
+    "defect_mask.png": "009d05a0dac67979906d1dd1aab424c13cd89f272eb2a07a6790699e0f4fb7d0",
+    "defect_part1.npz": "4bf314508aa7fe7dd57f6f881e704326bbde51de8f986193a4a54f558313b93e",
+    "defect_part2.npz": "e82095330ab97ebd2890a5df7735d67d130fde9669e3acc61b0527e1001d8ebe",
+    "failure.JPG": "d9eb3cf8ff878eac084c0d9e4bad90322ea3fae7eddeafb4fbf99ddd8a55de15",
+    "failure_mask.png": "a4298126929487e5e26c34a008b3bbbc5ffde843a096defaf28e0d0a47cdae49",
+    "failure_part2.npz": "d378b7458e7e1583d51bb42e30fcd56478cfa33b0a77ead4fad630fbc85e9c10",
+    "normal.JPG": "4a0c0a6607571d54302bbab3605ecf764e66eb282618580a598ed9485f9c426c",
+    "normal_part1.npz": "d9b5a36c04a84eb2bbafce9dff104a0fe8bba943796f8c7c115ed17e267d825b",
+    "normal_part2.npz": "5cc5ba0694ab5dc6c9e8e9337fadd37cf3a67e2854ee512a8fcf42b7d1aec0cf",
+    "reference.JPG": "739d3d9841a58b4dc4b8c3b45fc6abfa64fb74329132c734c79158a5f3ea6862",
+    "selection.json": "4eeb7685e53a5a08a1f695a900bb9fe6e1998920b25d5bcc2657e5fc76b245ef"
+  }
+}

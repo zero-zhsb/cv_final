@@ -1,0 +1,9 @@
+start,end,duration_seconds,speaker,asset,section
+00:00,00:25,25,A,assets/01_problem.png,Problem
+00:25,01:05,40,A,assets/02_method.png,Current approach
+01:05,02:00,55,A,assets/03_part1.png,Baseline implementation
+02:00,03:00,60,B,assets/04_part2.png,Feature-based implementation
+03:00,03:25,25,B,assets/05_preliminary_comparison.png,Preliminary comparison
+03:25,03:45,20,B,assets/06_part2_progress.png,Broader Part 2 progress
+03:45,04:10,25,B,assets/07_limitations_plan.png,Limitations
+04:10,04:40,30,A,assets/07_limitations_plan.png,Future improvements
