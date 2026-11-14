@@ -1,0 +1,8 @@
+{
+  "same_reference_manifest": true,
+  "identical_test_mask_label_ids": true,
+  "configuration_count": 72,
+  "prediction_count": 11520,
+  "timing_limit": "CPU Part 1 vs historical GPU Part 2; observed latency only, not a controlled speed ratio",
+  "pixel_auc": "exact nonnegative float32 key counts; original image resolution; normals included"
+}

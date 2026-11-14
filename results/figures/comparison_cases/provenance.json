@@ -1,0 +1,7 @@
+{
+  "selection": "actual threshold errors, one per category first, then largest relative error margin; no parameter tuning",
+  "manifest_id": "51934290ccd342f9f7fa03f9f56c712494cb7b576b7038516efdb41d43b9b2c5",
+  "part1": "recomputed unchanged template method",
+  "part2": "published B visualization replay; no model rerun",
+  "count": 5
+}

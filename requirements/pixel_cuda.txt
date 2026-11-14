@@ -1,0 +1,2 @@
+# Optional exact pixel evaluation only. Part 1 inference remains CPU-only.
+cupy-cuda12x==13.3.0
