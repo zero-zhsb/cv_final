@@ -1,0 +1,20 @@
+{
+  "protocol_version": "part3_multilayer_v1",
+  "fixed_before_test_evaluation": true,
+  "backbone": "dinov2_vits14",
+  "resolution": 448,
+  "frozen": true,
+  "layers_one_based": [6,12],
+  "fusion": "L2 normalize each layer, concatenate with weights sqrt(0.5), then use original normalized exact nearest-neighbor pipeline",
+  "reference_matching": "one shared reference patch minimizes combined distance, not independent nearest neighbors per layer",
+  "foreground_mask": "unchanged official final-layer PCA mask for all variants",
+  "variants": ["layer12","layer6","fusion6_12"],
+  "primary_proposal": "fusion6_12",
+  "parameter_selection": "fixed by design, no layer/weight sweep on test labels",
+  "baseline_run": "part2_gpu_exact_matrix_v1",
+  "shots": [1,2,4,8],
+  "seeds": [0,1,2],
+  "calibration": "same 20 reserved normal images, only threshold percentile 95",
+  "metrics": ["image_auroc","pixel_auroc","inference_ms","peak_gpu_memory_mib"],
+  "spatial_resolution_claim": "Layer fusion does not change the patch grid"
+}
