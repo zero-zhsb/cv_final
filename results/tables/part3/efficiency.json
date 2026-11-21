@@ -1,0 +1,3106 @@
+{
+  "measured_at_utc": "2026-11-21T13:59:11.292013+00:00",
+  "manifest_id": "51934290ccd342f9f7fa03f9f56c712494cb7b576b7038516efdb41d43b9b2c5",
+  "device": "NVIDIA RTX A6000",
+  "code_commit": "7cb635a144154228c718d764e38ae42d95fd658e",
+  "benchmark_sha256": "f51957da2bf0e88a654f11817f51f0228089ad9f7ad49070c889c2c2e734f91f",
+  "protocol": {
+    "shots": [
+      1,
+      8
+    ],
+    "seed": 0,
+    "categories": 6,
+    "images_per_category": 4,
+    "repeats": 3,
+    "backbone_warmup": 25,
+    "full_pipeline_warmup": 3,
+    "cache": "none",
+    "order": "counterbalanced cyclic variant order across 12 category/shot blocks",
+    "scope": "synchronized RGB read, transforms, features, PCA mask, exact kNN; excludes rendering/export",
+    "memory_scope": "max PyTorch allocated bytes, one variant resident; excludes driver and other users",
+    "limitations": "Shared GPU, no exclusive reservation; counterbalancing reduces but does not remove load confounding. This is an efficiency sample, not the full accuracy matrix."
+  },
+  "summary": [
+    {
+      "variant": "layer12",
+      "shot": 1,
+      "category_macro_mean_ms": 74.39928428761455,
+      "max_peak_gpu_allocated_mib": 149.5537109375
+    },
+    {
+      "variant": "layer6",
+      "shot": 1,
+      "category_macro_mean_ms": 71.42637525814482,
+      "max_peak_gpu_allocated_mib": 149.5537109375
+    },
+    {
+      "variant": "fusion6_12",
+      "shot": 1,
+      "category_macro_mean_ms": 77.97032924524198,
+      "max_peak_gpu_allocated_mib": 168.4189453125
+    },
+    {
+      "variant": "layer12",
+      "shot": 8,
+      "category_macro_mean_ms": 80.94576527623254,
+      "max_peak_gpu_allocated_mib": 381.57666015625
+    },
+    {
+      "variant": "layer6",
+      "shot": 8,
+      "category_macro_mean_ms": 75.38184213788351,
+      "max_peak_gpu_allocated_mib": 381.57666015625
+    },
+    {
+      "variant": "fusion6_12",
+      "shot": 8,
+      "category_macro_mean_ms": 84.33709269027328,
+      "max_peak_gpu_allocated_mib": 669.57666015625
+    }
+  ],
+  "configurations": [
+    {
+      "category": "candle",
+      "shot": 1,
+      "seed": 0,
+      "variant": "layer12",
+      "variant_order": [
+        "layer12",
+        "layer6",
+        "fusion6_12"
+      ],
+      "mean_ms": 71.66918258493145,
+      "median_ms": 70.28747140429914,
+      "peak_gpu_allocated_mib": 127.57568359375,
+      "bank_ms": 601.5886710956693,
+      "gpu_snapshot": "11988 MiB, 0 %",
+      "references": [
+        "candle/train/good/0023.JPG"
+      ],
+      "timings": [
+        {
+          "repeat": 0,
+          "image_path": "candle/test/good/0011.JPG",
+          "inference_ms": 74.1012073121965
+        },
+        {
+          "repeat": 0,
+          "image_path": "candle/test/good/0013.JPG",
+          "inference_ms": 73.24649440124631
+        },
+        {
+          "repeat": 0,
+          "image_path": "candle/test/bad/000.JPG",
+          "inference_ms": 75.22835908457637
+        },
+        {
+          "repeat": 0,
+          "image_path": "candle/test/bad/001.JPG",
+          "inference_ms": 76.65636669844389
+        },
+        {
+          "repeat": 1,
+          "image_path": "candle/test/good/0011.JPG",
+          "inference_ms": 70.96989592537284
+        },
+        {
+          "repeat": 1,
+          "image_path": "candle/test/good/0013.JPG",
+          "inference_ms": 70.22954802960157
+        },
+        {
+          "repeat": 1,
+          "image_path": "candle/test/bad/000.JPG",
+          "inference_ms": 69.88097168505192
+        },
+        {
+          "repeat": 1,
+          "image_path": "candle/test/bad/001.JPG",
+          "inference_ms": 69.54219890758395
+        },
+        {
+          "repeat": 2,
+          "image_path": "candle/test/good/0011.JPG",
+          "inference_ms": 69.94235003367066
+        },
+        {
+          "repeat": 2,
+          "image_path": "candle/test/good/0013.JPG",
+          "inference_ms": 70.3453947789967
+        },
+        {
+          "repeat": 2,
+          "image_path": "candle/test/bad/000.JPG",
+          "inference_ms": 69.75889531895518
+        },
+        {
+          "repeat": 2,
+          "image_path": "candle/test/bad/001.JPG",
+          "inference_ms": 70.12850884348154
+        }
+      ]
+    },
+    {
+      "category": "candle",
+      "shot": 1,
+      "seed": 0,
+      "variant": "layer6",
+      "variant_order": [
+        "layer12",
+        "layer6",
+        "fusion6_12"
+      ],
+      "mean_ms": 68.51678151482095,
+      "median_ms": 68.53631651028991,
+      "peak_gpu_allocated_mib": 128.88916015625,
+      "bank_ms": 631.7993779666722,
+      "gpu_snapshot": "11988 MiB, 11 %",
+      "references": [
+        "candle/train/good/0023.JPG"
+      ],
+      "timings": [
+        {
+          "repeat": 0,
+          "image_path": "candle/test/good/0011.JPG",
+          "inference_ms": 68.82044998928905
+        },
+        {
+          "repeat": 0,
+          "image_path": "candle/test/good/0013.JPG",
+          "inference_ms": 68.62912094220519
+        },
+        {
+          "repeat": 0,
+          "image_path": "candle/test/bad/000.JPG",
+          "inference_ms": 68.51597875356674
+        },
+        {
+          "repeat": 0,
+          "image_path": "candle/test/bad/001.JPG",
+          "inference_ms": 69.19220741838217
+        },
+        {
+          "repeat": 1,
+          "image_path": "candle/test/good/0011.JPG",
+          "inference_ms": 68.55665426701307
+        },
+        {
+          "repeat": 1,
+          "image_path": "candle/test/good/0013.JPG",
+          "inference_ms": 68.26577009633183
+        },
+        {
+          "repeat": 1,
+          "image_path": "candle/test/bad/000.JPG",
+          "inference_ms": 68.26218357309699
+        },
+        {
+          "repeat": 1,
+          "image_path": "candle/test/bad/001.JPG",
+          "inference_ms": 67.97704799100757
+        },
+        {
+          "repeat": 2,
+          "image_path": "candle/test/good/0011.JPG",
+          "inference_ms": 69.37993038445711
+        },
+        {
+          "repeat": 2,
+          "image_path": "candle/test/good/0013.JPG",
+          "inference_ms": 68.62509483471513
+        },
+        {
+          "repeat": 2,
+          "image_path": "candle/test/bad/000.JPG",
+          "inference_ms": 68.23831889778376
+        },
+        {
+          "repeat": 2,
+          "image_path": "candle/test/bad/001.JPG",
+          "inference_ms": 67.73862103000283
+        }
+      ]
+    },
+    {
+      "category": "candle",
+      "shot": 1,
+      "seed": 0,
+      "variant": "fusion6_12",
+      "variant_order": [
+        "layer12",
+        "layer6",
+        "fusion6_12"
+      ],
+      "mean_ms": 57.72942145510266,
+      "median_ms": 57.63038597069681,
+      "peak_gpu_allocated_mib": 145.73583984375,
+      "bank_ms": 536.6092170588672,
+      "gpu_snapshot": "12012 MiB, 11 %",
+      "references": [
+        "candle/train/good/0023.JPG"
+      ],
+      "timings": [
+        {
+          "repeat": 0,
+          "image_path": "candle/test/good/0011.JPG",
+          "inference_ms": 58.20644926279783
+        },
+        {
+          "repeat": 0,
+          "image_path": "candle/test/good/0013.JPG",
+          "inference_ms": 58.00662375986576
+        },
+        {
+          "repeat": 0,
+          "image_path": "candle/test/bad/000.JPG",
+          "inference_ms": 57.767546735703945
+        },
+        {
+          "repeat": 0,
+          "image_path": "candle/test/bad/001.JPG",
+          "inference_ms": 57.8921502456069
+        },
+        {
+          "repeat": 1,
+          "image_path": "candle/test/good/0011.JPG",
+          "inference_ms": 57.04790772870183
+        },
+        {
+          "repeat": 1,
+          "image_path": "candle/test/good/0013.JPG",
+          "inference_ms": 56.74747470766306
+        },
+        {
+          "repeat": 1,
+          "image_path": "candle/test/bad/000.JPG",
+          "inference_ms": 57.56161222234368
+        },
+        {
+          "repeat": 1,
+          "image_path": "candle/test/bad/001.JPG",
+          "inference_ms": 57.2207011282444
+        },
+        {
+          "repeat": 2,
+          "image_path": "candle/test/good/0011.JPG",
+          "inference_ms": 57.59441386908293
+        },
+        {
+          "repeat": 2,
+          "image_path": "candle/test/good/0013.JPG",
+          "inference_ms": 57.02009471133351
+        },
+        {
+          "repeat": 2,
+          "image_path": "candle/test/bad/000.JPG",
+          "inference_ms": 57.666358072310686
+        },
+        {
+          "repeat": 2,
+          "image_path": "candle/test/bad/001.JPG",
+          "inference_ms": 60.02172501757741
+        }
+      ]
+    },
+    {
+      "category": "candle",
+      "shot": 8,
+      "seed": 0,
+      "variant": "layer6",
+      "variant_order": [
+        "layer6",
+        "fusion6_12",
+        "layer12"
+      ],
+      "mean_ms": 72.75849192713697,
+      "median_ms": 72.25132337771356,
+      "peak_gpu_allocated_mib": 305.47509765625,
+      "bank_ms": 5830.354366917163,
+      "gpu_snapshot": "12168 MiB, 15 %",
+      "references": [
+        "candle/train/good/0023.JPG",
+        "candle/train/good/0025.JPG",
+        "candle/train/good/0028.JPG",
+        "candle/train/good/0029.JPG",
+        "candle/train/good/0030.JPG",
+        "candle/train/good/0031.JPG",
+        "candle/train/good/0032.JPG",
+        "candle/train/good/0033.JPG"
+      ],
+      "timings": [
+        {
+          "repeat": 0,
+          "image_path": "candle/test/good/0011.JPG",
+          "inference_ms": 73.5412067733705
+        },
+        {
+          "repeat": 0,
+          "image_path": "candle/test/good/0013.JPG",
+          "inference_ms": 73.37369304150343
+        },
+        {
+          "repeat": 0,
+          "image_path": "candle/test/bad/000.JPG",
+          "inference_ms": 73.76546831801534
+        },
+        {
+          "repeat": 0,
+          "image_path": "candle/test/bad/001.JPG",
+          "inference_ms": 72.77181511744857
+        },
+        {
+          "repeat": 1,
+          "image_path": "candle/test/good/0011.JPG",
+          "inference_ms": 71.9415657222271
+        },
+        {
+          "repeat": 1,
+          "image_path": "candle/test/good/0013.JPG",
+          "inference_ms": 71.67424587532878
+        },
+        {
+          "repeat": 1,
+          "image_path": "candle/test/bad/000.JPG",
+          "inference_ms": 72.17274094000459
+        },
+        {
+          "repeat": 1,
+          "image_path": "candle/test/bad/001.JPG",
+          "inference_ms": 71.90889632329345
+        },
+        {
+          "repeat": 2,
+          "image_path": "candle/test/good/0011.JPG",
+          "inference_ms": 72.06524908542633
+        },
+        {
+          "repeat": 2,
+          "image_path": "candle/test/good/0013.JPG",
+          "inference_ms": 72.11335003376007
+        },
+        {
+          "repeat": 2,
+          "image_path": "candle/test/bad/000.JPG",
+          "inference_ms": 72.32990581542253
+        },
+        {
+          "repeat": 2,
+          "image_path": "candle/test/bad/001.JPG",
+          "inference_ms": 75.44376607984304
+        }
+      ]
+    },
+    {
+      "category": "candle",
+      "shot": 8,
+      "seed": 0,
+      "variant": "fusion6_12",
+      "variant_order": [
+        "layer6",
+        "fusion6_12",
+        "layer12"
+      ],
+      "mean_ms": 80.1163703436032,
+      "median_ms": 79.90654394961894,
+      "peak_gpu_allocated_mib": 513.47509765625,
+      "bank_ms": 16830.730341840535,
+      "gpu_snapshot": "12376 MiB, 0 %",
+      "references": [
+        "candle/train/good/0023.JPG",
+        "candle/train/good/0025.JPG",
+        "candle/train/good/0028.JPG",
+        "candle/train/good/0029.JPG",
+        "candle/train/good/0030.JPG",
+        "candle/train/good/0031.JPG",
+        "candle/train/good/0032.JPG",
+        "candle/train/good/0033.JPG"
+      ],
+      "timings": [
+        {
+          "repeat": 0,
+          "image_path": "candle/test/good/0011.JPG",
+          "inference_ms": 80.94680309295654
+        },
+        {
+          "repeat": 0,
+          "image_path": "candle/test/good/0013.JPG",
+          "inference_ms": 79.1649823077023
+        },
+        {
+          "repeat": 0,
+          "image_path": "candle/test/bad/000.JPG",
+          "inference_ms": 79.45508696138859
+        },
+        {
+          "repeat": 0,
+          "image_path": "candle/test/bad/001.JPG",
+          "inference_ms": 79.36469744890928
+        },
+        {
+          "repeat": 1,
+          "image_path": "candle/test/good/0011.JPG",
+          "inference_ms": 79.13098810240626
+        },
+        {
+          "repeat": 1,
+          "image_path": "candle/test/good/0013.JPG",
+          "inference_ms": 79.94749024510384
+        },
+        {
+          "repeat": 1,
+          "image_path": "candle/test/bad/000.JPG",
+          "inference_ms": 81.8590447306633
+        },
+        {
+          "repeat": 1,
+          "image_path": "candle/test/bad/001.JPG",
+          "inference_ms": 80.91621799394488
+        },
+        {
+          "repeat": 2,
+          "image_path": "candle/test/good/0011.JPG",
+          "inference_ms": 80.87955927476287
+        },
+        {
+          "repeat": 2,
+          "image_path": "candle/test/good/0013.JPG",
+          "inference_ms": 79.86559765413404
+        },
+        {
+          "repeat": 2,
+          "image_path": "candle/test/bad/000.JPG",
+          "inference_ms": 80.40247391909361
+        },
+        {
+          "repeat": 2,
+          "image_path": "candle/test/bad/001.JPG",
+          "inference_ms": 79.46350239217281
+        }
+      ]
+    },
+    {
+      "category": "candle",
+      "shot": 8,
+      "seed": 0,
+      "variant": "layer12",
+      "variant_order": [
+        "layer6",
+        "fusion6_12",
+        "layer12"
+      ],
+      "mean_ms": 76.39048167038709,
+      "median_ms": 76.71763654798269,
+      "peak_gpu_allocated_mib": 305.47509765625,
+      "bank_ms": 7758.252031169832,
+      "gpu_snapshot": "12238 MiB, 22 %",
+      "references": [
+        "candle/train/good/0023.JPG",
+        "candle/train/good/0025.JPG",
+        "candle/train/good/0028.JPG",
+        "candle/train/good/0029.JPG",
+        "candle/train/good/0030.JPG",
+        "candle/train/good/0031.JPG",
+        "candle/train/good/0032.JPG",
+        "candle/train/good/0033.JPG"
+      ],
+      "timings": [
+        {
+          "repeat": 0,
+          "image_path": "candle/test/good/0011.JPG",
+          "inference_ms": 76.54574420303106
+        },
+        {
+          "repeat": 0,
+          "image_path": "candle/test/good/0013.JPG",
+          "inference_ms": 73.80504300817847
+        },
+        {
+          "repeat": 0,
+          "image_path": "candle/test/bad/000.JPG",
+          "inference_ms": 73.38309101760387
+        },
+        {
+          "repeat": 0,
+          "image_path": "candle/test/bad/001.JPG",
+          "inference_ms": 73.34239315241575
+        },
+        {
+          "repeat": 1,
+          "image_path": "candle/test/good/0011.JPG",
+          "inference_ms": 76.02128013968468
+        },
+        {
+          "repeat": 1,
+          "image_path": "candle/test/good/0013.JPG",
+          "inference_ms": 77.96596782281995
+        },
+        {
+          "repeat": 1,
+          "image_path": "candle/test/bad/000.JPG",
+          "inference_ms": 79.0886739268899
+        },
+        {
+          "repeat": 1,
+          "image_path": "candle/test/bad/001.JPG",
+          "inference_ms": 76.94339985027909
+        },
+        {
+          "repeat": 2,
+          "image_path": "candle/test/good/0011.JPG",
+          "inference_ms": 76.24682178720832
+        },
+        {
+          "repeat": 2,
+          "image_path": "candle/test/good/0013.JPG",
+          "inference_ms": 79.2424320243299
+        },
+        {
+          "repeat": 2,
+          "image_path": "candle/test/bad/000.JPG",
+          "inference_ms": 77.21140421926975
+        },
+        {
+          "repeat": 2,
+          "image_path": "candle/test/bad/001.JPG",
+          "inference_ms": 76.88952889293432
+        }
+      ]
+    },
+    {
+      "category": "capsules",
+      "shot": 1,
+      "seed": 0,
+      "variant": "fusion6_12",
+      "variant_order": [
+        "fusion6_12",
+        "layer12",
+        "layer6"
+      ],
+      "mean_ms": 92.5933284452185,
+      "median_ms": 91.67055995203555,
+      "peak_gpu_allocated_mib": 168.4189453125,
+      "bank_ms": 834.2032372020185,
+      "gpu_snapshot": "12128 MiB, 34 %",
+      "references": [
+        "capsules/train/good/023.JPG"
+      ],
+      "timings": [
+        {
+          "repeat": 0,
+          "image_path": "capsules/test/good/011.JPG",
+          "inference_ms": 98.95564010366797
+        },
+        {
+          "repeat": 0,
+          "image_path": "capsules/test/good/013.JPG",
+          "inference_ms": 94.39539723098278
+        },
+        {
+          "repeat": 0,
+          "image_path": "capsules/test/bad/000.JPG",
+          "inference_ms": 97.6805379614234
+        },
+        {
+          "repeat": 0,
+          "image_path": "capsules/test/bad/001.JPG",
+          "inference_ms": 94.50984001159668
+        },
+        {
+          "repeat": 1,
+          "image_path": "capsules/test/good/011.JPG",
+          "inference_ms": 91.74077678471804
+        },
+        {
+          "repeat": 1,
+          "image_path": "capsules/test/good/013.JPG",
+          "inference_ms": 91.60034311935306
+        },
+        {
+          "repeat": 1,
+          "image_path": "capsules/test/bad/000.JPG",
+          "inference_ms": 94.38350331038237
+        },
+        {
+          "repeat": 1,
+          "image_path": "capsules/test/bad/001.JPG",
+          "inference_ms": 89.96671810746193
+        },
+        {
+          "repeat": 2,
+          "image_path": "capsules/test/good/011.JPG",
+          "inference_ms": 91.03318816050887
+        },
+        {
+          "repeat": 2,
+          "image_path": "capsules/test/good/013.JPG",
+          "inference_ms": 89.76171305403113
+        },
+        {
+          "repeat": 2,
+          "image_path": "capsules/test/bad/000.JPG",
+          "inference_ms": 88.4773125872016
+        },
+        {
+          "repeat": 2,
+          "image_path": "capsules/test/bad/001.JPG",
+          "inference_ms": 88.61497091129422
+        }
+      ]
+    },
+    {
+      "category": "capsules",
+      "shot": 1,
+      "seed": 0,
+      "variant": "layer12",
+      "variant_order": [
+        "fusion6_12",
+        "layer12",
+        "layer6"
+      ],
+      "mean_ms": 91.93809248972684,
+      "median_ms": 87.7876365557313,
+      "peak_gpu_allocated_mib": 149.5537109375,
+      "bank_ms": 750.8745100349188,
+      "gpu_snapshot": "12046 MiB, 37 %",
+      "references": [
+        "capsules/train/good/023.JPG"
+      ],
+      "timings": [
+        {
+          "repeat": 0,
+          "image_path": "capsules/test/good/011.JPG",
+          "inference_ms": 85.44119261205196
+        },
+        {
+          "repeat": 0,
+          "image_path": "capsules/test/good/013.JPG",
+          "inference_ms": 84.45610385388136
+        },
+        {
+          "repeat": 0,
+          "image_path": "capsules/test/bad/000.JPG",
+          "inference_ms": 83.70768232271075
+        },
+        {
+          "repeat": 0,
+          "image_path": "capsules/test/bad/001.JPG",
+          "inference_ms": 102.93784830719233
+        },
+        {
+          "repeat": 1,
+          "image_path": "capsules/test/good/011.JPG",
+          "inference_ms": 86.35328384116292
+        },
+        {
+          "repeat": 1,
+          "image_path": "capsules/test/good/013.JPG",
+          "inference_ms": 88.55430502444506
+        },
+        {
+          "repeat": 1,
+          "image_path": "capsules/test/bad/000.JPG",
+          "inference_ms": 87.02096808701754
+        },
+        {
+          "repeat": 1,
+          "image_path": "capsules/test/bad/001.JPG",
+          "inference_ms": 86.0647726804018
+        },
+        {
+          "repeat": 2,
+          "image_path": "capsules/test/good/011.JPG",
+          "inference_ms": 89.25559092313051
+        },
+        {
+          "repeat": 2,
+          "image_path": "capsules/test/good/013.JPG",
+          "inference_ms": 92.93099492788315
+        },
+        {
+          "repeat": 2,
+          "image_path": "capsules/test/bad/000.JPG",
+          "inference_ms": 104.12982711568475
+        },
+        {
+          "repeat": 2,
+          "image_path": "capsules/test/bad/001.JPG",
+          "inference_ms": 112.40454018115997
+        }
+      ]
+    },
+    {
+      "category": "capsules",
+      "shot": 1,
+      "seed": 0,
+      "variant": "layer6",
+      "variant_order": [
+        "fusion6_12",
+        "layer12",
+        "layer6"
+      ],
+      "mean_ms": 82.6416522419701,
+      "median_ms": 82.40892575122416,
+      "peak_gpu_allocated_mib": 149.5537109375,
+      "bank_ms": 723.5693498514593,
+      "gpu_snapshot": "12074 MiB, 24 %",
+      "references": [
+        "capsules/train/good/023.JPG"
+      ],
+      "timings": [
+        {
+          "repeat": 0,
+          "image_path": "capsules/test/good/011.JPG",
+          "inference_ms": 82.06812338903546
+        },
+        {
+          "repeat": 0,
+          "image_path": "capsules/test/good/013.JPG",
+          "inference_ms": 82.24531495943666
+        },
+        {
+          "repeat": 0,
+          "image_path": "capsules/test/bad/000.JPG",
+          "inference_ms": 82.64375198632479
+        },
+        {
+          "repeat": 0,
+          "image_path": "capsules/test/bad/001.JPG",
+          "inference_ms": 82.97980204224586
+        },
+        {
+          "repeat": 1,
+          "image_path": "capsules/test/good/011.JPG",
+          "inference_ms": 82.01330993324518
+        },
+        {
+          "repeat": 1,
+          "image_path": "capsules/test/good/013.JPG",
+          "inference_ms": 82.43459975346923
+        },
+        {
+          "repeat": 1,
+          "image_path": "capsules/test/bad/000.JPG",
+          "inference_ms": 82.39864185452461
+        },
+        {
+          "repeat": 1,
+          "image_path": "capsules/test/bad/001.JPG",
+          "inference_ms": 82.25629478693008
+        },
+        {
+          "repeat": 2,
+          "image_path": "capsules/test/good/011.JPG",
+          "inference_ms": 85.19108965992928
+        },
+        {
+          "repeat": 2,
+          "image_path": "capsules/test/good/013.JPG",
+          "inference_ms": 81.32389606907964
+        },
+        {
+          "repeat": 2,
+          "image_path": "capsules/test/bad/000.JPG",
+          "inference_ms": 82.41920964792371
+        },
+        {
+          "repeat": 2,
+          "image_path": "capsules/test/bad/001.JPG",
+          "inference_ms": 83.72579282149673
+        }
+      ]
+    },
+    {
+      "category": "capsules",
+      "shot": 8,
+      "seed": 0,
+      "variant": "layer12",
+      "variant_order": [
+        "layer12",
+        "layer6",
+        "fusion6_12"
+      ],
+      "mean_ms": 96.98913506387423,
+      "median_ms": 97.01340110041201,
+      "peak_gpu_allocated_mib": 381.57666015625,
+      "bank_ms": 11781.971456017345,
+      "gpu_snapshot": "12350 MiB, 14 %",
+      "references": [
+        "capsules/train/good/023.JPG",
+        "capsules/train/good/025.JPG",
+        "capsules/train/good/028.JPG",
+        "capsules/train/good/029.JPG",
+        "capsules/train/good/030.JPG",
+        "capsules/train/good/031.JPG",
+        "capsules/train/good/032.JPG",
+        "capsules/train/good/033.JPG"
+      ],
+      "timings": [
+        {
+          "repeat": 0,
+          "image_path": "capsules/test/good/011.JPG",
+          "inference_ms": 97.21295814961195
+        },
+        {
+          "repeat": 0,
+          "image_path": "capsules/test/good/013.JPG",
+          "inference_ms": 94.92575703188777
+        },
+        {
+          "repeat": 0,
+          "image_path": "capsules/test/bad/000.JPG",
+          "inference_ms": 98.07142009958625
+        },
+        {
+          "repeat": 0,
+          "image_path": "capsules/test/bad/001.JPG",
+          "inference_ms": 96.56035620719194
+        },
+        {
+          "repeat": 1,
+          "image_path": "capsules/test/good/011.JPG",
+          "inference_ms": 96.89457295462489
+        },
+        {
+          "repeat": 1,
+          "image_path": "capsules/test/good/013.JPG",
+          "inference_ms": 96.2164499796927
+        },
+        {
+          "repeat": 1,
+          "image_path": "capsules/test/bad/000.JPG",
+          "inference_ms": 95.36264883354306
+        },
+        {
+          "repeat": 1,
+          "image_path": "capsules/test/bad/001.JPG",
+          "inference_ms": 97.13222924619913
+        },
+        {
+          "repeat": 2,
+          "image_path": "capsules/test/good/011.JPG",
+          "inference_ms": 97.3877590149641
+        },
+        {
+          "repeat": 2,
+          "image_path": "capsules/test/good/013.JPG",
+          "inference_ms": 99.49834831058979
+        },
+        {
+          "repeat": 2,
+          "image_path": "capsules/test/bad/000.JPG",
+          "inference_ms": 96.89093707129359
+        },
+        {
+          "repeat": 2,
+          "image_path": "capsules/test/bad/001.JPG",
+          "inference_ms": 97.71618386730552
+        }
+      ]
+    },
+    {
+      "category": "capsules",
+      "shot": 8,
+      "seed": 0,
+      "variant": "layer6",
+      "variant_order": [
+        "layer12",
+        "layer6",
+        "fusion6_12"
+      ],
+      "mean_ms": 88.73194184464712,
+      "median_ms": 90.04235453903675,
+      "peak_gpu_allocated_mib": 381.57666015625,
+      "bank_ms": 10580.833861138672,
+      "gpu_snapshot": "12748 MiB, 0 %",
+      "references": [
+        "capsules/train/good/023.JPG",
+        "capsules/train/good/025.JPG",
+        "capsules/train/good/028.JPG",
+        "capsules/train/good/029.JPG",
+        "capsules/train/good/030.JPG",
+        "capsules/train/good/031.JPG",
+        "capsules/train/good/032.JPG",
+        "capsules/train/good/033.JPG"
+      ],
+      "timings": [
+        {
+          "repeat": 0,
+          "image_path": "capsules/test/good/011.JPG",
+          "inference_ms": 83.78880890086293
+        },
+        {
+          "repeat": 0,
+          "image_path": "capsules/test/good/013.JPG",
+          "inference_ms": 83.25532777234912
+        },
+        {
+          "repeat": 0,
+          "image_path": "capsules/test/bad/000.JPG",
+          "inference_ms": 89.95382813736796
+        },
+        {
+          "repeat": 0,
+          "image_path": "capsules/test/bad/001.JPG",
+          "inference_ms": 91.4682811126113
+        },
+        {
+          "repeat": 1,
+          "image_path": "capsules/test/good/011.JPG",
+          "inference_ms": 91.63549542427063
+        },
+        {
+          "repeat": 1,
+          "image_path": "capsules/test/good/013.JPG",
+          "inference_ms": 91.79114690050483
+        },
+        {
+          "repeat": 1,
+          "image_path": "capsules/test/bad/000.JPG",
+          "inference_ms": 94.52038910239935
+        },
+        {
+          "repeat": 1,
+          "image_path": "capsules/test/bad/001.JPG",
+          "inference_ms": 90.13088094070554
+        },
+        {
+          "repeat": 2,
+          "image_path": "capsules/test/good/011.JPG",
+          "inference_ms": 87.63927593827248
+        },
+        {
+          "repeat": 2,
+          "image_path": "capsules/test/good/013.JPG",
+          "inference_ms": 86.4329319447279
+        },
+        {
+          "repeat": 2,
+          "image_path": "capsules/test/bad/000.JPG",
+          "inference_ms": 90.20756604149938
+        },
+        {
+          "repeat": 2,
+          "image_path": "capsules/test/bad/001.JPG",
+          "inference_ms": 83.95936992019415
+        }
+      ]
+    },
+    {
+      "category": "capsules",
+      "shot": 8,
+      "seed": 0,
+      "variant": "fusion6_12",
+      "variant_order": [
+        "layer12",
+        "layer6",
+        "fusion6_12"
+      ],
+      "mean_ms": 107.38206868215154,
+      "median_ms": 112.9240095615387,
+      "peak_gpu_allocated_mib": 669.57666015625,
+      "bank_ms": 17188.157500699162,
+      "gpu_snapshot": "12558 MiB, 0 %",
+      "references": [
+        "capsules/train/good/023.JPG",
+        "capsules/train/good/025.JPG",
+        "capsules/train/good/028.JPG",
+        "capsules/train/good/029.JPG",
+        "capsules/train/good/030.JPG",
+        "capsules/train/good/031.JPG",
+        "capsules/train/good/032.JPG",
+        "capsules/train/good/033.JPG"
+      ],
+      "timings": [
+        {
+          "repeat": 0,
+          "image_path": "capsules/test/good/011.JPG",
+          "inference_ms": 102.95453714206815
+        },
+        {
+          "repeat": 0,
+          "image_path": "capsules/test/good/013.JPG",
+          "inference_ms": 96.45510790869594
+        },
+        {
+          "repeat": 0,
+          "image_path": "capsules/test/bad/000.JPG",
+          "inference_ms": 95.32456705346704
+        },
+        {
+          "repeat": 0,
+          "image_path": "capsules/test/bad/001.JPG",
+          "inference_ms": 96.93274600431323
+        },
+        {
+          "repeat": 1,
+          "image_path": "capsules/test/good/011.JPG",
+          "inference_ms": 95.56435700505972
+        },
+        {
+          "repeat": 1,
+          "image_path": "capsules/test/good/013.JPG",
+          "inference_ms": 112.60518105700612
+        },
+        {
+          "repeat": 1,
+          "image_path": "capsules/test/bad/000.JPG",
+          "inference_ms": 114.81164256110787
+        },
+        {
+          "repeat": 1,
+          "image_path": "capsules/test/bad/001.JPG",
+          "inference_ms": 116.90032202750444
+        },
+        {
+          "repeat": 2,
+          "image_path": "capsules/test/good/011.JPG",
+          "inference_ms": 113.24283806607127
+        },
+        {
+          "repeat": 2,
+          "image_path": "capsules/test/good/013.JPG",
+          "inference_ms": 114.21534465625882
+        },
+        {
+          "repeat": 2,
+          "image_path": "capsules/test/bad/000.JPG",
+          "inference_ms": 114.38306793570518
+        },
+        {
+          "repeat": 2,
+          "image_path": "capsules/test/bad/001.JPG",
+          "inference_ms": 115.19511276856065
+        }
+      ]
+    },
+    {
+      "category": "cashew",
+      "shot": 1,
+      "seed": 0,
+      "variant": "layer6",
+      "variant_order": [
+        "layer6",
+        "fusion6_12",
+        "layer12"
+      ],
+      "mean_ms": 77.16224358106653,
+      "median_ms": 75.47374931164086,
+      "peak_gpu_allocated_mib": 127.591796875,
+      "bank_ms": 656.14003688097,
+      "gpu_snapshot": "11976 MiB, 23 %",
+      "references": [
+        "cashew/train/good/024.JPG"
+      ],
+      "timings": [
+        {
+          "repeat": 0,
+          "image_path": "cashew/test/good/006.JPG",
+          "inference_ms": 80.56220272555947
+        },
+        {
+          "repeat": 0,
+          "image_path": "cashew/test/good/012.JPG",
+          "inference_ms": 81.10828883945942
+        },
+        {
+          "repeat": 0,
+          "image_path": "cashew/test/bad/000.JPG",
+          "inference_ms": 81.28091273829341
+        },
+        {
+          "repeat": 0,
+          "image_path": "cashew/test/bad/001.JPG",
+          "inference_ms": 83.33435701206326
+        },
+        {
+          "repeat": 1,
+          "image_path": "cashew/test/good/006.JPG",
+          "inference_ms": 74.57806169986725
+        },
+        {
+          "repeat": 1,
+          "image_path": "cashew/test/good/012.JPG",
+          "inference_ms": 74.4596803560853
+        },
+        {
+          "repeat": 1,
+          "image_path": "cashew/test/bad/000.JPG",
+          "inference_ms": 73.97377770394087
+        },
+        {
+          "repeat": 1,
+          "image_path": "cashew/test/bad/001.JPG",
+          "inference_ms": 76.0972942225635
+        },
+        {
+          "repeat": 2,
+          "image_path": "cashew/test/good/006.JPG",
+          "inference_ms": 75.07953606545925
+        },
+        {
+          "repeat": 2,
+          "image_path": "cashew/test/good/012.JPG",
+          "inference_ms": 75.50369063392282
+        },
+        {
+          "repeat": 2,
+          "image_path": "cashew/test/bad/000.JPG",
+          "inference_ms": 75.4438079893589
+        },
+        {
+          "repeat": 2,
+          "image_path": "cashew/test/bad/001.JPG",
+          "inference_ms": 74.52531298622489
+        }
+      ]
+    },
+    {
+      "category": "cashew",
+      "shot": 1,
+      "seed": 0,
+      "variant": "fusion6_12",
+      "variant_order": [
+        "layer6",
+        "fusion6_12",
+        "layer12"
+      ],
+      "mean_ms": 76.74978650175035,
+      "median_ms": 76.66950696147978,
+      "peak_gpu_allocated_mib": 145.23486328125,
+      "bank_ms": 712.1320068836212,
+      "gpu_snapshot": "12014 MiB, 23 %",
+      "references": [
+        "cashew/train/good/024.JPG"
+      ],
+      "timings": [
+        {
+          "repeat": 0,
+          "image_path": "cashew/test/good/006.JPG",
+          "inference_ms": 77.03794306144118
+        },
+        {
+          "repeat": 0,
+          "image_path": "cashew/test/good/012.JPG",
+          "inference_ms": 76.55982486903667
+        },
+        {
+          "repeat": 0,
+          "image_path": "cashew/test/bad/000.JPG",
+          "inference_ms": 78.17883370444179
+        },
+        {
+          "repeat": 0,
+          "image_path": "cashew/test/bad/001.JPG",
+          "inference_ms": 76.12628303468227
+        },
+        {
+          "repeat": 1,
+          "image_path": "cashew/test/good/006.JPG",
+          "inference_ms": 75.79568307846785
+        },
+        {
+          "repeat": 1,
+          "image_path": "cashew/test/good/012.JPG",
+          "inference_ms": 76.24971400946379
+        },
+        {
+          "repeat": 1,
+          "image_path": "cashew/test/bad/000.JPG",
+          "inference_ms": 76.77918905392289
+        },
+        {
+          "repeat": 1,
+          "image_path": "cashew/test/bad/001.JPG",
+          "inference_ms": 77.38866377621889
+        },
+        {
+          "repeat": 2,
+          "image_path": "cashew/test/good/006.JPG",
+          "inference_ms": 76.21408812701702
+        },
+        {
+          "repeat": 2,
+          "image_path": "cashew/test/good/012.JPG",
+          "inference_ms": 75.93581499531865
+        },
+        {
+          "repeat": 2,
+          "image_path": "cashew/test/bad/000.JPG",
+          "inference_ms": 77.58882828056812
+        },
+        {
+          "repeat": 2,
+          "image_path": "cashew/test/bad/001.JPG",
+          "inference_ms": 77.14257203042507
+        }
+      ]
+    },
+    {
+      "category": "cashew",
+      "shot": 1,
+      "seed": 0,
+      "variant": "layer12",
+      "variant_order": [
+        "layer6",
+        "fusion6_12",
+        "layer12"
+      ],
+      "mean_ms": 73.6376194205756,
+      "median_ms": 73.67040263488889,
+      "peak_gpu_allocated_mib": 125.99658203125,
+      "bank_ms": 674.2201359011233,
+      "gpu_snapshot": "11976 MiB, 2 %",
+      "references": [
+        "cashew/train/good/024.JPG"
+      ],
+      "timings": [
+        {
+          "repeat": 0,
+          "image_path": "cashew/test/good/006.JPG",
+          "inference_ms": 71.62572024390101
+        },
+        {
+          "repeat": 0,
+          "image_path": "cashew/test/good/012.JPG",
+          "inference_ms": 73.01693176850677
+        },
+        {
+          "repeat": 0,
+          "image_path": "cashew/test/bad/000.JPG",
+          "inference_ms": 73.00314493477345
+        },
+        {
+          "repeat": 0,
+          "image_path": "cashew/test/bad/001.JPG",
+          "inference_ms": 74.9436067417264
+        },
+        {
+          "repeat": 1,
+          "image_path": "cashew/test/good/006.JPG",
+          "inference_ms": 75.09128469973803
+        },
+        {
+          "repeat": 1,
+          "image_path": "cashew/test/good/012.JPG",
+          "inference_ms": 73.31751519814134
+        },
+        {
+          "repeat": 1,
+          "image_path": "cashew/test/bad/000.JPG",
+          "inference_ms": 73.7738311290741
+        },
+        {
+          "repeat": 1,
+          "image_path": "cashew/test/bad/001.JPG",
+          "inference_ms": 73.66746198385954
+        },
+        {
+          "repeat": 2,
+          "image_path": "cashew/test/good/006.JPG",
+          "inference_ms": 74.23674082383513
+        },
+        {
+          "repeat": 2,
+          "image_path": "cashew/test/good/012.JPG",
+          "inference_ms": 73.67334328591824
+        },
+        {
+          "repeat": 2,
+          "image_path": "cashew/test/bad/000.JPG",
+          "inference_ms": 74.58632718771696
+        },
+        {
+          "repeat": 2,
+          "image_path": "cashew/test/bad/001.JPG",
+          "inference_ms": 72.71552504971623
+        }
+      ]
+    },
+    {
+      "category": "cashew",
+      "shot": 8,
+      "seed": 0,
+      "variant": "fusion6_12",
+      "variant_order": [
+        "fusion6_12",
+        "layer12",
+        "layer6"
+      ],
+      "mean_ms": 80.02858069570114,
+      "median_ms": 80.49418870359659,
+      "peak_gpu_allocated_mib": 501.46728515625,
+      "bank_ms": 15063.959388062358,
+      "gpu_snapshot": "12554 MiB, 31 %",
+      "references": [
+        "cashew/train/good/024.JPG",
+        "cashew/train/good/025.JPG",
+        "cashew/train/good/026.JPG",
+        "cashew/train/good/027.JPG",
+        "cashew/train/good/028.JPG",
+        "cashew/train/good/029.JPG",
+        "cashew/train/good/030.JPG",
+        "cashew/train/good/031.JPG"
+      ],
+      "timings": [
+        {
+          "repeat": 0,
+          "image_path": "cashew/test/good/006.JPG",
+          "inference_ms": 78.65823898464441
+        },
+        {
+          "repeat": 0,
+          "image_path": "cashew/test/good/012.JPG",
+          "inference_ms": 78.46578815951943
+        },
+        {
+          "repeat": 0,
+          "image_path": "cashew/test/bad/000.JPG",
+          "inference_ms": 80.65453683957458
+        },
+        {
+          "repeat": 0,
+          "image_path": "cashew/test/bad/001.JPG",
+          "inference_ms": 78.81712820380926
+        },
+        {
+          "repeat": 1,
+          "image_path": "cashew/test/good/006.JPG",
+          "inference_ms": 77.5645268149674
+        },
+        {
+          "repeat": 1,
+          "image_path": "cashew/test/good/012.JPG",
+          "inference_ms": 77.78119388967752
+        },
+        {
+          "repeat": 1,
+          "image_path": "cashew/test/bad/000.JPG",
+          "inference_ms": 81.10442524775863
+        },
+        {
+          "repeat": 1,
+          "image_path": "cashew/test/bad/001.JPG",
+          "inference_ms": 80.54312132298946
+        },
+        {
+          "repeat": 2,
+          "image_path": "cashew/test/good/006.JPG",
+          "inference_ms": 80.44525608420372
+        },
+        {
+          "repeat": 2,
+          "image_path": "cashew/test/good/012.JPG",
+          "inference_ms": 81.39447681605816
+        },
+        {
+          "repeat": 2,
+          "image_path": "cashew/test/bad/000.JPG",
+          "inference_ms": 82.56374299526215
+        },
+        {
+          "repeat": 2,
+          "image_path": "cashew/test/bad/001.JPG",
+          "inference_ms": 82.35053298994899
+        }
+      ]
+    },
+    {
+      "category": "cashew",
+      "shot": 8,
+      "seed": 0,
+      "variant": "layer12",
+      "variant_order": [
+        "fusion6_12",
+        "layer12",
+        "layer6"
+      ],
+      "mean_ms": 78.03779762859146,
+      "median_ms": 78.0741514172405,
+      "peak_gpu_allocated_mib": 297.46728515625,
+      "bank_ms": 7567.240917123854,
+      "gpu_snapshot": "12310 MiB, 28 %",
+      "references": [
+        "cashew/train/good/024.JPG",
+        "cashew/train/good/025.JPG",
+        "cashew/train/good/026.JPG",
+        "cashew/train/good/027.JPG",
+        "cashew/train/good/028.JPG",
+        "cashew/train/good/029.JPG",
+        "cashew/train/good/030.JPG",
+        "cashew/train/good/031.JPG"
+      ],
+      "timings": [
+        {
+          "repeat": 0,
+          "image_path": "cashew/test/good/006.JPG",
+          "inference_ms": 77.87521136924624
+        },
+        {
+          "repeat": 0,
+          "image_path": "cashew/test/good/012.JPG",
+          "inference_ms": 77.5830838829279
+        },
+        {
+          "repeat": 0,
+          "image_path": "cashew/test/bad/000.JPG",
+          "inference_ms": 78.52143468335271
+        },
+        {
+          "repeat": 0,
+          "image_path": "cashew/test/bad/001.JPG",
+          "inference_ms": 78.29926908016205
+        },
+        {
+          "repeat": 1,
+          "image_path": "cashew/test/good/006.JPG",
+          "inference_ms": 81.45963214337826
+        },
+        {
+          "repeat": 1,
+          "image_path": "cashew/test/good/012.JPG",
+          "inference_ms": 78.2109028659761
+        },
+        {
+          "repeat": 1,
+          "image_path": "cashew/test/bad/000.JPG",
+          "inference_ms": 79.1197088547051
+        },
+        {
+          "repeat": 1,
+          "image_path": "cashew/test/bad/001.JPG",
+          "inference_ms": 77.9373999685049
+        },
+        {
+          "repeat": 2,
+          "image_path": "cashew/test/good/006.JPG",
+          "inference_ms": 78.48479691892862
+        },
+        {
+          "repeat": 2,
+          "image_path": "cashew/test/good/012.JPG",
+          "inference_ms": 77.4545818567276
+        },
+        {
+          "repeat": 2,
+          "image_path": "cashew/test/bad/000.JPG",
+          "inference_ms": 76.28768309950829
+        },
+        {
+          "repeat": 2,
+          "image_path": "cashew/test/bad/001.JPG",
+          "inference_ms": 75.21986681967974
+        }
+      ]
+    },
+    {
+      "category": "cashew",
+      "shot": 8,
+      "seed": 0,
+      "variant": "layer6",
+      "variant_order": [
+        "fusion6_12",
+        "layer12",
+        "layer6"
+      ],
+      "mean_ms": 61.928253659668066,
+      "median_ms": 62.28911061771214,
+      "peak_gpu_allocated_mib": 297.46728515625,
+      "bank_ms": 4386.541441082954,
+      "gpu_snapshot": "12310 MiB, 49 %",
+      "references": [
+        "cashew/train/good/024.JPG",
+        "cashew/train/good/025.JPG",
+        "cashew/train/good/026.JPG",
+        "cashew/train/good/027.JPG",
+        "cashew/train/good/028.JPG",
+        "cashew/train/good/029.JPG",
+        "cashew/train/good/030.JPG",
+        "cashew/train/good/031.JPG"
+      ],
+      "timings": [
+        {
+          "repeat": 0,
+          "image_path": "cashew/test/good/006.JPG",
+          "inference_ms": 60.507319401949644
+        },
+        {
+          "repeat": 0,
+          "image_path": "cashew/test/good/012.JPG",
+          "inference_ms": 63.05411085486412
+        },
+        {
+          "repeat": 0,
+          "image_path": "cashew/test/bad/000.JPG",
+          "inference_ms": 60.62463019043207
+        },
+        {
+          "repeat": 0,
+          "image_path": "cashew/test/bad/001.JPG",
+          "inference_ms": 62.15832894667983
+        },
+        {
+          "repeat": 1,
+          "image_path": "cashew/test/good/006.JPG",
+          "inference_ms": 63.34152212366462
+        },
+        {
+          "repeat": 1,
+          "image_path": "cashew/test/good/012.JPG",
+          "inference_ms": 62.62082792818546
+        },
+        {
+          "repeat": 1,
+          "image_path": "cashew/test/bad/000.JPG",
+          "inference_ms": 62.43916694074869
+        },
+        {
+          "repeat": 1,
+          "image_path": "cashew/test/bad/001.JPG",
+          "inference_ms": 62.32449226081371
+        },
+        {
+          "repeat": 2,
+          "image_path": "cashew/test/good/006.JPG",
+          "inference_ms": 62.32199724763632
+        },
+        {
+          "repeat": 2,
+          "image_path": "cashew/test/good/012.JPG",
+          "inference_ms": 60.531456023454666
+        },
+        {
+          "repeat": 2,
+          "image_path": "cashew/test/bad/000.JPG",
+          "inference_ms": 60.95896800979972
+        },
+        {
+          "repeat": 2,
+          "image_path": "cashew/test/bad/001.JPG",
+          "inference_ms": 62.25622398778796
+        }
+      ]
+    },
+    {
+      "category": "chewinggum",
+      "shot": 1,
+      "seed": 0,
+      "variant": "layer12",
+      "variant_order": [
+        "layer12",
+        "layer6",
+        "fusion6_12"
+      ],
+      "mean_ms": 60.386545451668404,
+      "median_ms": 59.62124350480735,
+      "peak_gpu_allocated_mib": 129.826171875,
+      "bank_ms": 563.7951740063727,
+      "gpu_snapshot": "12140 MiB, 47 %",
+      "references": [
+        "chewinggum/train/good/023.JPG"
+      ],
+      "timings": [
+        {
+          "repeat": 0,
+          "image_path": "chewinggum/test/good/006.JPG",
+          "inference_ms": 62.03209375962615
+        },
+        {
+          "repeat": 0,
+          "image_path": "chewinggum/test/good/012.JPG",
+          "inference_ms": 60.09750301018357
+        },
+        {
+          "repeat": 0,
+          "image_path": "chewinggum/test/bad/000.JPG",
+          "inference_ms": 59.51976776123047
+        },
+        {
+          "repeat": 0,
+          "image_path": "chewinggum/test/bad/001.JPG",
+          "inference_ms": 59.72271924838424
+        },
+        {
+          "repeat": 1,
+          "image_path": "chewinggum/test/good/006.JPG",
+          "inference_ms": 57.07680154591799
+        },
+        {
+          "repeat": 1,
+          "image_path": "chewinggum/test/good/012.JPG",
+          "inference_ms": 58.86581027880311
+        },
+        {
+          "repeat": 1,
+          "image_path": "chewinggum/test/bad/000.JPG",
+          "inference_ms": 67.68272491171956
+        },
+        {
+          "repeat": 1,
+          "image_path": "chewinggum/test/bad/001.JPG",
+          "inference_ms": 64.65711398050189
+        },
+        {
+          "repeat": 2,
+          "image_path": "chewinggum/test/good/006.JPG",
+          "inference_ms": 63.35116410627961
+        },
+        {
+          "repeat": 2,
+          "image_path": "chewinggum/test/good/012.JPG",
+          "inference_ms": 56.632346007972956
+        },
+        {
+          "repeat": 2,
+          "image_path": "chewinggum/test/bad/000.JPG",
+          "inference_ms": 57.25261103361845
+        },
+        {
+          "repeat": 2,
+          "image_path": "chewinggum/test/bad/001.JPG",
+          "inference_ms": 57.747889775782824
+        }
+      ]
+    },
+    {
+      "category": "chewinggum",
+      "shot": 1,
+      "seed": 0,
+      "variant": "layer6",
+      "variant_order": [
+        "layer12",
+        "layer6",
+        "fusion6_12"
+      ],
+      "mean_ms": 59.1617653456827,
+      "median_ms": 59.20478445477784,
+      "peak_gpu_allocated_mib": 131.60888671875,
+      "bank_ms": 557.4381500482559,
+      "gpu_snapshot": "12140 MiB, 52 %",
+      "references": [
+        "chewinggum/train/good/023.JPG"
+      ],
+      "timings": [
+        {
+          "repeat": 0,
+          "image_path": "chewinggum/test/good/006.JPG",
+          "inference_ms": 60.45797374099493
+        },
+        {
+          "repeat": 0,
+          "image_path": "chewinggum/test/good/012.JPG",
+          "inference_ms": 61.027481220662594
+        },
+        {
+          "repeat": 0,
+          "image_path": "chewinggum/test/bad/000.JPG",
+          "inference_ms": 60.21343404427171
+        },
+        {
+          "repeat": 0,
+          "image_path": "chewinggum/test/bad/001.JPG",
+          "inference_ms": 58.967444114387035
+        },
+        {
+          "repeat": 1,
+          "image_path": "chewinggum/test/good/006.JPG",
+          "inference_ms": 57.61538492515683
+        },
+        {
+          "repeat": 1,
+          "image_path": "chewinggum/test/good/012.JPG",
+          "inference_ms": 57.34624993056059
+        },
+        {
+          "repeat": 1,
+          "image_path": "chewinggum/test/bad/000.JPG",
+          "inference_ms": 58.16680891439319
+        },
+        {
+          "repeat": 1,
+          "image_path": "chewinggum/test/bad/001.JPG",
+          "inference_ms": 59.352036099880934
+        },
+        {
+          "repeat": 2,
+          "image_path": "chewinggum/test/good/006.JPG",
+          "inference_ms": 59.57913212478161
+        },
+        {
+          "repeat": 2,
+          "image_path": "chewinggum/test/good/012.JPG",
+          "inference_ms": 57.355798315256834
+        },
+        {
+          "repeat": 2,
+          "image_path": "chewinggum/test/bad/000.JPG",
+          "inference_ms": 60.801907908171415
+        },
+        {
+          "repeat": 2,
+          "image_path": "chewinggum/test/bad/001.JPG",
+          "inference_ms": 59.05753280967474
+        }
+      ]
+    },
+    {
+      "category": "chewinggum",
+      "shot": 1,
+      "seed": 0,
+      "variant": "fusion6_12",
+      "variant_order": [
+        "layer12",
+        "layer6",
+        "fusion6_12"
+      ],
+      "mean_ms": 79.21006258887549,
+      "median_ms": 79.10793158225715,
+      "peak_gpu_allocated_mib": 150.23876953125,
+      "bank_ms": 732.9443511553109,
+      "gpu_snapshot": "12200 MiB, 47 %",
+      "references": [
+        "chewinggum/train/good/023.JPG"
+      ],
+      "timings": [
+        {
+          "repeat": 0,
+          "image_path": "chewinggum/test/good/006.JPG",
+          "inference_ms": 79.9373909831047
+        },
+        {
+          "repeat": 0,
+          "image_path": "chewinggum/test/good/012.JPG",
+          "inference_ms": 79.5567980967462
+        },
+        {
+          "repeat": 0,
+          "image_path": "chewinggum/test/bad/000.JPG",
+          "inference_ms": 79.3762388639152
+        },
+        {
+          "repeat": 0,
+          "image_path": "chewinggum/test/bad/001.JPG",
+          "inference_ms": 79.20671999454498
+        },
+        {
+          "repeat": 1,
+          "image_path": "chewinggum/test/good/006.JPG",
+          "inference_ms": 78.42932222411036
+        },
+        {
+          "repeat": 1,
+          "image_path": "chewinggum/test/good/012.JPG",
+          "inference_ms": 79.08111624419689
+        },
+        {
+          "repeat": 1,
+          "image_path": "chewinggum/test/bad/000.JPG",
+          "inference_ms": 78.96735286340117
+        },
+        {
+          "repeat": 1,
+          "image_path": "chewinggum/test/bad/001.JPG",
+          "inference_ms": 78.9529848843813
+        },
+        {
+          "repeat": 2,
+          "image_path": "chewinggum/test/good/006.JPG",
+          "inference_ms": 79.13474692031741
+        },
+        {
+          "repeat": 2,
+          "image_path": "chewinggum/test/good/012.JPG",
+          "inference_ms": 78.90323223546147
+        },
+        {
+          "repeat": 2,
+          "image_path": "chewinggum/test/bad/000.JPG",
+          "inference_ms": 78.91196897253394
+        },
+        {
+          "repeat": 2,
+          "image_path": "chewinggum/test/bad/001.JPG",
+          "inference_ms": 80.06287878379226
+        }
+      ]
+    },
+    {
+      "category": "chewinggum",
+      "shot": 8,
+      "seed": 0,
+      "variant": "layer6",
+      "variant_order": [
+        "layer6",
+        "fusion6_12",
+        "layer12"
+      ],
+      "mean_ms": 71.57564640510827,
+      "median_ms": 73.7892787437886,
+      "peak_gpu_allocated_mib": 321.49853515625,
+      "bank_ms": 7583.814506884664,
+      "gpu_snapshot": "12412 MiB, 31 %",
+      "references": [
+        "chewinggum/train/good/023.JPG",
+        "chewinggum/train/good/024.JPG",
+        "chewinggum/train/good/025.JPG",
+        "chewinggum/train/good/026.JPG",
+        "chewinggum/train/good/027.JPG",
+        "chewinggum/train/good/028.JPG",
+        "chewinggum/train/good/029.JPG",
+        "chewinggum/train/good/030.JPG"
+      ],
+      "timings": [
+        {
+          "repeat": 0,
+          "image_path": "chewinggum/test/good/006.JPG",
+          "inference_ms": 74.23026487231255
+        },
+        {
+          "repeat": 0,
+          "image_path": "chewinggum/test/good/012.JPG",
+          "inference_ms": 73.41298973187804
+        },
+        {
+          "repeat": 0,
+          "image_path": "chewinggum/test/bad/000.JPG",
+          "inference_ms": 75.10801497846842
+        },
+        {
+          "repeat": 0,
+          "image_path": "chewinggum/test/bad/001.JPG",
+          "inference_ms": 75.26723388582468
+        },
+        {
+          "repeat": 1,
+          "image_path": "chewinggum/test/good/006.JPG",
+          "inference_ms": 73.46785487607121
+        },
+        {
+          "repeat": 1,
+          "image_path": "chewinggum/test/good/012.JPG",
+          "inference_ms": 74.11070261150599
+        },
+        {
+          "repeat": 1,
+          "image_path": "chewinggum/test/bad/000.JPG",
+          "inference_ms": 74.56699013710022
+        },
+        {
+          "repeat": 1,
+          "image_path": "chewinggum/test/bad/001.JPG",
+          "inference_ms": 74.96901322156191
+        },
+        {
+          "repeat": 2,
+          "image_path": "chewinggum/test/good/006.JPG",
+          "inference_ms": 71.78633799776435
+        },
+        {
+          "repeat": 2,
+          "image_path": "chewinggum/test/good/012.JPG",
+          "inference_ms": 60.93233497813344
+        },
+        {
+          "repeat": 2,
+          "image_path": "chewinggum/test/bad/000.JPG",
+          "inference_ms": 61.935086734592915
+        },
+        {
+          "repeat": 2,
+          "image_path": "chewinggum/test/bad/001.JPG",
+          "inference_ms": 69.12093283608556
+        }
+      ]
+    },
+    {
+      "category": "chewinggum",
+      "shot": 8,
+      "seed": 0,
+      "variant": "fusion6_12",
+      "variant_order": [
+        "layer6",
+        "fusion6_12",
+        "layer12"
+      ],
+      "mean_ms": 81.71725350742538,
+      "median_ms": 80.64240356907248,
+      "peak_gpu_allocated_mib": 549.49853515625,
+      "bank_ms": 12028.110445011407,
+      "gpu_snapshot": "12520 MiB, 0 %",
+      "references": [
+        "chewinggum/train/good/023.JPG",
+        "chewinggum/train/good/024.JPG",
+        "chewinggum/train/good/025.JPG",
+        "chewinggum/train/good/026.JPG",
+        "chewinggum/train/good/027.JPG",
+        "chewinggum/train/good/028.JPG",
+        "chewinggum/train/good/029.JPG",
+        "chewinggum/train/good/030.JPG"
+      ],
+      "timings": [
+        {
+          "repeat": 0,
+          "image_path": "chewinggum/test/good/006.JPG",
+          "inference_ms": 84.09774210304022
+        },
+        {
+          "repeat": 0,
+          "image_path": "chewinggum/test/good/012.JPG",
+          "inference_ms": 93.80374010652304
+        },
+        {
+          "repeat": 0,
+          "image_path": "chewinggum/test/bad/000.JPG",
+          "inference_ms": 80.75041603296995
+        },
+        {
+          "repeat": 0,
+          "image_path": "chewinggum/test/bad/001.JPG",
+          "inference_ms": 79.52227862551808
+        },
+        {
+          "repeat": 1,
+          "image_path": "chewinggum/test/good/006.JPG",
+          "inference_ms": 81.10356889665127
+        },
+        {
+          "repeat": 1,
+          "image_path": "chewinggum/test/good/012.JPG",
+          "inference_ms": 82.04005006700754
+        },
+        {
+          "repeat": 1,
+          "image_path": "chewinggum/test/bad/000.JPG",
+          "inference_ms": 80.53439110517502
+        },
+        {
+          "repeat": 1,
+          "image_path": "chewinggum/test/bad/001.JPG",
+          "inference_ms": 79.78333020582795
+        },
+        {
+          "repeat": 2,
+          "image_path": "chewinggum/test/good/006.JPG",
+          "inference_ms": 80.11850994080305
+        },
+        {
+          "repeat": 2,
+          "image_path": "chewinggum/test/good/012.JPG",
+          "inference_ms": 85.72716312482953
+        },
+        {
+          "repeat": 2,
+          "image_path": "chewinggum/test/bad/000.JPG",
+          "inference_ms": 77.41757621988654
+        },
+        {
+          "repeat": 2,
+          "image_path": "chewinggum/test/bad/001.JPG",
+          "inference_ms": 75.70827566087246
+        }
+      ]
+    },
+    {
+      "category": "chewinggum",
+      "shot": 8,
+      "seed": 0,
+      "variant": "layer12",
+      "variant_order": [
+        "layer6",
+        "fusion6_12",
+        "layer12"
+      ],
+      "mean_ms": 75.09662963760395,
+      "median_ms": 74.70409804955125,
+      "peak_gpu_allocated_mib": 321.49853515625,
+      "bank_ms": 14759.129723068327,
+      "gpu_snapshot": "12292 MiB, 0 %",
+      "references": [
+        "chewinggum/train/good/023.JPG",
+        "chewinggum/train/good/024.JPG",
+        "chewinggum/train/good/025.JPG",
+        "chewinggum/train/good/026.JPG",
+        "chewinggum/train/good/027.JPG",
+        "chewinggum/train/good/028.JPG",
+        "chewinggum/train/good/029.JPG",
+        "chewinggum/train/good/030.JPG"
+      ],
+      "timings": [
+        {
+          "repeat": 0,
+          "image_path": "chewinggum/test/good/006.JPG",
+          "inference_ms": 75.32972283661366
+        },
+        {
+          "repeat": 0,
+          "image_path": "chewinggum/test/good/012.JPG",
+          "inference_ms": 74.70498001202941
+        },
+        {
+          "repeat": 0,
+          "image_path": "chewinggum/test/bad/000.JPG",
+          "inference_ms": 74.97255085036159
+        },
+        {
+          "repeat": 0,
+          "image_path": "chewinggum/test/bad/001.JPG",
+          "inference_ms": 79.02942225337029
+        },
+        {
+          "repeat": 1,
+          "image_path": "chewinggum/test/good/006.JPG",
+          "inference_ms": 75.03783470019698
+        },
+        {
+          "repeat": 1,
+          "image_path": "chewinggum/test/good/012.JPG",
+          "inference_ms": 74.50399966910481
+        },
+        {
+          "repeat": 1,
+          "image_path": "chewinggum/test/bad/000.JPG",
+          "inference_ms": 75.85743395611644
+        },
+        {
+          "repeat": 1,
+          "image_path": "chewinggum/test/bad/001.JPG",
+          "inference_ms": 74.70321608707309
+        },
+        {
+          "repeat": 2,
+          "image_path": "chewinggum/test/good/006.JPG",
+          "inference_ms": 74.57402301952243
+        },
+        {
+          "repeat": 2,
+          "image_path": "chewinggum/test/good/012.JPG",
+          "inference_ms": 74.50057519599795
+        },
+        {
+          "repeat": 2,
+          "image_path": "chewinggum/test/bad/000.JPG",
+          "inference_ms": 74.44501016288996
+        },
+        {
+          "repeat": 2,
+          "image_path": "chewinggum/test/bad/001.JPG",
+          "inference_ms": 73.5007869079709
+        }
+      ]
+    },
+    {
+      "category": "fryum",
+      "shot": 1,
+      "seed": 0,
+      "variant": "fusion6_12",
+      "variant_order": [
+        "fusion6_12",
+        "layer12",
+        "layer6"
+      ],
+      "mean_ms": 86.18005741542827,
+      "median_ms": 86.13046375103295,
+      "peak_gpu_allocated_mib": 165.24853515625,
+      "bank_ms": 629.8838360235095,
+      "gpu_snapshot": "12156 MiB, 27 %",
+      "references": [
+        "fryum/train/good/024.JPG"
+      ],
+      "timings": [
+        {
+          "repeat": 0,
+          "image_path": "fryum/test/good/006.JPG",
+          "inference_ms": 89.58036173135042
+        },
+        {
+          "repeat": 0,
+          "image_path": "fryum/test/good/012.JPG",
+          "inference_ms": 85.15620231628418
+        },
+        {
+          "repeat": 0,
+          "image_path": "fryum/test/bad/000.JPG",
+          "inference_ms": 87.9673040471971
+        },
+        {
+          "repeat": 0,
+          "image_path": "fryum/test/bad/001.JPG",
+          "inference_ms": 86.28880139440298
+        },
+        {
+          "repeat": 1,
+          "image_path": "fryum/test/good/006.JPG",
+          "inference_ms": 85.90117190033197
+        },
+        {
+          "repeat": 1,
+          "image_path": "fryum/test/good/012.JPG",
+          "inference_ms": 83.94954772666097
+        },
+        {
+          "repeat": 1,
+          "image_path": "fryum/test/bad/000.JPG",
+          "inference_ms": 84.88543471321464
+        },
+        {
+          "repeat": 1,
+          "image_path": "fryum/test/bad/001.JPG",
+          "inference_ms": 86.86836017295718
+        },
+        {
+          "repeat": 2,
+          "image_path": "fryum/test/good/006.JPG",
+          "inference_ms": 86.45780803635716
+        },
+        {
+          "repeat": 2,
+          "image_path": "fryum/test/good/012.JPG",
+          "inference_ms": 85.97212610766292
+        },
+        {
+          "repeat": 2,
+          "image_path": "fryum/test/bad/000.JPG",
+          "inference_ms": 84.48464190587401
+        },
+        {
+          "repeat": 2,
+          "image_path": "fryum/test/bad/001.JPG",
+          "inference_ms": 86.64892893284559
+        }
+      ]
+    },
+    {
+      "category": "fryum",
+      "shot": 1,
+      "seed": 0,
+      "variant": "layer12",
+      "variant_order": [
+        "fusion6_12",
+        "layer12",
+        "layer6"
+      ],
+      "mean_ms": 78.80608881047617,
+      "median_ms": 78.49541632458568,
+      "peak_gpu_allocated_mib": 139.4599609375,
+      "bank_ms": 731.6035972908139,
+      "gpu_snapshot": "12104 MiB, 26 %",
+      "references": [
+        "fryum/train/good/024.JPG"
+      ],
+      "timings": [
+        {
+          "repeat": 0,
+          "image_path": "fryum/test/good/006.JPG",
+          "inference_ms": 80.55696776136756
+        },
+        {
+          "repeat": 0,
+          "image_path": "fryum/test/good/012.JPG",
+          "inference_ms": 77.97121163457632
+        },
+        {
+          "repeat": 0,
+          "image_path": "fryum/test/bad/000.JPG",
+          "inference_ms": 77.54755532369018
+        },
+        {
+          "repeat": 0,
+          "image_path": "fryum/test/bad/001.JPG",
+          "inference_ms": 77.4736856110394
+        },
+        {
+          "repeat": 1,
+          "image_path": "fryum/test/good/006.JPG",
+          "inference_ms": 79.70632007345557
+        },
+        {
+          "repeat": 1,
+          "image_path": "fryum/test/good/012.JPG",
+          "inference_ms": 79.43876786157489
+        },
+        {
+          "repeat": 1,
+          "image_path": "fryum/test/bad/000.JPG",
+          "inference_ms": 81.50402782484889
+        },
+        {
+          "repeat": 1,
+          "image_path": "fryum/test/bad/001.JPG",
+          "inference_ms": 78.34331085905433
+        },
+        {
+          "repeat": 2,
+          "image_path": "fryum/test/good/006.JPG",
+          "inference_ms": 77.91473483666778
+        },
+        {
+          "repeat": 2,
+          "image_path": "fryum/test/good/012.JPG",
+          "inference_ms": 78.64752179011703
+        },
+        {
+          "repeat": 2,
+          "image_path": "fryum/test/bad/000.JPG",
+          "inference_ms": 77.39417813718319
+        },
+        {
+          "repeat": 2,
+          "image_path": "fryum/test/bad/001.JPG",
+          "inference_ms": 79.17478401213884
+        }
+      ]
+    },
+    {
+      "category": "fryum",
+      "shot": 1,
+      "seed": 0,
+      "variant": "layer6",
+      "variant_order": [
+        "fusion6_12",
+        "layer12",
+        "layer6"
+      ],
+      "mean_ms": 58.6587821211045,
+      "median_ms": 58.45019547268748,
+      "peak_gpu_allocated_mib": 141.71142578125,
+      "bank_ms": 566.5670516900718,
+      "gpu_snapshot": "12104 MiB, 26 %",
+      "references": [
+        "fryum/train/good/024.JPG"
+      ],
+      "timings": [
+        {
+          "repeat": 0,
+          "image_path": "fryum/test/good/006.JPG",
+          "inference_ms": 58.611649088561535
+        },
+        {
+          "repeat": 0,
+          "image_path": "fryum/test/good/012.JPG",
+          "inference_ms": 59.79208508506417
+        },
+        {
+          "repeat": 0,
+          "image_path": "fryum/test/bad/000.JPG",
+          "inference_ms": 60.39158208295703
+        },
+        {
+          "repeat": 0,
+          "image_path": "fryum/test/bad/001.JPG",
+          "inference_ms": 60.327019076794386
+        },
+        {
+          "repeat": 1,
+          "image_path": "fryum/test/good/006.JPG",
+          "inference_ms": 59.983355924487114
+        },
+        {
+          "repeat": 1,
+          "image_path": "fryum/test/good/012.JPG",
+          "inference_ms": 57.05629615113139
+        },
+        {
+          "repeat": 1,
+          "image_path": "fryum/test/bad/000.JPG",
+          "inference_ms": 59.55142434686422
+        },
+        {
+          "repeat": 1,
+          "image_path": "fryum/test/bad/001.JPG",
+          "inference_ms": 58.28874185681343
+        },
+        {
+          "repeat": 2,
+          "image_path": "fryum/test/good/006.JPG",
+          "inference_ms": 57.58875794708729
+        },
+        {
+          "repeat": 2,
+          "image_path": "fryum/test/good/012.JPG",
+          "inference_ms": 57.417767122387886
+        },
+        {
+          "repeat": 2,
+          "image_path": "fryum/test/bad/000.JPG",
+          "inference_ms": 57.692652102559805
+        },
+        {
+          "repeat": 2,
+          "image_path": "fryum/test/bad/001.JPG",
+          "inference_ms": 57.20405466854572
+        }
+      ]
+    },
+    {
+      "category": "fryum",
+      "shot": 8,
+      "seed": 0,
+      "variant": "layer12",
+      "variant_order": [
+        "layer12",
+        "layer6",
+        "fusion6_12"
+      ],
+      "mean_ms": 84.41295257459085,
+      "median_ms": 84.49808834120631,
+      "peak_gpu_allocated_mib": 381.57666015625,
+      "bank_ms": 5700.40727686137,
+      "gpu_snapshot": "12444 MiB, 29 %",
+      "references": [
+        "fryum/train/good/024.JPG",
+        "fryum/train/good/025.JPG",
+        "fryum/train/good/026.JPG",
+        "fryum/train/good/027.JPG",
+        "fryum/train/good/028.JPG",
+        "fryum/train/good/029.JPG",
+        "fryum/train/good/030.JPG",
+        "fryum/train/good/031.JPG"
+      ],
+      "timings": [
+        {
+          "repeat": 0,
+          "image_path": "fryum/test/good/006.JPG",
+          "inference_ms": 84.95417004451156
+        },
+        {
+          "repeat": 0,
+          "image_path": "fryum/test/good/012.JPG",
+          "inference_ms": 83.47455086186528
+        },
+        {
+          "repeat": 0,
+          "image_path": "fryum/test/bad/000.JPG",
+          "inference_ms": 83.09520687907934
+        },
+        {
+          "repeat": 0,
+          "image_path": "fryum/test/bad/001.JPG",
+          "inference_ms": 84.06488969922066
+        },
+        {
+          "repeat": 1,
+          "image_path": "fryum/test/good/006.JPG",
+          "inference_ms": 85.17765067517757
+        },
+        {
+          "repeat": 1,
+          "image_path": "fryum/test/good/012.JPG",
+          "inference_ms": 84.93128698319197
+        },
+        {
+          "repeat": 1,
+          "image_path": "fryum/test/bad/000.JPG",
+          "inference_ms": 85.26361174881458
+        },
+        {
+          "repeat": 1,
+          "image_path": "fryum/test/bad/001.JPG",
+          "inference_ms": 85.02257894724607
+        },
+        {
+          "repeat": 2,
+          "image_path": "fryum/test/good/006.JPG",
+          "inference_ms": 83.09537824243307
+        },
+        {
+          "repeat": 2,
+          "image_path": "fryum/test/good/012.JPG",
+          "inference_ms": 83.81446870043874
+        },
+        {
+          "repeat": 2,
+          "image_path": "fryum/test/bad/000.JPG",
+          "inference_ms": 83.72013317421079
+        },
+        {
+          "repeat": 2,
+          "image_path": "fryum/test/bad/001.JPG",
+          "inference_ms": 86.34150493890047
+        }
+      ]
+    },
+    {
+      "category": "fryum",
+      "shot": 8,
+      "seed": 0,
+      "variant": "layer6",
+      "variant_order": [
+        "layer12",
+        "layer6",
+        "fusion6_12"
+      ],
+      "mean_ms": 84.14257709713031,
+      "median_ms": 84.2942779418081,
+      "peak_gpu_allocated_mib": 381.57666015625,
+      "bank_ms": 8844.449419993907,
+      "gpu_snapshot": "12476 MiB, 41 %",
+      "references": [
+        "fryum/train/good/024.JPG",
+        "fryum/train/good/025.JPG",
+        "fryum/train/good/026.JPG",
+        "fryum/train/good/027.JPG",
+        "fryum/train/good/028.JPG",
+        "fryum/train/good/029.JPG",
+        "fryum/train/good/030.JPG",
+        "fryum/train/good/031.JPG"
+      ],
+      "timings": [
+        {
+          "repeat": 0,
+          "image_path": "fryum/test/good/006.JPG",
+          "inference_ms": 81.12226286903024
+        },
+        {
+          "repeat": 0,
+          "image_path": "fryum/test/good/012.JPG",
+          "inference_ms": 84.28737008944154
+        },
+        {
+          "repeat": 0,
+          "image_path": "fryum/test/bad/000.JPG",
+          "inference_ms": 87.09822036325932
+        },
+        {
+          "repeat": 0,
+          "image_path": "fryum/test/bad/001.JPG",
+          "inference_ms": 84.62088694795966
+        },
+        {
+          "repeat": 1,
+          "image_path": "fryum/test/good/006.JPG",
+          "inference_ms": 85.6247409246862
+        },
+        {
+          "repeat": 1,
+          "image_path": "fryum/test/good/012.JPG",
+          "inference_ms": 84.88172618672252
+        },
+        {
+          "repeat": 1,
+          "image_path": "fryum/test/bad/000.JPG",
+          "inference_ms": 82.55681023001671
+        },
+        {
+          "repeat": 1,
+          "image_path": "fryum/test/bad/001.JPG",
+          "inference_ms": 83.55070697143674
+        },
+        {
+          "repeat": 2,
+          "image_path": "fryum/test/good/006.JPG",
+          "inference_ms": 83.15465226769447
+        },
+        {
+          "repeat": 2,
+          "image_path": "fryum/test/good/012.JPG",
+          "inference_ms": 83.87349266558886
+        },
+        {
+          "repeat": 2,
+          "image_path": "fryum/test/bad/000.JPG",
+          "inference_ms": 84.30118579417467
+        },
+        {
+          "repeat": 2,
+          "image_path": "fryum/test/bad/001.JPG",
+          "inference_ms": 84.63886985555291
+        }
+      ]
+    },
+    {
+      "category": "fryum",
+      "shot": 8,
+      "seed": 0,
+      "variant": "fusion6_12",
+      "variant_order": [
+        "layer12",
+        "layer6",
+        "fusion6_12"
+      ],
+      "mean_ms": 78.69719139610727,
+      "median_ms": 79.03402391821146,
+      "peak_gpu_allocated_mib": 669.57666015625,
+      "bank_ms": 19373.542244080454,
+      "gpu_snapshot": "12786 MiB, 38 %",
+      "references": [
+        "fryum/train/good/024.JPG",
+        "fryum/train/good/025.JPG",
+        "fryum/train/good/026.JPG",
+        "fryum/train/good/027.JPG",
+        "fryum/train/good/028.JPG",
+        "fryum/train/good/029.JPG",
+        "fryum/train/good/030.JPG",
+        "fryum/train/good/031.JPG"
+      ],
+      "timings": [
+        {
+          "repeat": 0,
+          "image_path": "fryum/test/good/006.JPG",
+          "inference_ms": 78.58614670112729
+        },
+        {
+          "repeat": 0,
+          "image_path": "fryum/test/good/012.JPG",
+          "inference_ms": 72.10098300129175
+        },
+        {
+          "repeat": 0,
+          "image_path": "fryum/test/bad/000.JPG",
+          "inference_ms": 69.64125111699104
+        },
+        {
+          "repeat": 0,
+          "image_path": "fryum/test/bad/001.JPG",
+          "inference_ms": 67.78379110619426
+        },
+        {
+          "repeat": 1,
+          "image_path": "fryum/test/good/006.JPG",
+          "inference_ms": 80.86195401847363
+        },
+        {
+          "repeat": 1,
+          "image_path": "fryum/test/good/012.JPG",
+          "inference_ms": 76.90389594063163
+        },
+        {
+          "repeat": 1,
+          "image_path": "fryum/test/bad/000.JPG",
+          "inference_ms": 77.14846590533853
+        },
+        {
+          "repeat": 1,
+          "image_path": "fryum/test/bad/001.JPG",
+          "inference_ms": 79.48190113529563
+        },
+        {
+          "repeat": 2,
+          "image_path": "fryum/test/good/006.JPG",
+          "inference_ms": 83.31373101100326
+        },
+        {
+          "repeat": 2,
+          "image_path": "fryum/test/good/012.JPG",
+          "inference_ms": 88.56807230040431
+        },
+        {
+          "repeat": 2,
+          "image_path": "fryum/test/bad/000.JPG",
+          "inference_ms": 87.29171473532915
+        },
+        {
+          "repeat": 2,
+          "image_path": "fryum/test/bad/001.JPG",
+          "inference_ms": 82.68438978120685
+        }
+      ]
+    },
+    {
+      "category": "pipe_fryum",
+      "shot": 1,
+      "seed": 0,
+      "variant": "layer6",
+      "variant_order": [
+        "layer6",
+        "fusion6_12",
+        "layer12"
+      ],
+      "mean_ms": 82.41702674422413,
+      "median_ms": 80.29716205783188,
+      "peak_gpu_allocated_mib": 130.12646484375,
+      "bank_ms": 494.10751881077886,
+      "gpu_snapshot": "12190 MiB, 51 %",
+      "references": [
+        "pipe_fryum/train/good/024.JPG"
+      ],
+      "timings": [
+        {
+          "repeat": 0,
+          "image_path": "pipe_fryum/test/good/006.JPG",
+          "inference_ms": 94.00947019457817
+        },
+        {
+          "repeat": 0,
+          "image_path": "pipe_fryum/test/good/012.JPG",
+          "inference_ms": 84.75995995104313
+        },
+        {
+          "repeat": 0,
+          "image_path": "pipe_fryum/test/bad/000.JPG",
+          "inference_ms": 82.99989392980933
+        },
+        {
+          "repeat": 0,
+          "image_path": "pipe_fryum/test/bad/001.JPG",
+          "inference_ms": 84.89829022437334
+        },
+        {
+          "repeat": 1,
+          "image_path": "pipe_fryum/test/good/006.JPG",
+          "inference_ms": 89.93866201490164
+        },
+        {
+          "repeat": 1,
+          "image_path": "pipe_fryum/test/good/012.JPG",
+          "inference_ms": 79.27176030352712
+        },
+        {
+          "repeat": 1,
+          "image_path": "pipe_fryum/test/bad/000.JPG",
+          "inference_ms": 79.7000341117382
+        },
+        {
+          "repeat": 1,
+          "image_path": "pipe_fryum/test/bad/001.JPG",
+          "inference_ms": 80.79479215666652
+        },
+        {
+          "repeat": 2,
+          "image_path": "pipe_fryum/test/good/006.JPG",
+          "inference_ms": 78.23112467303872
+        },
+        {
+          "repeat": 2,
+          "image_path": "pipe_fryum/test/good/012.JPG",
+          "inference_ms": 79.25382675603032
+        },
+        {
+          "repeat": 2,
+          "image_path": "pipe_fryum/test/bad/000.JPG",
+          "inference_ms": 79.79953195899725
+        },
+        {
+          "repeat": 2,
+          "image_path": "pipe_fryum/test/bad/001.JPG",
+          "inference_ms": 75.34697465598583
+        }
+      ]
+    },
+    {
+      "category": "pipe_fryum",
+      "shot": 1,
+      "seed": 0,
+      "variant": "fusion6_12",
+      "variant_order": [
+        "layer6",
+        "fusion6_12",
+        "layer12"
+      ],
+      "mean_ms": 75.3593190650766,
+      "median_ms": 71.86170411296189,
+      "peak_gpu_allocated_mib": 149.23681640625,
+      "bank_ms": 651.1660818941891,
+      "gpu_snapshot": "12582 MiB, 15 %",
+      "references": [
+        "pipe_fryum/train/good/024.JPG"
+      ],
+      "timings": [
+        {
+          "repeat": 0,
+          "image_path": "pipe_fryum/test/good/006.JPG",
+          "inference_ms": 72.03066628426313
+        },
+        {
+          "repeat": 0,
+          "image_path": "pipe_fryum/test/good/012.JPG",
+          "inference_ms": 70.84946800023317
+        },
+        {
+          "repeat": 0,
+          "image_path": "pipe_fryum/test/bad/000.JPG",
+          "inference_ms": 72.68017716705799
+        },
+        {
+          "repeat": 0,
+          "image_path": "pipe_fryum/test/bad/001.JPG",
+          "inference_ms": 71.69274194166064
+        },
+        {
+          "repeat": 1,
+          "image_path": "pipe_fryum/test/good/006.JPG",
+          "inference_ms": 70.92891726642847
+        },
+        {
+          "repeat": 1,
+          "image_path": "pipe_fryum/test/good/012.JPG",
+          "inference_ms": 71.5070222504437
+        },
+        {
+          "repeat": 1,
+          "image_path": "pipe_fryum/test/bad/000.JPG",
+          "inference_ms": 71.17197290062904
+        },
+        {
+          "repeat": 1,
+          "image_path": "pipe_fryum/test/bad/001.JPG",
+          "inference_ms": 113.43257129192352
+        },
+        {
+          "repeat": 2,
+          "image_path": "pipe_fryum/test/good/006.JPG",
+          "inference_ms": 72.5341928191483
+        },
+        {
+          "repeat": 2,
+          "image_path": "pipe_fryum/test/good/012.JPG",
+          "inference_ms": 73.03685788065195
+        },
+        {
+          "repeat": 2,
+          "image_path": "pipe_fryum/test/bad/000.JPG",
+          "inference_ms": 73.04345071315765
+        },
+        {
+          "repeat": 2,
+          "image_path": "pipe_fryum/test/bad/001.JPG",
+          "inference_ms": 71.40379026532173
+        }
+      ]
+    },
+    {
+      "category": "pipe_fryum",
+      "shot": 1,
+      "seed": 0,
+      "variant": "layer12",
+      "variant_order": [
+        "layer6",
+        "fusion6_12",
+        "layer12"
+      ],
+      "mean_ms": 69.95817696830879,
+      "median_ms": 69.74881142377853,
+      "peak_gpu_allocated_mib": 128.4375,
+      "bank_ms": 717.1750846318901,
+      "gpu_snapshot": "12397 MiB, 21 %",
+      "references": [
+        "pipe_fryum/train/good/024.JPG"
+      ],
+      "timings": [
+        {
+          "repeat": 0,
+          "image_path": "pipe_fryum/test/good/006.JPG",
+          "inference_ms": 69.80426516383886
+        },
+        {
+          "repeat": 0,
+          "image_path": "pipe_fryum/test/good/012.JPG",
+          "inference_ms": 69.83320973813534
+        },
+        {
+          "repeat": 0,
+          "image_path": "pipe_fryum/test/bad/000.JPG",
+          "inference_ms": 69.63513838127255
+        },
+        {
+          "repeat": 0,
+          "image_path": "pipe_fryum/test/bad/001.JPG",
+          "inference_ms": 72.27785419672728
+        },
+        {
+          "repeat": 1,
+          "image_path": "pipe_fryum/test/good/006.JPG",
+          "inference_ms": 69.55154100432992
+        },
+        {
+          "repeat": 1,
+          "image_path": "pipe_fryum/test/good/012.JPG",
+          "inference_ms": 69.24647791311145
+        },
+        {
+          "repeat": 1,
+          "image_path": "pipe_fryum/test/bad/000.JPG",
+          "inference_ms": 69.6933576837182
+        },
+        {
+          "repeat": 1,
+          "image_path": "pipe_fryum/test/bad/001.JPG",
+          "inference_ms": 70.17910992726684
+        },
+        {
+          "repeat": 2,
+          "image_path": "pipe_fryum/test/good/006.JPG",
+          "inference_ms": 69.02098516002297
+        },
+        {
+          "repeat": 2,
+          "image_path": "pipe_fryum/test/good/012.JPG",
+          "inference_ms": 68.98527732118964
+        },
+        {
+          "repeat": 2,
+          "image_path": "pipe_fryum/test/bad/000.JPG",
+          "inference_ms": 70.33273996785283
+        },
+        {
+          "repeat": 2,
+          "image_path": "pipe_fryum/test/bad/001.JPG",
+          "inference_ms": 70.93816716223955
+        }
+      ]
+    },
+    {
+      "category": "pipe_fryum",
+      "shot": 8,
+      "seed": 0,
+      "variant": "fusion6_12",
+      "variant_order": [
+        "fusion6_12",
+        "layer12",
+        "layer6"
+      ],
+      "mean_ms": 78.08109151665121,
+      "median_ms": 77.52259122207761,
+      "peak_gpu_allocated_mib": 525.48291015625,
+      "bank_ms": 18892.92695466429,
+      "gpu_snapshot": "12506 MiB, 19 %",
+      "references": [
+        "pipe_fryum/train/good/024.JPG",
+        "pipe_fryum/train/good/025.JPG",
+        "pipe_fryum/train/good/026.JPG",
+        "pipe_fryum/train/good/027.JPG",
+        "pipe_fryum/train/good/028.JPG",
+        "pipe_fryum/train/good/029.JPG",
+        "pipe_fryum/train/good/030.JPG",
+        "pipe_fryum/train/good/031.JPG"
+      ],
+      "timings": [
+        {
+          "repeat": 0,
+          "image_path": "pipe_fryum/test/good/006.JPG",
+          "inference_ms": 78.60172539949417
+        },
+        {
+          "repeat": 0,
+          "image_path": "pipe_fryum/test/good/012.JPG",
+          "inference_ms": 80.55209089070559
+        },
+        {
+          "repeat": 0,
+          "image_path": "pipe_fryum/test/bad/000.JPG",
+          "inference_ms": 77.47795293107629
+        },
+        {
+          "repeat": 0,
+          "image_path": "pipe_fryum/test/bad/001.JPG",
+          "inference_ms": 78.96890491247177
+        },
+        {
+          "repeat": 1,
+          "image_path": "pipe_fryum/test/good/006.JPG",
+          "inference_ms": 77.19821576029062
+        },
+        {
+          "repeat": 1,
+          "image_path": "pipe_fryum/test/good/012.JPG",
+          "inference_ms": 79.11454886198044
+        },
+        {
+          "repeat": 1,
+          "image_path": "pipe_fryum/test/bad/000.JPG",
+          "inference_ms": 77.3530793376267
+        },
+        {
+          "repeat": 1,
+          "image_path": "pipe_fryum/test/bad/001.JPG",
+          "inference_ms": 77.54129078239202
+        },
+        {
+          "repeat": 2,
+          "image_path": "pipe_fryum/test/good/006.JPG",
+          "inference_ms": 77.50389166176319
+        },
+        {
+          "repeat": 2,
+          "image_path": "pipe_fryum/test/good/012.JPG",
+          "inference_ms": 78.99206830188632
+        },
+        {
+          "repeat": 2,
+          "image_path": "pipe_fryum/test/bad/000.JPG",
+          "inference_ms": 76.83864235877991
+        },
+        {
+          "repeat": 2,
+          "image_path": "pipe_fryum/test/bad/001.JPG",
+          "inference_ms": 76.83068700134754
+        }
+      ]
+    },
+    {
+      "category": "pipe_fryum",
+      "shot": 8,
+      "seed": 0,
+      "variant": "layer12",
+      "variant_order": [
+        "fusion6_12",
+        "layer12",
+        "layer6"
+      ],
+      "mean_ms": 74.74759508234759,
+      "median_ms": 74.96842462569475,
+      "peak_gpu_allocated_mib": 309.48291015625,
+      "bank_ms": 6024.557393975556,
+      "gpu_snapshot": "12290 MiB, 0 %",
+      "references": [
+        "pipe_fryum/train/good/024.JPG",
+        "pipe_fryum/train/good/025.JPG",
+        "pipe_fryum/train/good/026.JPG",
+        "pipe_fryum/train/good/027.JPG",
+        "pipe_fryum/train/good/028.JPG",
+        "pipe_fryum/train/good/029.JPG",
+        "pipe_fryum/train/good/030.JPG",
+        "pipe_fryum/train/good/031.JPG"
+      ],
+      "timings": [
+        {
+          "repeat": 0,
+          "image_path": "pipe_fryum/test/good/006.JPG",
+          "inference_ms": 75.67230565473437
+        },
+        {
+          "repeat": 0,
+          "image_path": "pipe_fryum/test/good/012.JPG",
+          "inference_ms": 74.66457411646843
+        },
+        {
+          "repeat": 0,
+          "image_path": "pipe_fryum/test/bad/000.JPG",
+          "inference_ms": 71.17509515956044
+        },
+        {
+          "repeat": 0,
+          "image_path": "pipe_fryum/test/bad/001.JPG",
+          "inference_ms": 72.84825015813112
+        },
+        {
+          "repeat": 1,
+          "image_path": "pipe_fryum/test/good/006.JPG",
+          "inference_ms": 74.0534937940538
+        },
+        {
+          "repeat": 1,
+          "image_path": "pipe_fryum/test/good/012.JPG",
+          "inference_ms": 77.65107601881027
+        },
+        {
+          "repeat": 1,
+          "image_path": "pipe_fryum/test/bad/000.JPG",
+          "inference_ms": 76.07120694592595
+        },
+        {
+          "repeat": 1,
+          "image_path": "pipe_fryum/test/bad/001.JPG",
+          "inference_ms": 76.25259784981608
+        },
+        {
+          "repeat": 2,
+          "image_path": "pipe_fryum/test/good/006.JPG",
+          "inference_ms": 75.27227513492107
+        },
+        {
+          "repeat": 2,
+          "image_path": "pipe_fryum/test/good/012.JPG",
+          "inference_ms": 74.227643199265
+        },
+        {
+          "repeat": 2,
+          "image_path": "pipe_fryum/test/bad/000.JPG",
+          "inference_ms": 73.79695307463408
+        },
+        {
+          "repeat": 2,
+          "image_path": "pipe_fryum/test/bad/001.JPG",
+          "inference_ms": 75.28566988185048
+        }
+      ]
+    },
+    {
+      "category": "pipe_fryum",
+      "shot": 8,
+      "seed": 0,
+      "variant": "layer6",
+      "variant_order": [
+        "fusion6_12",
+        "layer12",
+        "layer6"
+      ],
+      "mean_ms": 73.15414189361036,
+      "median_ms": 73.3191471081227,
+      "peak_gpu_allocated_mib": 309.48291015625,
+      "bank_ms": 7171.82711372152,
+      "gpu_snapshot": "12290 MiB, 17 %",
+      "references": [
+        "pipe_fryum/train/good/024.JPG",
+        "pipe_fryum/train/good/025.JPG",
+        "pipe_fryum/train/good/026.JPG",
+        "pipe_fryum/train/good/027.JPG",
+        "pipe_fryum/train/good/028.JPG",
+        "pipe_fryum/train/good/029.JPG",
+        "pipe_fryum/train/good/030.JPG",
+        "pipe_fryum/train/good/031.JPG"
+      ],
+      "timings": [
+        {
+          "repeat": 0,
+          "image_path": "pipe_fryum/test/good/006.JPG",
+          "inference_ms": 74.44620924070477
+        },
+        {
+          "repeat": 0,
+          "image_path": "pipe_fryum/test/good/012.JPG",
+          "inference_ms": 74.2668230086565
+        },
+        {
+          "repeat": 0,
+          "image_path": "pipe_fryum/test/bad/000.JPG",
+          "inference_ms": 73.32794833928347
+        },
+        {
+          "repeat": 0,
+          "image_path": "pipe_fryum/test/bad/001.JPG",
+          "inference_ms": 72.69790396094322
+        },
+        {
+          "repeat": 1,
+          "image_path": "pipe_fryum/test/good/006.JPG",
+          "inference_ms": 71.3141830638051
+        },
+        {
+          "repeat": 1,
+          "image_path": "pipe_fryum/test/good/012.JPG",
+          "inference_ms": 72.70839484408498
+        },
+        {
+          "repeat": 1,
+          "image_path": "pipe_fryum/test/bad/000.JPG",
+          "inference_ms": 72.75744620710611
+        },
+        {
+          "repeat": 1,
+          "image_path": "pipe_fryum/test/bad/001.JPG",
+          "inference_ms": 73.57649598270655
+        },
+        {
+          "repeat": 2,
+          "image_path": "pipe_fryum/test/good/006.JPG",
+          "inference_ms": 74.19247413054109
+        },
+        {
+          "repeat": 2,
+          "image_path": "pipe_fryum/test/good/012.JPG",
+          "inference_ms": 73.79035791382194
+        },
+        {
+          "repeat": 2,
+          "image_path": "pipe_fryum/test/bad/000.JPG",
+          "inference_ms": 73.31034587696195
+        },
+        {
+          "repeat": 2,
+          "image_path": "pipe_fryum/test/bad/001.JPG",
+          "inference_ms": 71.46112015470862
+        }
+      ]
+    }
+  ]
+}

@@ -1,6 +1,6 @@
 # CV Final · Few-Shot Industrial Visual Anomaly Detection
 
-**Part 3 已启动（2026-11-21），正式结果尚未完成。** 新分支 `codex/part3-multilayer` 实现冻结 DINOv2 的第 6/12 层等权融合，保留原 Part 2 对照，并安排第 6 层单层消融。三项数学/输入测试通过；新增第 12 层路径在三张真实图上的分数和 patch map 与原实现误差均为 0，三个变体的前景 mask 相同。完整矩阵和评价仍在服务器运行，见 [固定方案与复现](docs/14_part3_protocol.md)。这不代表已获得指标提升或完成 Part 3。
+**Part 3 的融合与消融实验均已完成。** 冻结 DINOv2 并等权融合第 6、12 层特征，相比原 Part 2，四种 shot 的图像 AUROC 均提高 **0.19–0.28 个百分点**。8-shot 的图像 AUROC 从 **96.62% 提高到 96.87%**，像素 AUROC 在三种低 shot 设置略降，8-shot 微升。第 6 层单独使用在两项指标上均低于原 Part 2。[全量结果](docs/15_part3_results.md) · [五个困难案例](docs/16_part3_failure_analysis.md) · [实验协议与复现](docs/14_part3_protocol.md)
 
 **最新录制版本：Part 1 和 Part 2 均已完成 72 配置全量实验。** 请使用 [完整对比 PPT 与讲稿](presentation/midterm_ppt/README.md) 和 [新版 4:40 视频素材](presentation/midterm_video/README.md)。第 5 页为 8-shot 六类总体比较，第 6 页为两方法完整 few-shot 曲线；旧 cashew 单配置仅用于方法示例。已有视频/PPT 尚未宣称 Part 3 实测结果。
 
@@ -22,9 +22,10 @@
 - [x] Part 2 全六类、四 shots、三 seeds 正式实验与 Part 2 精确评估（72/72）。
 - [x] Part 2 结果表、曲线、五个真实失败案例、单图 CLI 演示和 B 的 Pre 讲稿。
 - [ ] Part 1/Part 2 联合演示、两方法对比、正式幻灯片与录屏。
-- [ ] Part 3 改进与最终报告。
+- [x] Part 3 特征融合、单层消融、正式评价、五个同图困难案例和效率抽样。
+- [ ] 课程最终报告。
 
-**成员 B 的 Part 2 主实验已完成：11,520 条测试预测。** 8-shot 的六类图像 AUROC 为 **96.62±0.57%**，pixel AUROC 为 **98.21±0.02%**（三个 seed）。完整结果及局限见 [Part 2 结果与交接](docs/10_part2_results.md)。A 的 Part 1 全量也已完成；8-shot 图像/像素 AUROC 为 **60.80±0.32% / 76.91±0.33%**。Part 3 尚未完成。
+**成员 B 的 Part 2 主实验已完成：11,520 条测试预测。** 8-shot 的六类图像 AUROC 为 **96.62±0.57%**，pixel AUROC 为 **98.21±0.02%**（三个 seed）。A 的 Part 1 全量也已完成，8-shot 图像/像素 AUROC 为 **60.80±0.32% / 76.91±0.33%**。[Part 2 结果与交接](docs/10_part2_results.md)
 
 B 的交付位于 **`codex/part2-anomalydino`**；A 的首个里程碑在其基础上的 **`codex/part1-integration`** 分支。数据、权重、完整异常图保留在各自服务器工作目录。
 
@@ -43,6 +44,8 @@ B 的交付位于 **`codex/part2-anomalydino`**；A 的首个里程碑在其基�
 | [GPU 实验记录](docs/09_gpu_experiments.md) | 完整矩阵命令、compact 异常图、精确评价与效率说明 |
 | [Part 2 结果与交接](docs/10_part2_results.md) | 已完成的成绩、错误分析、服务器复现和 A 的接入步骤 |
 | [A 的首个里程碑](docs/11_member_a_milestone.md) | 独立 venv、cashew 单配置、公共评估、同图演示与复现 |
+| [Part 3 实验结果](docs/15_part3_results.md) | 三个变体的完整矩阵、图像与像素 AUROC、类别差异 |
+| [Part 3 效率抽样](docs/17_part3_efficiency.md) | 同一会话的推理延迟及峰值 PyTorch 显存 |
 | [成员 B Pre 讲稿](presentation/member_b_notes.md) | 方法、实验、结果与答疑 |
 
 ## 第一个里程碑

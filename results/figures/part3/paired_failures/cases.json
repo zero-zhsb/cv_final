@@ -1,0 +1,132 @@
+{
+  "selection": "actual threshold errors, one per category first, then largest relative error margin; no parameter tuning",
+  "common_raw_vmin": 0,
+  "common_raw_vmax": 0.3313334584236145,
+  "cases": [
+    {
+      "case": 1,
+      "category": "pipe_fryum",
+      "image_path": "pipe_fryum/test/good/400.JPG",
+      "error_type": "FP",
+      "label": 0,
+      "defect_pixel_fraction": 0.0,
+      "figure": "case_1_pipe_fryum.png",
+      "baseline": {
+        "score": "0.2938917875289917",
+        "threshold": "0.14808265810663054",
+        "decision": "NG",
+        "fraction_top1pct_map_pixels_inside_gt": null,
+        "mean_map_inside_gt": null,
+        "mean_map_outside_gt": 0.021013783290982246
+      },
+      "fusion": {
+        "score": "0.24827820333567532",
+        "threshold": "0.14976959919387647",
+        "decision": "NG",
+        "fraction_top1pct_map_pixels_inside_gt": null,
+        "mean_map_inside_gt": null,
+        "mean_map_outside_gt": 0.01973106525838375
+      }
+    },
+    {
+      "case": 2,
+      "category": "chewinggum",
+      "image_path": "chewinggum/test/good/467.JPG",
+      "error_type": "FP",
+      "label": 0,
+      "defect_pixel_fraction": 0.0,
+      "figure": "case_2_chewinggum.png",
+      "baseline": {
+        "score": "0.235316331187884",
+        "threshold": "0.1375135040531556",
+        "decision": "NG",
+        "fraction_top1pct_map_pixels_inside_gt": null,
+        "mean_map_inside_gt": null,
+        "mean_map_outside_gt": 0.02265968732535839
+      },
+      "fusion": {
+        "score": "0.21552865703900656",
+        "threshold": "0.14968463045855365",
+        "decision": "NG",
+        "fraction_top1pct_map_pixels_inside_gt": null,
+        "mean_map_inside_gt": null,
+        "mean_map_outside_gt": 0.024093085899949074
+      }
+    },
+    {
+      "case": 3,
+      "category": "candle",
+      "image_path": "candle/test/good/0427.JPG",
+      "error_type": "FP",
+      "label": 0,
+      "defect_pixel_fraction": 0.0,
+      "figure": "case_3_candle.png",
+      "baseline": {
+        "score": "0.2415707761591131",
+        "threshold": "0.15173308524218473",
+        "decision": "NG",
+        "fraction_top1pct_map_pixels_inside_gt": null,
+        "mean_map_inside_gt": null,
+        "mean_map_outside_gt": 0.027086416259407997
+      },
+      "fusion": {
+        "score": "0.21459150314331055",
+        "threshold": "0.15589498985897413",
+        "decision": "NG",
+        "fraction_top1pct_map_pixels_inside_gt": null,
+        "mean_map_inside_gt": null,
+        "mean_map_outside_gt": 0.025302089750766754
+      }
+    },
+    {
+      "case": 4,
+      "category": "cashew",
+      "image_path": "cashew/test/bad/069.JPG",
+      "error_type": "FN",
+      "label": 1,
+      "defect_pixel_fraction": 0.00014684052584927222,
+      "figure": "case_4_cashew.png",
+      "baseline": {
+        "score": "0.117012357711792",
+        "threshold": "0.17079482406377794",
+        "decision": "OK",
+        "fraction_top1pct_map_pixels_inside_gt": 0.010411800040045384,
+        "mean_map_inside_gt": 0.09876705706119537,
+        "mean_map_outside_gt": 0.013827883638441563
+      },
+      "fusion": {
+        "score": "0.12274238467216492",
+        "threshold": "0.15186408147215844",
+        "decision": "OK",
+        "fraction_top1pct_map_pixels_inside_gt": 0.012948007742107722,
+        "mean_map_inside_gt": 0.12195085734128952,
+        "mean_map_outside_gt": 0.01699259877204895
+      }
+    },
+    {
+      "case": 5,
+      "category": "capsules",
+      "image_path": "capsules/test/bad/065.JPG",
+      "error_type": "FN",
+      "label": 1,
+      "defect_pixel_fraction": 0.014199333333333333,
+      "figure": "case_5_capsules.png",
+      "baseline": {
+        "score": "0.13621902068456013",
+        "threshold": "0.1371053336064021",
+        "decision": "OK",
+        "fraction_top1pct_map_pixels_inside_gt": 0.31253333333333333,
+        "mean_map_inside_gt": 0.0849151760339737,
+        "mean_map_outside_gt": 0.030709397047758102
+      },
+      "fusion": {
+        "score": "0.16141149202982585",
+        "threshold": "0.17744731307029726",
+        "decision": "OK",
+        "fraction_top1pct_map_pixels_inside_gt": 0.31704553029798016,
+        "mean_map_inside_gt": 0.11805564910173416,
+        "mean_map_outside_gt": 0.0488855205476284
+      }
+    }
+  ]
+}
