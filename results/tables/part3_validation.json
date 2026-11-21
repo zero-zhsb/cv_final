@@ -1,0 +1,27 @@
+{
+  "passed": true,
+  "baseline_path": "unchanged src/part2/inspector.py",
+  "errors": [
+    {
+      "image": "cashew/test/good/006.JPG",
+      "score_error": 0.0,
+      "patch_max_error": 0.0
+    },
+    {
+      "image": "cashew/test/bad/000.JPG",
+      "score_error": 0.0,
+      "patch_max_error": 0.0
+    },
+    {
+      "image": "cashew/test/bad/075.JPG",
+      "score_error": 0.0,
+      "patch_max_error": 0.0
+    }
+  ],
+  "identical_final_layer_masks": true,
+  "images": [
+    "cashew/test/good/006.JPG",
+    "cashew/test/bad/000.JPG",
+    "cashew/test/bad/075.JPG"
+  ]
+}
