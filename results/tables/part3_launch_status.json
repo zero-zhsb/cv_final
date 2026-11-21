@@ -1,0 +1,36 @@
+{
+  "observed_at_utc": "2026-11-21T10:52:22.500596+00:00",
+  "study": {
+    "stage": "running",
+    "time_utc": "2026-11-21T10:44:44.717199+00:00",
+    "variant": "fusion6_12"
+  },
+  "finalization": {
+    "stage": "waiting_for_full_study",
+    "time_utc": "2026-11-21T10:51:37.175725+00:00"
+  },
+  "runs": {
+    "fusion6_12": {
+      "status": "running",
+      "completed_inference_configurations": 11,
+      "expected": 72,
+      "code_commit": "5abbebdc0102aceedd08c96275089b94ae661031",
+      "code_dirty": false,
+      "evaluation": {
+        "status": "running",
+        "evaluated": 1,
+        "expected": 72,
+        "workers": 1,
+        "active_configurations": [
+          "candle/shot_1/seed_1"
+        ]
+      }
+    },
+    "layer6": {
+      "status": "pending",
+      "expected": 72
+    }
+  },
+  "disk_free_gib": 6.690422058105469,
+  "gpu_snapshot": "41606 MiB, 100 %"
+}
