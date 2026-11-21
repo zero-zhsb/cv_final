@@ -40,3 +40,26 @@ nice -n 10 .venv-b/bin/python scripts/run_part3.py --variant fusion6_12 \
 每 shot 先对六类等权 macro 平均，再报告三个 seed 的 mean±population std。主指标 image AUROC，同时报告 pixel AUROC、实际困难案例、背景误报、平均推理时间及峰值 PyTorch 显存。无测试逐图归一化，不改变掩码或测试分辨率来降低评价成本。提升、持平和下降都如实报告；根据受控消融讨论原因，不根据测试成绩不断更换层或权重。
 
 该实验属于课程 Part 3 Direction A。方法源于官方 AnomalyDINO / DINOv2，多层表示是课程允许的探索，不包装为已证实的原创算法。视频与报告只有在正式结果完成后才更新为实测改进。
+
+## 本次实际运行与后处理
+
+2026-11-21 已通过真实图 gate：三张 cashew 图像的新第 12 层路径与原 Part 2 的 score 和 patch 最大绝对误差均为 0；三个变体的最终层 PCA mask 相同。记录见 `results/tables/part3_validation.json`。这只是实现核验，不是全矩阵改进证据。
+
+一键控制器 `scripts/run_part3_study.py` 顺序执行融合、单第 6 层各 72 配置；每条路径边推理边用一个进程做原分辨率精确 pixel AUROC。控制器持文件锁，拒绝覆盖既有不完整 run。服务器 B 目录：`/data/disk1/home/sshen560/cv_final_member_b`（服务器可能将其解析为 disk2 路径）。
+
+进度与日志：
+
+```bash
+cat runs/part3_study_status.json
+cat runs/part3_fusion6_12_v1/evaluation_status.json
+tail -n 20 logs/part3_fusion6_12_inference.log
+tail -n 20 logs/part3_fusion6_12_evaluation.log
+```
+
+原始结果分别在 `runs/part3_fusion6_12_v1`、`runs/part3_layer6_v1`，其中包含 `run.json`、逐图 `predictions.csv`、参考/校准/阈值、紧凑浮点 patch map 与 `metrics/*.json`。原 Part 2 仍在 `runs/part2_gpu_exact_matrix_v1`。
+
+`scripts/finalize_part3.py` 是本次实验的一次性后处理：等待两条完整路径及评价结束后，检查各方法的全部测试身份、参考/校准名单、权重及输入等设置，生成按 shot/类别/seed 的表格、消融曲线、五个真实错误的 Part 2/Part 3 同图对照，再运行同会话效率抽样。最终状态是 `artifacts_ready`，表示材料可供审核；仍需人工查看图像、解释正负变化并提交结果，不能把它等同于报告已完成。
+
+效率抽样固定六类、1/8-shot、seed=0、每类两正常两异常图、三次重复。三个方法的顺序按类别/shot 循环轮换，各次只驻留一个方法。共享 GPU 没有独占预留，即便同一会话也不能消除其他负载影响，结果会明确标注。模型层、融合权重和准确率协议不受计时结果调整。
+
+预期生成文件（运行结束前可能尚不存在）：`docs/15_part3_results.md`、`docs/16_part3_failure_analysis.md`、`docs/17_part3_efficiency.md`、`results/tables/part3/` 和 `results/figures/part3/`。不把未生成或未审阅的材料提前算作完成。

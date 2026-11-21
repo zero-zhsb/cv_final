@@ -1,6 +1,8 @@
 # CV Final · Few-Shot Industrial Visual Anomaly Detection
 
-**最新录制版本：Part 1 和 Part 2 均已完成 72 配置全量实验。** 请使用 [完整对比 PPT 与讲稿](presentation/midterm_ppt/README.md) 和 [新版 4:40 视频素材](presentation/midterm_video/README.md)。第 5 页为 8-shot 六类总体比较，第 6 页为两方法完整 few-shot 曲线；旧 cashew 单配置仅用于方法示例。Part 3 仍为后续计划。
+**Part 3 已启动（2026-11-21），正式结果尚未完成。** 新分支 `codex/part3-multilayer` 实现冻结 DINOv2 的第 6/12 层等权融合，保留原 Part 2 对照，并安排第 6 层单层消融。三项数学/输入测试通过；新增第 12 层路径在三张真实图上的分数和 patch map 与原实现误差均为 0，三个变体的前景 mask 相同。完整矩阵和评价仍在服务器运行，见 [固定方案与复现](docs/14_part3_protocol.md)。这不代表已获得指标提升或完成 Part 3。
+
+**最新录制版本：Part 1 和 Part 2 均已完成 72 配置全量实验。** 请使用 [完整对比 PPT 与讲稿](presentation/midterm_ppt/README.md) 和 [新版 4:40 视频素材](presentation/midterm_video/README.md)。第 5 页为 8-shot 六类总体比较，第 6 页为两方法完整 few-shot 曲线；旧 cashew 单配置仅用于方法示例。已有视频/PPT 尚未宣称 Part 3 实测结果。
 
 **期中视频素材已整理：** [素材包入口](presentation/midterm_video/README.md)，含 8 张 1080p 图卡、中英文讲稿、字幕草案、280 秒时间线和离线 HTML 翻页页。本次 Canvas 要求为不超过 5 分钟的阶段进展视频，无需先完成 Part 1 全量实验或联合实时界面。本次素材在 `codex/midterm-video-materials` 分支。
 
