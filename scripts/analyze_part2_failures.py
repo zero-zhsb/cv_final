@@ -16,6 +16,9 @@ def main():
     parser.add_argument("--shot", type=int, default=8)
     parser.add_argument("--seed", type=int, default=0)
     parser.add_argument("--count", type=int, default=5)
+    parser.add_argument("--compare-run", action="append", default=[], metavar="LABEL=PATH",
+                        help="Show the same images and common color scale for another completed run")
+    parser.add_argument("--method-label", default="Raw anomaly map")
     args = parser.parse_args()
     import numpy as np
     from PIL import Image
@@ -30,6 +33,20 @@ def main():
         rows = [row for row in csv.DictReader(handle) if int(row["shot"]) == args.shot and int(row["seed"]) == args.seed]
     if not rows:
         parser.error("Requested configuration is absent")
+    comparisons = []
+    for comparison in args.compare_run:
+        label, separator, directory = comparison.partition("=")
+        if not separator or not label or not directory:
+            parser.error("--compare-run requires LABEL=PATH")
+        root = Path(directory)
+        control = json.loads((root / "run.json").read_text())
+        if (control["status"] != "completed" or control["partial_smoke_test"]
+                or control["manifest_id"] != meta["manifest_id"]):
+            parser.error("Comparison must be a completed run on the same manifest")
+        with (root / "predictions.csv").open(newline="") as handle:
+            matching = {r["image_path"]: r for r in csv.DictReader(handle)
+                        if int(r["shot"]) == args.shot and int(r["seed"]) == args.seed}
+        comparisons.append((label, root, matching))
     counts, errors = [], []
     for category in meta["categories"]:
         group = [r for r in rows if r["category"] == category]
@@ -60,25 +77,46 @@ def main():
     with (args.output / "threshold_confusion.csv").open("w", newline="") as handle:
         writer = csv.DictWriter(handle, fieldnames=list(counts[0])); writer.writeheader(); writer.writerows(counts)
     maps = [load_anomaly_map(args.run / row["map_path"]) for row in selected]
-    vmax = max((float(value.max()) for value in maps), default=1)
-    for index, (row, anomaly) in enumerate(zip(selected, maps)):
+    comparisons_by_image = []
+    for row in selected:
+        methods = []
+        for label, root, matching in comparisons:
+            other = matching[row["image_path"]]
+            if (row["label"], row["mask_path"]) != (other["label"], other["mask_path"]):
+                raise ValueError("Comparison prediction does not match the ground-truth identity")
+            methods.append((label, other, load_anomaly_map(root / other["map_path"])))
+        comparisons_by_image.append(methods)
+    all_maps = maps + [m for methods in comparisons_by_image for _, _, m in methods]
+    vmax = max((float(value.max()) for value in all_maps), default=1)
+    for index, (row, anomaly, other_maps) in enumerate(zip(selected, maps, comparisons_by_image)):
         rgb = np.asarray(Image.open(args.data_root / row["image_path"]).convert("RGB"))
         mask = np.asarray(Image.open(args.data_root / row["mask_path"])) > 0 if row["mask_path"] else np.zeros(rgb.shape[:2], dtype=bool)
-        fig, axes = plt.subplots(1, 4, figsize=(12, 3.5))
+        columns = 4 + len(other_maps)
+        fig, axes = plt.subplots(1, columns, figsize=(3 * columns, 3.5))
         axes[0].imshow(rgb); axes[0].set_title("Product image")
         axes[1].imshow(mask, cmap="gray", vmin=0, vmax=1); axes[1].set_title("Ground truth")
-        image = axes[2].imshow(anomaly, cmap="inferno", vmin=0, vmax=vmax)
-        axes[2].set_title("Raw anomaly map"); fig.colorbar(image, ax=axes[2], fraction=0.046)
-        axes[3].imshow(rgb); axes[3].imshow(anomaly, cmap="inferno", vmin=0, vmax=vmax, alpha=0.45)
-        axes[3].set_title("Overlay")
+        methods = [*other_maps, (args.method_label, row, anomaly)]
+        for ax, (label, details, heatmap) in zip(axes[2:-1], methods):
+            if heatmap.shape != mask.shape:
+                raise ValueError("Heatmap resolution does not match ground truth")
+            image = ax.imshow(heatmap, cmap="inferno", vmin=0, vmax=vmax)
+            title = f"{label}\n{details['decision']}, score={float(details['score']):.4f}" if comparisons else label
+            ax.set_title(title, fontsize=10)
+        fig.colorbar(image, ax=axes[-2], fraction=0.046)
+        axes[-1].imshow(rgb); axes[-1].imshow(anomaly, cmap="inferno", vmin=0, vmax=vmax, alpha=0.45)
+        axes[-1].set_title("Overlay")
         for ax in axes: ax.axis("off")
         description = "False positive: normal product flagged NG" if row["error_type"] == "FP" else "False negative: defective product flagged OK"
         fig.suptitle(f"{row['category']} | {description}\nshot={args.shot}, seed={args.seed}, score={float(row['score']):.4f}, threshold={float(row['threshold']):.4f}", fontsize=10)
         fig.tight_layout(); name = f"failure_{index+1}_{row['category']}.png"
         fig.savefig(args.output / name, dpi=150); plt.close(fig)
         row["figure"] = name
+        if other_maps:
+            row["comparisons"] = {label: {k: details[k] for k in ("score", "threshold", "decision")}
+                                  for label, details, _ in other_maps}
     report = {"shot": args.shot, "seed": args.seed, "selection": "actual threshold errors, one per category first, then largest relative error margin; no parameter tuning",
-              "available_error_count": len(errors), "selected_count": len(selected), "cases": selected}
+              "available_error_count": len(errors), "selected_count": len(selected),
+              "common_raw_vmax": vmax, "cases": selected}
     (args.output / "cases.json").write_text(json.dumps(report, indent=2) + "\n")
     print(json.dumps({"available_errors": len(errors), "selected": len(selected)}))
 

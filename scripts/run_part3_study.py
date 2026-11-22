@@ -57,6 +57,9 @@ def main():
             subprocess.run([sys.executable, 'scripts/analyze_part2_failures.py',
                             '--run', str(ROOT / 'runs/part3_fusion448_672_v1'), '--data-root', data,
                             '--output', str(ROOT / 'results/figures/part3_multiscale/fusion_failures'),
+                            '--compare-run', 'Part 2 (448)=' + str(ROOT / 'runs/part2_gpu_exact_matrix_v1'),
+                            '--compare-run', 'Single scale (672)=' + str(ROOT / 'runs/part3_scale672_v1'),
+                            '--method-label', 'Fusion (448+672)',
                             '--shot', '8', '--seed', '0', '--count', '5'], cwd=ROOT, check=True)
             save('benchmarking')
             subprocess.run(['nice', '-n', '10', sys.executable, 'scripts/benchmark_part3.py',
