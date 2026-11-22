@@ -15,11 +15,15 @@
 复用同一 VisA manifest（六类，1/2/4/8-shot，seed 0/1/2）、AnomalyDINO 与 DINOv2 固定提交、权重文件及原始 Part 2 run。完整矩阵各 72 配置，可以使用以下入口。服务器目录中的第三方依赖、权重和原 Part 2 run 可用只读访问方式复用。
 
 ```bash
-.venv-b/bin/python scripts/check_part3_multiscale.py \
+cd /data/disk1/home/sshen560/cv_final_part3_multiscale
+cv_part3_python=/data/disk1/home/sshen560/cv_final_member_b/.venv-b/bin/python
+"$cv_part3_python" scripts/check_part3_multiscale.py \
   --data-root /data/disk1/home/sshen560/cv_final_data/VisA_pytorch/1cls \
   --output runs/part3_multiscale_gate.json
-.venv-b/bin/python scripts/run_part3_study.py --study multiscale
+"$cv_part3_python" scripts/run_part3_study.py --study multiscale
 ```
+
+后台任务启动后，可在本工作目录通过 `runs/part3_multiscale_status.json` 查看阶段。预检日志为 `logs/part3_multiscale_study.log`。正式推理和精确评价各有一份按变体命名的日志，例如 `logs/part3_scale672_inference.log`，每个 run 下也有 `run.json` 和 `evaluation_status.json`。
 
 预检采用每类 8-shot 正常参考和一张正常校准图，检查有限输出、特征形状、两变体掩码一致和实际峰值显存。正式实验每次运行一个推理进程和一个评价进程，分别有 15% 与 10% 的 PyTorch 分配器上限。结果落在独立目录，原 Part 2 和多层实验可继续复核。
 

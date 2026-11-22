@@ -2,6 +2,8 @@
 
 **Part 3 的融合与消融实验均已完成。** 冻结 DINOv2 并等权融合第 6、12 层特征，相比原 Part 2，四种 shot 的图像 AUROC 均提高 **0.19–0.28 个百分点**。8-shot 的图像 AUROC 从 **96.62% 提高到 96.87%**，像素 AUROC 在三种低 shot 设置略降，8-shot 微升。第 6 层单独使用在两项指标上均低于原 Part 2。[全量结果](docs/15_part3_results.md) · [五个困难案例](docs/16_part3_failure_analysis.md) · [实验协议与复现](docs/14_part3_protocol.md)
 
+**Part 3 后续实验检验小缺陷定位。** 对照原 Part 2 的 448 输入、单尺度 672 输入和 448+672 特征融合。[多尺度协议与服务器入口](docs/18_part3_multiscale_protocol.md)
+
 **最新录制版本：Part 1 和 Part 2 均已完成 72 配置全量实验。** 请使用 [完整对比 PPT 与讲稿](presentation/midterm_ppt/README.md) 和 [新版 4:40 视频素材](presentation/midterm_video/README.md)。第 5 页为 8-shot 六类总体比较，第 6 页为两方法完整 few-shot 曲线；旧 cashew 单配置仅用于方法示例。已有视频/PPT 尚未宣称 Part 3 实测结果。
 
 **期中视频素材已整理：** [素材包入口](presentation/midterm_video/README.md)，含 8 张 1080p 图卡、中英文讲稿、字幕草案、280 秒时间线和离线 HTML 翻页页。本次 Canvas 要求为不超过 5 分钟的阶段进展视频，无需先完成 Part 1 全量实验或联合实时界面。本次素材在 `codex/midterm-video-materials` 分支。
