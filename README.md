@@ -1,5 +1,9 @@
 # CV Final · Few-Shot Industrial Visual Anomaly Detection
 
+**最终交付草稿。** [CVPR 报告](report/AIAA3201_Report_Draft.pdf) · [单图 demo 与复现](demo/final_demo.md) · [多尺度完整结果](docs/19_part3_multiscale_results.md)
+
+实际单图推理入口 `scripts/inspect_product.py` 接受新产品图，使用选定的正常参考图和另留的 20 张正常校准图输出分数、OK/NG 和原图尺寸热图。仓库中的 [代表输出](demo/examples/final) 来自服务器重新执行四种方法，覆盖正常通过、融合检出与持续漏检。环境、数据与权重的固定版本见 [复现手册](docs/21_final_reproduction.md)。
+
 **Part 3 的多尺度实验已完成。** 448+672 特征融合使四种 shot 的图像 AUROC 比原 Part 2 高 **0.58–1.11 个百分点**，8-shot 从 **96.62% 提到 97.19%**。单尺度 672 的整体像素 AUROC 最高。8-shot 下，融合在相同约 4.33% 的正常图误报率下，将小缺陷漏检率从 **29.36% 降到 25.75%**，共享 RTX A6000 同会话抽样的推理用时由 73.30 增至 205.81 ms/图。[全量结果与困难案例](docs/19_part3_multiscale_results.md) · [效率](docs/20_part3_multiscale_efficiency.md) · [复现](docs/18_part3_multiscale_protocol.md)
 
 **Part 3 前期探索。** 448 输入下融合第 6、12 层带来 **0.19–0.28 个百分点**的图像 AUROC 增益，像素定位改善有限。这组消融用于解释后续图像尺度实验的动机。[多层结果](docs/15_part3_results.md)

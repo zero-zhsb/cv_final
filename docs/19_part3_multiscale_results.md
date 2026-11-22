@@ -31,6 +31,8 @@ The tiny subset uses nonempty masks covering at most 0.1% of original image pixe
 
 Fusion improved image AUROC over both controls in all 12 shot–seed pairs after averaging the six categories. Its mean gain over Part 2 ranged from 0.58 to 1.11 percentage points across the four shot counts. Relative to the 672 control, fusion added 0.37 to 0.75 points in image AUROC and lost 0.10 to 0.11 points in pixel AUROC. The results describe three reference selections per shot on the six VisA categories.
 
+We quantified test-image uncertainty with 4,000 paired, category-and-label-stratified bootstrap replicates. A sampled image keeps the same bootstrap weight across variants, shots and reference seeds. At 1-shot the gain over Part 2 is 1.11 points, with a 95% percentile interval of [0.50, 1.74]. The gain over 672 is 0.75 [0.30, 1.20]. Both intervals still exclude zero after adjusting for eight shot/control contrasts. At 8-shot the gain over Part 2 is 0.58 [0.10, 1.07]. Its adjusted interval of [−0.07, 1.25] includes zero. This post hoc analysis is conditional on the observed categories and reference selections. [Paired bootstrap estimates](../results/tables/part3_multiscale/paired_image_bootstrap.json)
+
 The small-defect subset contains 195 distinct images with nonempty masks covering at most 0.1% of the original image. At 8-shot the empirical normal-image FPR was 4.33% for all variants under the 5% cap. Each value averages the six categories and three seeds.
 
 | 8-shot method | Small-defect image miss rate | Small-defect GT pixel recall in the hottest 1% |

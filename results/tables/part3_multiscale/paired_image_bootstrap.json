@@ -1,0 +1,113 @@
+{
+  "repeats": 4000,
+  "rng_seed": 6412,
+  "population": "Observed VisA categories and fixed references; uncertainty from resampling test images",
+  "paired_across": "all variants, shot counts and reference seeds",
+  "strata": "category by test label",
+  "contrasts": [
+    {
+      "shot": 1,
+      "control": "part2_448",
+      "image_auroc_delta_pp": 1.108148148148158,
+      "percentile_ci95_pp": [
+        0.5035138888889013,
+        1.7368703703703692
+      ],
+      "bonferroni_interval_for_eight_contrasts_pp": [
+        0.2810098379629554,
+        1.9807835648147867
+      ]
+    },
+    {
+      "shot": 2,
+      "control": "part2_448",
+      "image_auroc_delta_pp": 0.8805555555555733,
+      "percentile_ci95_pp": [
+        0.29626851851852765,
+        1.4715185185185324
+      ],
+      "bonferroni_interval_for_eight_contrasts_pp": [
+        0.06995370370369591,
+        1.7196805555555426
+      ]
+    },
+    {
+      "shot": 4,
+      "control": "part2_448",
+      "image_auroc_delta_pp": 0.6651851851852131,
+      "percentile_ci95_pp": [
+        0.10570833333329534,
+        1.241314814814831
+      ],
+      "bonferroni_interval_for_eight_contrasts_pp": [
+        -0.08640219907407941,
+        1.4540248842592607
+      ]
+    },
+    {
+      "shot": 8,
+      "control": "part2_448",
+      "image_auroc_delta_pp": 0.5772222222222068,
+      "percentile_ci95_pp": [
+        0.10220370370368548,
+        1.0666712962963232
+      ],
+      "bonferroni_interval_for_eight_contrasts_pp": [
+        -0.06821643518520969,
+        1.2538107638888858
+      ]
+    },
+    {
+      "shot": 1,
+      "control": "scale672",
+      "image_auroc_delta_pp": 0.7479629629629558,
+      "percentile_ci95_pp": [
+        0.296393518518518,
+        1.1998194444444439
+      ],
+      "bonferroni_interval_for_eight_contrasts_pp": [
+        0.13434780092591803,
+        1.427132523148138
+      ]
+    },
+    {
+      "shot": 2,
+      "control": "scale672",
+      "image_auroc_delta_pp": 0.4429629629629672,
+      "percentile_ci95_pp": [
+        0.018884259259260017,
+        0.8613009259259283
+      ],
+      "bonferroni_interval_for_eight_contrasts_pp": [
+        -0.14593055555554002,
+        1.0324247685185137
+      ]
+    },
+    {
+      "shot": 4,
+      "control": "scale672",
+      "image_auroc_delta_pp": 0.5251851851851952,
+      "percentile_ci95_pp": [
+        0.1549629629629687,
+        0.9161342592592443
+      ],
+      "bonferroni_interval_for_eight_contrasts_pp": [
+        0.010532407407410009,
+        1.0644513888888838
+      ]
+    },
+    {
+      "shot": 8,
+      "control": "scale672",
+      "image_auroc_delta_pp": 0.3729629629629527,
+      "percentile_ci95_pp": [
+        0.030370370370391142,
+        0.734078703703717
+      ],
+      "bonferroni_interval_for_eight_contrasts_pp": [
+        -0.12651504629628665,
+        0.8785300925925738
+      ]
+    }
+  ]
+}
