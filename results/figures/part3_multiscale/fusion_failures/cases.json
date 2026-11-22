@@ -1,0 +1,165 @@
+{
+  "shot": 8,
+  "seed": 0,
+  "selection": "actual threshold errors, one per category first, then largest relative error margin; no parameter tuning",
+  "available_error_count": 135,
+  "selected_count": 5,
+  "common_raw_vmax": 0.37408825755119324,
+  "cases": [
+    {
+      "run_id": "part3_fusion448_672_v1",
+      "method": "anomalydino_fusion448_672",
+      "manifest_id": "51934290ccd342f9f7fa03f9f56c712494cb7b576b7038516efdb41d43b9b2c5",
+      "category": "pipe_fryum",
+      "shot": "8",
+      "seed": "0",
+      "image_path": "pipe_fryum/test/good/400.JPG",
+      "mask_path": "",
+      "label": "0",
+      "score": "0.29003175497055056",
+      "map_path": "maps/pipe_fryum/shot_8/seed_0/good/400.npz",
+      "threshold": "0.13993824243545536",
+      "decision": "NG",
+      "inference_ms": "178.77017799764872",
+      "error_type": "FP",
+      "relative_threshold_margin": 1.0725696558917683,
+      "figure": "failure_1_pipe_fryum.png",
+      "comparisons": {
+        "Part 2 (448)": {
+          "score": "0.2938917875289917",
+          "threshold": "0.14808265810663054",
+          "decision": "NG"
+        },
+        "Single scale (672)": {
+          "score": "0.3220688271522522",
+          "threshold": "0.12757104682922366",
+          "decision": "NG"
+        }
+      }
+    },
+    {
+      "run_id": "part3_fusion448_672_v1",
+      "method": "anomalydino_fusion448_672",
+      "manifest_id": "51934290ccd342f9f7fa03f9f56c712494cb7b576b7038516efdb41d43b9b2c5",
+      "category": "chewinggum",
+      "shot": "8",
+      "seed": "0",
+      "image_path": "chewinggum/test/good/467.JPG",
+      "mask_path": "",
+      "label": "0",
+      "score": "0.20736836945569073",
+      "map_path": "maps/chewinggum/shot_8/seed_0/good/467.npz",
+      "threshold": "0.1223824992775917",
+      "decision": "NG",
+      "inference_ms": "229.12678588181734",
+      "error_type": "FP",
+      "relative_threshold_margin": 0.6944282939126083,
+      "figure": "failure_2_chewinggum.png",
+      "comparisons": {
+        "Part 2 (448)": {
+          "score": "0.235316331187884",
+          "threshold": "0.1375135040531556",
+          "decision": "NG"
+        },
+        "Single scale (672)": {
+          "score": "0.1832914330341198",
+          "threshold": "0.11240242118084873",
+          "decision": "NG"
+        }
+      }
+    },
+    {
+      "run_id": "part3_fusion448_672_v1",
+      "method": "anomalydino_fusion448_672",
+      "manifest_id": "51934290ccd342f9f7fa03f9f56c712494cb7b576b7038516efdb41d43b9b2c5",
+      "category": "candle",
+      "shot": "8",
+      "seed": "0",
+      "image_path": "candle/test/good/0427.JPG",
+      "mask_path": "",
+      "label": "0",
+      "score": "0.22402006139357886",
+      "map_path": "maps/candle/shot_8/seed_0/good/0427.npz",
+      "threshold": "0.13981718501696982",
+      "decision": "NG",
+      "inference_ms": "659.9070560187101",
+      "error_type": "FP",
+      "relative_threshold_margin": 0.6022355289615451,
+      "figure": "failure_3_candle.png",
+      "comparisons": {
+        "Part 2 (448)": {
+          "score": "0.2415707761591131",
+          "threshold": "0.15173308524218473",
+          "decision": "NG"
+        },
+        "Single scale (672)": {
+          "score": "0.23837028443813324",
+          "threshold": "0.11317495983093978",
+          "decision": "NG"
+        }
+      }
+    },
+    {
+      "run_id": "part3_fusion448_672_v1",
+      "method": "anomalydino_fusion448_672",
+      "manifest_id": "51934290ccd342f9f7fa03f9f56c712494cb7b576b7038516efdb41d43b9b2c5",
+      "category": "capsules",
+      "shot": "8",
+      "seed": "0",
+      "image_path": "capsules/test/bad/066.JPG",
+      "mask_path": "capsules/ground_truth/bad/066.png",
+      "label": "1",
+      "score": "0.11659726851126727",
+      "map_path": "maps/capsules/shot_8/seed_0/bad/066.npz",
+      "threshold": "0.15232469882158672",
+      "decision": "OK",
+      "inference_ms": "283.07622391730547",
+      "error_type": "FN",
+      "relative_threshold_margin": 0.2345478480293331,
+      "figure": "failure_4_capsules.png",
+      "comparisons": {
+        "Part 2 (448)": {
+          "score": "0.1285310924053192",
+          "threshold": "0.1371053336064021",
+          "decision": "OK"
+        },
+        "Single scale (672)": {
+          "score": "0.11086772995836594",
+          "threshold": "0.12468735908760746",
+          "decision": "OK"
+        }
+      }
+    },
+    {
+      "run_id": "part3_fusion448_672_v1",
+      "method": "anomalydino_fusion448_672",
+      "manifest_id": "51934290ccd342f9f7fa03f9f56c712494cb7b576b7038516efdb41d43b9b2c5",
+      "category": "cashew",
+      "shot": "8",
+      "seed": "0",
+      "image_path": "cashew/test/bad/071.JPG",
+      "mask_path": "cashew/ground_truth/bad/071.png",
+      "label": "1",
+      "score": "0.10876784225304921",
+      "map_path": "maps/cashew/shot_8/seed_0/bad/071.npz",
+      "threshold": "0.14135354508956274",
+      "decision": "OK",
+      "inference_ms": "152.51632686704397",
+      "error_type": "FN",
+      "relative_threshold_margin": 0.23052625115179792,
+      "figure": "failure_5_cashew.png",
+      "comparisons": {
+        "Part 2 (448)": {
+          "score": "0.1173328548669815",
+          "threshold": "0.17079482406377794",
+          "decision": "OK"
+        },
+        "Single scale (672)": {
+          "score": "0.10336250563462575",
+          "threshold": "0.1529463017980258",
+          "decision": "OK"
+        }
+      }
+    }
+  ]
+}

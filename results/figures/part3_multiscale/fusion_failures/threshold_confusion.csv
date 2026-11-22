@@ -1,0 +1,7 @@
+category,shot,seed,TP,TN,FP,FN
+candle,8,0,89,81,19,11
+capsules,8,0,72,60,0,28
+cashew,8,0,74,49,1,26
+chewinggum,8,0,99,38,12,1
+fryum,8,0,95,41,9,5
+pipe_fryum,8,0,100,27,23,0

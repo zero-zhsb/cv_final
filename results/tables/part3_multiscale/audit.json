@@ -1,0 +1,27 @@
+{
+  "passed": true,
+  "configurations_per_variant": 72,
+  "prediction_identities_per_variant": 11520,
+  "matching_metadata_fields": [
+    "manifest_id",
+    "weights_sha256",
+    "upstream_commit",
+    "dinov2_commit",
+    "preprocess",
+    "precision",
+    "knn_backend",
+    "warmup_iters",
+    "categories",
+    "shots",
+    "seeds"
+  ],
+  "unchanged_baseline_core": true,
+  "identical_references_and_calibration": true,
+  "finite_metrics": true,
+  "clean_source_full_runs": true,
+  "input_short_edge_by_variant": {
+    "part2_448": 448,
+    "scale672": 672,
+    "fusion448_672": 672
+  }
+}
