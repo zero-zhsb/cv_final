@@ -1,0 +1,141 @@
+{
+  "passed": true,
+  "normal_only": true,
+  "matching_fine_masks": true,
+  "settings": "8-shot seed 0",
+  "protocol_sha256": "ccc49d4449fa199f1bdfcf3ecabe009b105af0ed75128135913650b03b9c578e",
+  "measurements": [
+    {
+      "category": "candle",
+      "variant": "scale672",
+      "normal_image": "candle/train/good/0000.JPG",
+      "grid": [
+        48,
+        52
+      ],
+      "feature_dim": 384,
+      "peak_allocated_mib": 561.4853515625
+    },
+    {
+      "category": "capsules",
+      "variant": "scale672",
+      "normal_image": "capsules/train/good/000.JPG",
+      "grid": [
+        48,
+        72
+      ],
+      "feature_dim": 384,
+      "peak_allocated_mib": 976.3291015625
+    },
+    {
+      "category": "cashew",
+      "variant": "scale672",
+      "normal_image": "cashew/train/good/000.JPG",
+      "grid": [
+        48,
+        52
+      ],
+      "feature_dim": 384,
+      "peak_allocated_mib": 886.3291015625
+    },
+    {
+      "category": "chewinggum",
+      "variant": "scale672",
+      "normal_image": "chewinggum/train/good/000.JPG",
+      "grid": [
+        48,
+        57
+      ],
+      "feature_dim": 384,
+      "peak_allocated_mib": 841.1533203125
+    },
+    {
+      "category": "fryum",
+      "variant": "scale672",
+      "normal_image": "fryum/train/good/000.JPG",
+      "grid": [
+        48,
+        72
+      ],
+      "feature_dim": 384,
+      "peak_allocated_mib": 998.8876953125
+    },
+    {
+      "category": "pipe_fryum",
+      "variant": "scale672",
+      "normal_image": "pipe_fryum/train/good/000.JPG",
+      "grid": [
+        48,
+        54
+      ],
+      "feature_dim": 384,
+      "peak_allocated_mib": 904.3525390625
+    },
+    {
+      "category": "candle",
+      "variant": "fusion448_672",
+      "normal_image": "candle/train/good/0000.JPG",
+      "grid": [
+        48,
+        52
+      ],
+      "feature_dim": 768,
+      "peak_allocated_mib": 1029.4853515625
+    },
+    {
+      "category": "capsules",
+      "variant": "fusion448_672",
+      "normal_image": "capsules/train/good/000.JPG",
+      "grid": [
+        48,
+        72
+      ],
+      "feature_dim": 768,
+      "peak_allocated_mib": 1858.3291015625
+    },
+    {
+      "category": "cashew",
+      "variant": "fusion448_672",
+      "normal_image": "cashew/train/good/000.JPG",
+      "grid": [
+        48,
+        52
+      ],
+      "feature_dim": 768,
+      "peak_allocated_mib": 1678.3291015625
+    },
+    {
+      "category": "chewinggum",
+      "variant": "fusion448_672",
+      "normal_image": "chewinggum/train/good/000.JPG",
+      "grid": [
+        48,
+        57
+      ],
+      "feature_dim": 768,
+      "peak_allocated_mib": 1588.1533203125
+    },
+    {
+      "category": "fryum",
+      "variant": "fusion448_672",
+      "normal_image": "fryum/train/good/000.JPG",
+      "grid": [
+        48,
+        72
+      ],
+      "feature_dim": 768,
+      "peak_allocated_mib": 1903.3876953125
+    },
+    {
+      "category": "pipe_fryum",
+      "variant": "fusion448_672",
+      "normal_image": "pipe_fryum/train/good/000.JPG",
+      "grid": [
+        48,
+        54
+      ],
+      "feature_dim": 768,
+      "peak_allocated_mib": 1714.3525390625
+    }
+  ]
+}
