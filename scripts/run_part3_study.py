@@ -58,8 +58,12 @@ def main():
                             '--run', str(ROOT / 'runs/part3_fusion448_672_v1'), '--data-root', data,
                             '--output', str(ROOT / 'results/figures/part3_multiscale/fusion_failures'),
                             '--shot', '8', '--seed', '0', '--count', '5'], cwd=ROOT, check=True)
+            save('benchmarking')
+            subprocess.run(['nice', '-n', '10', sys.executable, 'scripts/benchmark_part3.py',
+                            '--study', 'multiscale', '--data-root', data], cwd=ROOT, check=True)
             save('artifacts_ready', required_artifacts=['results/tables/part3_multiscale',
-                 'docs/19_part3_multiscale_results.md', 'results/figures/part3_multiscale'])
+                 'docs/19_part3_multiscale_results.md', 'docs/20_part3_multiscale_efficiency.md',
+                 'results/figures/part3_multiscale'])
             return
         subprocess.run([sys.executable,'scripts/summarize_part3.py'],cwd=ROOT,check=True)
         subprocess.run([sys.executable,'scripts/analyze_part2_failures.py','--run',str(ROOT/'runs/part3_fusion6_12_v1'),'--data-root',data,'--output',str(ROOT/'results/figures/part3_fusion_failures'),'--shot','8','--seed','0','--count','5'],cwd=ROOT,check=True)

@@ -1,6 +1,7 @@
 """Counterbalanced, same-session efficiency sample; never changes model settings."""
 from __future__ import annotations
 
+import argparse
 import gc
 import hashlib
 import json
@@ -17,21 +18,31 @@ sys.path.insert(0, str(ROOT))
 
 
 def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--study", choices=["multilayer", "multiscale"], default="multilayer")
+    parser.add_argument("--data-root", type=Path,
+                        default=Path("/data/disk1/home/sshen560/cv_final_data/VisA_pytorch/1cls"))
+    args = parser.parse_args()
+    multiscale = args.study == "multiscale"
     import numpy as np
     import torch
     from src.part2.inspector import AnomalyDINOInspector
     from src.part3.inspector import MultilayerInspector
+    from src.part3.multiscale import attach_multiscale
 
-    study = json.loads((ROOT / "runs/part3_study_status.json").read_text())
-    if study["stage"] != "completed":
+    status = "part3_multiscale_status.json" if multiscale else "part3_study_status.json"
+    study = json.loads((ROOT / "runs" / status).read_text())
+    ready = {"benchmarking", "artifacts_ready"} if multiscale else {"completed"}
+    if study["stage"] not in ready:
         raise RuntimeError("Finish the full inference and evaluation study first")
-    output = ROOT / "results/tables/part3/efficiency.json"
+    report_dir = "part3_multiscale" if multiscale else "part3"
+    output = ROOT / "results/tables" / report_dir / "efficiency.json"
     if output.exists():
         raise FileExistsError("Preserving existing benchmark: " + str(output))
     torch.cuda.set_per_process_memory_fraction(.15, 0)
-    data = Path("/data/disk1/home/sshen560/cv_final_data/VisA_pytorch/1cls")
+    data = args.data_root
     manifest = json.loads((ROOT / "manifests/visa_1cls.json").read_text())
-    variants = ["layer12", "layer6", "fusion6_12"]
+    variants = ["part2_448", "scale672", "fusion448_672"] if multiscale else ["layer12", "layer6", "fusion6_12"]
     rows = []
     common = (ROOT / "third_party/AnomalyDINO", ROOT / "third_party/dinov2",
               ROOT / "weights/dinov2_vits14_pretrain.pth", "cuda:0")
@@ -46,7 +57,13 @@ def main():
                 gc.collect()
                 torch.cuda.empty_cache()
                 torch.cuda.reset_peak_memory_stats(0)
-                if variant == "layer12":
+                if multiscale:
+                    resolution = 448 if variant == "part2_448" else 672
+                    inspector = AnomalyDINOInspector(*common, resolution=resolution, knn_backend="torch-gpu")
+                    inspector.backbone.model.requires_grad_(False)
+                    if variant == "fusion448_672":
+                        attach_multiscale(inspector.backbone)
+                elif variant == "layer12":
                     inspector = AnomalyDINOInspector(*common, knn_backend="torch-gpu")
                 else:
                     inspector = MultilayerInspector(*common, variant=variant,
@@ -115,7 +132,9 @@ def main():
                   "显存为该进程 PyTorch 分配峰值，不含驱动/上下文/其他用户，"
                   "完整准确率实验的 72 配置显存另见 `results/tables/part3/per_configuration.csv`。", "",
                   "逐图计时、顺序、参考图及 GPU 负载快照：`results/tables/part3/efficiency.json`。"])
-    (ROOT / "docs/17_part3_efficiency.md").write_text("\n".join(lines) + "\n")
+    doc = "20_part3_multiscale_efficiency.md" if multiscale else "17_part3_efficiency.md"
+    lines = [line.replace("results/tables/part3/", f"results/tables/{report_dir}/") for line in lines]
+    (ROOT / "docs" / doc).write_text("\n".join(lines) + "\n")
 
 
 if __name__ == "__main__":
