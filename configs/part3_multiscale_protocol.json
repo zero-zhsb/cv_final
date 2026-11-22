@@ -1,0 +1,17 @@
+{
+  "protocol_version": "part3_multiscale_v1",
+  "backbone": "dinov2_vits14",
+  "frozen": true,
+  "layer_one_based": 12,
+  "baseline_run": "part2_gpu_exact_matrix_v1",
+  "variants": {"part2_448": [448], "scale672": [672], "fusion448_672": [448, 672]},
+  "primary_proposal": "fusion448_672",
+  "alignment": "sample coarse tokens bilinearly at fine patch centers using uncropped resized dimensions and top-left crop, clamping at coarse grid edges",
+  "fusion": "L2-normalize each aligned scale, concatenate with equal sqrt(0.5) weights, and match one joint reference patch",
+  "foreground_mask": "the official PCA mask on unmodified 672 final-layer features for both new variants",
+  "map_reconstruction": "identical official original-resolution renderer with sigma 4",
+  "selection": "fixed before new test outputs; previous VisA results informed the failure hypothesis; no test-label parameter sweep",
+  "tiny_defect_mask_fraction_max": 0.001,
+  "matched_test_fpr": 0.05,
+  "threshold_calibration": "existing 20 normal calibration images only"
+}

@@ -41,7 +41,8 @@ def manifest_path(root: Path, relative: str, allowed_roots=()) -> Path:
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--variant", required=True, choices=["layer12", "layer6", "fusion6_12"])
+    parser.add_argument("--variant", required=True,
+                        choices=["layer12", "layer6", "fusion6_12", "scale672", "fusion448_672"])
     parser.add_argument("--data-root", required=True, type=Path)
     parser.add_argument("--manifest", type=Path, default=ROOT / "manifests/visa_1cls.json")
     parser.add_argument("--upstream", type=Path, default=ROOT / "third_party/AnomalyDINO")
@@ -72,8 +73,21 @@ def main():
         os.environ[name] = str(args.threads)
     import numpy as np
     import torch
-    from src.part2.inspector import UPSTREAM_COMMIT
+    from src.part2.inspector import AnomalyDINOInspector, UPSTREAM_COMMIT
     from src.part3.inspector import MultilayerInspector
+    from src.part3.multiscale import attach_multiscale
+    multiscale_study = args.variant in {"scale672", "fusion448_672"}
+    protocol_path = ROOT / "configs" / (
+        "part3_multiscale_protocol.json" if multiscale_study else "part3_protocol.json"
+    )
+    resolution = 672 if multiscale_study else 448
+    sources = [
+        ROOT / "scripts/run_part3.py", ROOT / "src/part3/inspector.py",
+        ROOT / "src/part3/features.py", protocol_path, ROOT / "src/part2/inspector.py",
+        ROOT / "src/part2/maps.py", ROOT / "src/part2/gpu_index.py",
+    ]
+    if multiscale_study:
+        sources.append(ROOT / "src/part3/multiscale.py")
     if args.device.startswith("cuda"):
         torch.cuda.set_per_process_memory_fraction(args.gpu_memory_fraction, args.device)
     def checked_image(relative):
@@ -112,12 +126,12 @@ def main():
     args.output.mkdir(parents=True)
     metadata = {"status": "running", "method": f"anomalydino_{args.variant}", "run_id": args.output.name,
                 "manifest_id": manifest_id, "code_commit": git_commit(ROOT),
-                "source_sha256": {str(path.relative_to(ROOT)): digest(path) for path in [ROOT / "scripts/run_part3.py", ROOT / "src/part3/inspector.py", ROOT / "src/part3/features.py", ROOT / "configs/part3_protocol.json", ROOT / "src/part2/inspector.py", ROOT / "src/part2/maps.py", ROOT / "src/part2/gpu_index.py"]},
+                "source_sha256": {path.relative_to(ROOT).as_posix(): digest(path) for path in sources},
                 "code_dirty": bool(subprocess.check_output(["git", "-C", str(ROOT), "status", "--porcelain"], text=True).strip()),
                 "upstream_commit": UPSTREAM_COMMIT, "dinov2_commit": git_commit(args.dinov2_repo),
                 "weights_sha256": digest(args.weights), "device": args.device,
                 "torch": torch.__version__, "cuda_build": torch.version.cuda,
-                "variant": args.variant, "protocol": json.loads((ROOT / "configs/part3_protocol.json").read_text()), "model": "dinov2_vits14", "resolution": 448, "preprocess": "agnostic",
+                "variant": args.variant, "protocol": json.loads(protocol_path.read_text()), "model": "dinov2_vits14", "resolution": resolution, "preprocess": "agnostic",
                 "precision": "float32", "faiss": "cpu" if args.knn_backend == "cpu-faiss" else "CPU normalization only",
                 "knn_backend": args.knn_backend, "knn_search": "exhaustive squared L2, k=1, no approximate search", "threads": args.threads,
                 "map_storage": args.map_storage, "warmup_iters": args.warmup_iters,
@@ -150,7 +164,15 @@ def main():
         metadata.setdefault("gpu_observations", []).append(observation)
     save_status()
     try:
-        inspector = MultilayerInspector(args.upstream, args.dinov2_repo, args.weights, args.device, threads=args.threads, knn_backend=args.knn_backend, variant=args.variant)
+        common = (args.upstream, args.dinov2_repo, args.weights, args.device)
+        options = {"threads": args.threads, "knn_backend": args.knn_backend}
+        if multiscale_study:
+            inspector = AnomalyDINOInspector(*common, resolution=resolution, **options)
+            inspector.backbone.model.requires_grad_(False)
+            if args.variant == "fusion448_672":
+                attach_multiscale(inspector.backbone)
+        else:
+            inspector = MultilayerInspector(*common, variant=args.variant, **options)
         fields = ["run_id", "method", "manifest_id", "category", "shot", "seed", "image_path", "mask_path", "label", "score", "map_path", "threshold", "decision", "inference_ms"]
         with (args.output / "predictions.csv").open("w", newline="", encoding="utf-8") as handle:
             writer = csv.DictWriter(handle, fieldnames=fields)
