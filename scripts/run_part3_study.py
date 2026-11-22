@@ -14,6 +14,7 @@ def main():
     (ROOT / "logs").mkdir(exist_ok=True)
     lock=(ROOT/f'runs/{study_name}.lock').open('w');fcntl.flock(lock,fcntl.LOCK_EX|fcntl.LOCK_NB)
     variants = ["scale672", "fusion448_672"] if multiscale else ["fusion6_12", "layer6"]
+    pixel_device = "cuda:0-positive-keys" if multiscale else "cuda:0"
     if multiscale:
         gate = json.loads((ROOT / "runs/part3_multiscale_gate.json").read_text())
         protocol = (ROOT / "configs/part3_multiscale_protocol.json").read_bytes()
@@ -46,7 +47,7 @@ def main():
                     time.sleep(1)
                 else:raise RuntimeError('Inference initialization timed out')
                 with (ROOT/f'logs/part3_{variant}_evaluation.log').open('a') as evaluation_log:
-                    evaluator=subprocess.Popen(['nice','-n','19',sys.executable,'scripts/watch_part2_parallel_evaluation.py','--run',str(run),'--data-root',data,'--workers','1','--pixel-device','cuda:0'],cwd=ROOT,stdout=evaluation_log,stderr=evaluation_log)
+                    evaluator=subprocess.Popen(['nice','-n','19',sys.executable,'scripts/watch_part2_parallel_evaluation.py','--run',str(run),'--data-root',data,'--workers','1','--pixel-device',pixel_device],cwd=ROOT,stdout=evaluation_log,stderr=evaluation_log)
                     code=0 if inference is None else inference.wait();eval_code=evaluator.wait()
                     if code or eval_code:raise RuntimeError(f'{variant} inference={code}, evaluation={eval_code}')
             save('variant_completed',variant=variant)

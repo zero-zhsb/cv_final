@@ -23,7 +23,7 @@ def main():
     parser.add_argument("--manifest", type=Path, default=ROOT / "manifests/visa_1cls.json")
     parser.add_argument("--configuration", help="For example: cashew/shot_1/seed_0")
     parser.add_argument("--memory-budget-gib", type=float, default=8)
-    parser.add_argument("--pixel-device", choices=["cpu", "cuda:0"], default="cpu")
+    parser.add_argument("--pixel-device", choices=["cpu", "cuda:0", "cuda:0-positive-keys"], default="cpu")
     args = parser.parse_args()
     import numpy as np
     from PIL import Image
@@ -86,6 +86,9 @@ def main():
             for anomaly_map, mask in pairs():
                 metric.add(anomaly_map, mask)
             pixel_auc, backend = metric.compute(), {"backend": "cpu_exact_hierarchical_histograms"}
+        elif args.pixel_device == "cuda:0-positive-keys":
+            from src.part2.gpu_metrics import gpu_pixel_auc_positive_keys
+            pixel_auc, backend = gpu_pixel_auc_positive_keys(pairs, "cuda:0")
         else:
             from src.part2.gpu_metrics import gpu_pixel_auc
             pixel_auc, backend = gpu_pixel_auc(pairs, args.pixel_device)

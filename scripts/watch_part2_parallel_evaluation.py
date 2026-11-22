@@ -23,7 +23,7 @@ def main():
     parser.add_argument("--run", type=Path, required=True)
     parser.add_argument("--data-root", type=Path, required=True)
     parser.add_argument("--workers", type=int, choices=[1, 2], default=2)
-    parser.add_argument("--pixel-device", choices=["cpu", "cuda:0"], default="cuda:0")
+    parser.add_argument("--pixel-device", choices=["cpu", "cuda:0", "cuda:0-positive-keys"], default="cuda:0")
     args = parser.parse_args()
     args.run = args.run.resolve()
     root = Path(__file__).resolve().parents[1]

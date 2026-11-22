@@ -26,6 +26,22 @@ class GPUAUROCTests(unittest.TestCase):
         actual, _ = gpu_pixel_auc(lambda: iter(pairs))
         self.assertEqual(actual, 0.5)
 
+    def test_positive_keys_match_exact_auc_across_wide_ranges_and_ties(self):
+        import numpy as np
+        from sklearn.metrics import roc_auc_score
+        from src.part2.gpu_metrics import gpu_pixel_auc_positive_keys
+
+        low = np.nextafter(np.float32(0), np.float32(1))
+        scores = np.array([[-0., 0., low, low, .1, .2],
+                           [0., low, .1, .3, .8, 1.]], dtype=np.float32)
+        masks = np.array([[1, 0, 0, 1, 0, 0], [0, 0, 1, 0, 1, 0]], dtype=bool)
+        for values in (scores, np.zeros_like(scores), scores + 1):
+            pairs = [(v, m) for v, m in zip(values, masks)]
+            expected = roc_auc_score(masks.ravel(), values.ravel())
+            actual, result = gpu_pixel_auc_positive_keys(lambda: iter(pairs))
+            self.assertAlmostEqual(actual, expected, places=14)
+            self.assertLessEqual(result["histogram_bytes"], (2 * masks.sum() + 1) * 4)
+
     def test_exhaustive_gpu_neighbors_match_cpu_faiss(self):
         import numpy as np
         import faiss
