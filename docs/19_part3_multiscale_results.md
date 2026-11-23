@@ -43,6 +43,8 @@ The small-defect subset contains 195 distinct images with nonempty masks coverin
 
 Finer sampling accounted for most of the improvement in small-defect hotspot coverage. Fusion improved the image decision at this empirical operating point. Deployment examples use the per-category 95th-percentile threshold from the reserved normal training images. Under that demo threshold, five small-defect images at 8-shot seed 0 changed from OK with both controls to NG with fusion. For example, `cashew/test/bad/044.JPG` covers 0.0695% of the original image and scored 0.1458 against the fusion threshold of 0.1414. This is an illustrative test example. The cashew image that motivated the study (`069.JPG`) remained a miss for all three methods.
 
+At 8-shot, the fusion-minus-448 small-defect miss-rate estimate is −3.62 pp. Its image-paired 95% bootstrap interval is [−10.45, +2.06] pp. Against 672, the estimate is −3.72 pp with interval [−7.86, +1.23] pp. In 4,000 draws, we resampled normal images and tiny-defect images within each category, reused the same draws across the methods and reference seeds, and re-estimated the empirical FPR cutoff in each draw. Both intervals span zero. The 195-image result is a useful operating-point trend with more uncertainty than the 1-shot image AUROC comparison. [Small-defect uncertainty](../results/tables/part3_multiscale/paired_tiny_fnr_bootstrap.json)
+
 The same-session RTX A6000 sample measured 73.30, 142.07, and 205.81 ms/image at 8-shot for 448, 672, and fusion, respectively. Peak allocated PyTorch memory was 381.58, 742.05, and 1390.05 MiB. The shared device and sample size limit deployment latency estimates. [Efficiency protocol and measurements](20_part3_multiscale_efficiency.md)
 
 ## Remaining failures

@@ -1,0 +1,138 @@
+{
+  "repeats": 4000,
+  "rng_seed": 2618,
+  "test_fpr_cap": 0.05,
+  "tiny_mask_fraction_max": 0.001,
+  "tiny_counts_by_category": {
+    "candle": 37,
+    "capsules": 39,
+    "cashew": 38,
+    "chewinggum": 6,
+    "fryum": 36,
+    "pipe_fryum": 39
+  },
+  "estimand": "Conditional on the six categories and fixed reference selections",
+  "bootstrapping": "Paired normal and tiny image draws within each category, reused across all methods, shots and seeds; threshold recomputed in each draw",
+  "contrasts": [
+    {
+      "shot": 1,
+      "control": "part2_448",
+      "control_tiny_fnr_percent": 36.62067938383728,
+      "fusion_tiny_fnr_percent": 32.64896137703154,
+      "delta_pp": -3.9717180068057356,
+      "percentile_ci95_pp": [
+        -11.890423655774534,
+        1.4972728295096798
+      ],
+      "bonferroni_interval_for_eight_contrasts_pp": [
+        -15.040240455536502,
+        4.932596226455836
+      ]
+    },
+    {
+      "shot": 2,
+      "control": "part2_448",
+      "control_tiny_fnr_percent": 36.17046533713199,
+      "fusion_tiny_fnr_percent": 30.808000983439577,
+      "delta_pp": -5.36246435369242,
+      "percentile_ci95_pp": [
+        -10.198621360902061,
+        2.5720896334931407
+      ],
+      "bonferroni_interval_for_eight_contrasts_pp": [
+        -12.406263751521424,
+        5.467158918365052
+      ]
+    },
+    {
+      "shot": 4,
+      "control": "part2_448",
+      "control_tiny_fnr_percent": 29.513454074857577,
+      "fusion_tiny_fnr_percent": 27.654138619050894,
+      "delta_pp": -1.8593154558066816,
+      "percentile_ci95_pp": [
+        -8.877648735104874,
+        3.3323564792863074
+      ],
+      "bonferroni_interval_for_eight_contrasts_pp": [
+        -11.70519551687315,
+        6.963932397731739
+      ]
+    },
+    {
+      "shot": 8,
+      "control": "part2_448",
+      "control_tiny_fnr_percent": 29.362898661144282,
+      "fusion_tiny_fnr_percent": 25.747728160008855,
+      "delta_pp": -3.6151705011354283,
+      "percentile_ci95_pp": [
+        -10.452943243513426,
+        2.0598204479783484
+      ],
+      "bonferroni_interval_for_eight_contrasts_pp": [
+        -13.057386048751175,
+        5.658198948357938
+      ]
+    },
+    {
+      "shot": 1,
+      "control": "scale672",
+      "control_tiny_fnr_percent": 37.887482624324726,
+      "fusion_tiny_fnr_percent": 32.64896137703154,
+      "delta_pp": -5.238521247293182,
+      "percentile_ci95_pp": [
+        -9.751860919624077,
+        0.8037756886441239
+      ],
+      "bonferroni_interval_for_eight_contrasts_pp": [
+        -11.980882124111291,
+        3.3701797065283565
+      ]
+    },
+    {
+      "shot": 2,
+      "control": "scale672",
+      "control_tiny_fnr_percent": 34.836135055433296,
+      "fusion_tiny_fnr_percent": 30.808000983439577,
+      "delta_pp": -4.028134071993716,
+      "percentile_ci95_pp": [
+        -8.26104191235771,
+        2.5306919605165255
+      ],
+      "bonferroni_interval_for_eight_contrasts_pp": [
+        -10.80465075188212,
+        5.298553814864114
+      ]
+    },
+    {
+      "shot": 4,
+      "control": "scale672",
+      "control_tiny_fnr_percent": 31.517735684402346,
+      "fusion_tiny_fnr_percent": 27.654138619050894,
+      "delta_pp": -3.863597065351454,
+      "percentile_ci95_pp": [
+        -7.742994343871533,
+        0.9699096870149518
+      ],
+      "bonferroni_interval_for_eight_contrasts_pp": [
+        -10.008072818516895,
+        4.229465421899606
+      ]
+    },
+    {
+      "shot": 8,
+      "control": "scale672",
+      "control_tiny_fnr_percent": 29.4724211390878,
+      "fusion_tiny_fnr_percent": 25.747728160008855,
+      "delta_pp": -3.7246929790789474,
+      "percentile_ci95_pp": [
+        -7.863518038956627,
+        1.226977652416249
+      ],
+      "bonferroni_interval_for_eight_contrasts_pp": [
+        -9.806829803403271,
+        4.349541269086224
+      ]
+    }
+  ]
+}

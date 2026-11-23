@@ -33,3 +33,26 @@ sha256sum weights/dinov2_vits14_pretrain.pth
 - [CVPR 报告及构建方式](../report/README.md)
 
 多尺度 672 组与融合组使用同一 fine-grid PCA mask。计划比较检测质量时应核对相同参考图、图像及掩码身份。计划比较推理速度时应优先使用同会话抽样协议，记录按方法拆分的端到端耗时与显存，同时保留小缺陷漏检率和总体指标。
+
+## 从公开版本复跑一个完整配置
+
+从公开的 `codex/final-delivery` 分支开始。以下命令处理 **cashew 的全部 150 张测试图**，使用相同的 8 张参考和 seed 0。它们各自创建新的运行目录。若使用符号链接版 VisA，在推理命令后加 `--allow-image-root "$VISA_ORIGINAL_ROOT"`，将参数指向官方图像与掩码所在的只读数据根目录。
+
+```bash
+common=(--data-root "$VISA_1CLS" --categories cashew --shots 8 --seeds 0)
+gpu=(--device cuda:0 --knn-backend torch-gpu --map-storage patch)
+
+python scripts/run_part1.py "${common[@]}" --output runs/check_template
+python scripts/run_part2.py "${common[@]}" "${gpu[@]}" --output runs/check_448
+python scripts/run_part3.py "${common[@]}" "${gpu[@]}" --variant scale672 --output runs/check_672
+python scripts/run_part3.py "${common[@]}" "${gpu[@]}" --variant fusion448_672 --output runs/check_fusion
+python scripts/run_oas.py "${common[@]}" "${gpu[@]}" --output runs/check_oas
+
+for method in template 448 672 fusion oas; do
+  python scripts/evaluate_part2.py --run "runs/check_$method" \
+    --data-root "$VISA_1CLS" --configuration cashew/shot_8/seed_0 \
+    --pixel-device cuda:0-positive-keys
+done
+```
+
+`--pixel-device cpu` 也可执行精确评价。主结果比较逐配置的图像与原图像素 AUROC。`inference_ms` 会随设备与负载变化，复现检查不要求其与公开表相等。

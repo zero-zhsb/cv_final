@@ -23,6 +23,8 @@ def main():
     parser.add_argument("--categories", nargs="+", default=["cashew"])
     parser.add_argument("--shots", type=int, nargs="+", default=[1])
     parser.add_argument("--seeds", type=int, nargs="+", default=[0])
+    parser.add_argument("--allow-image-root", type=Path, action="append", default=[],
+                        help="Approved read-only VisA root for a symlink-based 1cls preparation")
     args = parser.parse_args()
     import cv2
     import numpy as np
@@ -40,9 +42,12 @@ def main():
         if len(set(values)) != len(values) or not set(values) <= set(allowed):
             parser.error("Duplicated or out-of-protocol configuration")
     data = args.data_root.resolve(strict=True)
+    allowed = [data, *(root.resolve(strict=True) for root in args.allow_image_root)]
+
     def checked(relative):
         path = (data / relative).resolve(strict=True)
-        path.relative_to(data)
+        if not any(path.is_relative_to(root) for root in allowed):
+            raise ValueError(f"Image escapes approved roots: {relative}")
         return path
     for category in args.categories:
         entry = manifest["categories"][category]
