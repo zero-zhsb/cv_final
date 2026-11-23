@@ -1,0 +1,85 @@
+{
+  "passed": true,
+  "checked_at_utc": "2026-11-23T07:33:38.087614+00:00",
+  "configuration": "cashew/shot_8/seed_0",
+  "manifest_id": "51934290ccd342f9f7fa03f9f56c712494cb7b576b7038516efdb41d43b9b2c5",
+  "test_images": 150,
+  "normal": 50,
+  "defective": 100,
+  "references": [
+    "cashew/train/good/024.JPG",
+    "cashew/train/good/025.JPG",
+    "cashew/train/good/026.JPG",
+    "cashew/train/good/027.JPG",
+    "cashew/train/good/028.JPG",
+    "cashew/train/good/029.JPG",
+    "cashew/train/good/030.JPG",
+    "cashew/train/good/031.JPG"
+  ],
+  "calibration_images": 20,
+  "scope": "Clean checkouts of the published source with existing pinned weights, course data and Python environment. A single full configuration per method.",
+  "same_reference_calibration_test_ids": true,
+  "demo_bundle_rebuilt_from_public_clone": "5307ecca818c8927dd259649cc9cecf34999e851",
+  "methods": [
+    {
+      "variant": "part2_448",
+      "clean_checkout_commit": "5307ecca818c8927dd259649cc9cecf34999e851",
+      "compared_to": "results/tables/part3_multiscale/per_configuration.csv",
+      "image_auroc": 0.9498,
+      "pixel_auroc": 0.9932299383346394,
+      "absolute_auroc_difference": {
+        "image_auroc": 0.0,
+        "pixel_auroc": 0.0
+      },
+      "pixel_backend": "cuda_exact_positive_float32_keys"
+    },
+    {
+      "variant": "scale672",
+      "clean_checkout_commit": "5307ecca818c8927dd259649cc9cecf34999e851",
+      "compared_to": "results/tables/part3_multiscale/per_configuration.csv",
+      "image_auroc": 0.9658,
+      "pixel_auroc": 0.9949909304110943,
+      "absolute_auroc_difference": {
+        "image_auroc": 0.0,
+        "pixel_auroc": 0.0
+      },
+      "pixel_backend": "cuda_exact_positive_float32_keys"
+    },
+    {
+      "variant": "fusion448_672",
+      "clean_checkout_commit": "5307ecca818c8927dd259649cc9cecf34999e851",
+      "compared_to": "results/tables/part3_multiscale/per_configuration.csv",
+      "image_auroc": 0.9702000000000001,
+      "pixel_auroc": 0.9950494538921857,
+      "absolute_auroc_difference": {
+        "image_auroc": 0.0,
+        "pixel_auroc": 0.0
+      },
+      "pixel_backend": "cuda_exact_positive_float32_keys"
+    },
+    {
+      "variant": "oas",
+      "clean_checkout_commit": "5307ecca818c8927dd259649cc9cecf34999e851",
+      "compared_to": "results/tables/multiscale_oas/full_per_configuration.csv",
+      "image_auroc": 0.9747999999999999,
+      "pixel_auroc": 0.9968696796263627,
+      "absolute_auroc_difference": {
+        "image_auroc": 0.0,
+        "pixel_auroc": 0.0
+      },
+      "pixel_backend": "cuda_exact_positive_float32_keys"
+    },
+    {
+      "variant": "template",
+      "clean_checkout_commit": "3225f88304085e18a3b8b86e55d1367433ce2817",
+      "compared_to": "results/tables/part1_full/per_configuration.csv",
+      "image_auroc": 0.6400000000000001,
+      "pixel_auroc": 0.7539546403429234,
+      "absolute_auroc_difference": {
+        "image_auroc": 0.0,
+        "pixel_auroc": 0.0
+      },
+      "pixel_backend": "cuda_exact_positive_float32_keys"
+    }
+  ]
+}

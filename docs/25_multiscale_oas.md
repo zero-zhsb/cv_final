@@ -50,4 +50,6 @@ OAS 采用 [scikit-learn OAS](https://scikit-learn.org/stable/modules/generated/
 
 实际矩阵由源码提交 `19de944` 的模块化实验入口运行；OAS-only API 从该路径抽取，纯数值函数保持相同，未声称重新执行了矩阵。紧凑 provenance 保存原始源文件哈希与每配置完成信息。
 
+随后使用公开提交 `5307ecc` 的独立 OAS 入口复跑 cashew / 8-shot / seed 0 的全部 150 张测试图。图像和像素 AUROC 均与历史表的同配置值完全一致。[核验记录](../results/tables/final_delivery_repro_audit.json)
+
 旧运行复用 `fit_details` 字典，可能覆盖各配置的 shrinkage 元数据；该字段不参与评分或评价，拟合 index 和实际指标不受影响。紧凑记录已移除不可靠的逐配置 shrinkage 值，当前 API 每次拟合创建新字典。若分析历史每配置 shrinkage，需要用参考图重新拟合，不能从旧元数据推断。

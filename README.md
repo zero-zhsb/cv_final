@@ -1,6 +1,6 @@
 # CV Final · Few-Shot Industrial Visual Anomaly Detection
 
-**最终交付草稿。** [CVPR 报告](report/AIAA3201_Report_Draft.pdf) · [单图 demo 与复现](demo/final_demo.md) · [多尺度完整结果](docs/19_part3_multiscale_results.md)
+**最终交付草稿。** [CVPR 报告](report/AIAA3201_Report_Draft.pdf) · [环境、数据与权重复现](docs/21_final_reproduction.md) · [可运行 demo 与打包](demo/final_demo.md) · [多尺度完整结果](docs/19_part3_multiscale_results.md)
 
 **可选 OAS 定位模块。** 在原多尺度融合上拟合正常参考特征的自动收缩协方差。8-shot 像素 AUROC **98.30% → 98.63%**，图像 AUROC **97.19% → 97.08%**，存在检测/定位取舍；原融合仍作为默认对照。见 [方法、完整结果与复现](docs/25_multiscale_oas.md)。
 
@@ -10,15 +10,23 @@
 
 **Part 3 前期探索。** 448 输入下融合第 6、12 层带来 **0.19–0.28 个百分点**的图像 AUROC 增益，像素定位改善有限。这组消融用于解释后续图像尺度实验的动机。[多层结果](docs/15_part3_results.md)
 
-**最新录制版本：Part 1 和 Part 2 均已完成 72 配置全量实验。** 请使用 [完整对比 PPT 与讲稿](presentation/midterm_ppt/README.md) 和 [新版 4:40 视频素材](presentation/midterm_video/README.md)。第 5 页为 8-shot 六类总体比较，第 6 页为两方法完整 few-shot 曲线；旧 cashew 单配置仅用于方法示例。已有视频/PPT 尚未宣称 Part 3 实测结果。
+### 8-shot 主结果
 
-**期中视频素材已整理：** [素材包入口](presentation/midterm_video/README.md)，含 8 张 1080p 图卡、中英文讲稿、字幕草案、280 秒时间线和离线 HTML 翻页页。本次 Canvas 要求为不超过 5 分钟的阶段进展视频，无需先完成 Part 1 全量实验或联合实时界面。本次素材在 `codex/midterm-video-materials` 分支。
+| 方法 | 图像 AUROC | 像素 AUROC |
+|---|---:|---:|
+| Part 1 RGB 模板差分 | 60.80 ± 0.32% | 76.91 ± 0.33% |
+| Part 2 AnomalyDINO 448 | 96.62 ± 0.57% | 98.21 ± 0.02% |
+| 单尺度 672 | 96.82 ± 0.46% | 98.41 ± 0.03% |
+| Part 3 对齐融合 448+672 | **97.19 ± 0.39%** | 98.30 ± 0.03% |
+| 探索性融合 + OAS | 97.08 ± 0.38% | **98.63 ± 0.001%** |
 
-两人课程项目：先完成 **Part 1（模板差分）与 Part 2（AnomalyDINO）**，用于 Pre 展示；后续再完成 Part 3 的一个改进。代码与实验记录在 GitHub 协作，数据、权重和实验任务在服务器上运行。
+以六类等权平均，再汇总三个参考 seed 的均值与总体标准差。每种方法覆盖 72 组配置。Part 3 的主要检测结论来自 448+672；OAS 作为探索性定位对照。8-shot 小缺陷漏检率降低 3.62 个百分点是点估计，图像配对的 95% 区间为 −10.45 至 +2.06 个百分点。
+
+五种方法都已从干净源码副本复跑 cashew / 8-shot / seed 0 的全部 150 张图，图像和像素 AUROC 与已发布表一致。[复现命令及核验](docs/21_final_reproduction.md#从公开版本复跑一个完整配置)
 
 ## 当前状态
 
-**A 的 Part 1 全量实验已完成并汇总：72/72 配置、11,520 条预测。** 与 B 的测试图片、掩码、标签和 manifest 身份核对一致，见 [A 的全量结果](docs/13_member_a_full_results.md)。交互 Demo 已启动并通过样例 API 验证，完整上传/浏览器验收尚未完成；本轮不做视频。
+Part 1、Part 2 和 Part 3 均完成了正式实验。提交前需确认报告作者栏、公开分支及 Canvas 文件。期中版本及答疑另见 [期中 PPT 和讲稿](presentation/midterm_ppt/README.md) 与 [4:40 视频素材](presentation/midterm_video/README.md)。
 
 - [x] 仓库结构、课程要求、A/B 分工、服务器步骤与 Pre 验收文档。
 - [x] 数据名单生成工具（校准集排除、官方参考图选择规则、掩码检查）。
@@ -29,10 +37,10 @@
 - [x] Part 2 官方代码接入、名单/校准适配、CPU 小样例与单图官方一致性检查。
 - [x] Part 2 全六类、四 shots、三 seeds 正式实验与 Part 2 精确评估（72/72）。
 - [x] Part 2 结果表、曲线、五个真实失败案例、单图 CLI 演示和 B 的 Pre 讲稿。
-- [ ] Part 1/Part 2 联合演示、两方法对比、正式幻灯片与录屏。
+- [x] 最终 demo 的真实单图预测、56 秒字幕视频与代表性输出打包。
 - [x] Part 3 特征融合、单层消融、正式评价、五个同图困难案例和效率抽样。
 - [x] Part 3 448+672 多尺度对照、小缺陷专项统计和效率抽样。
-- [ ] 课程最终报告。
+- [x] CVPR 报告草稿及源文件，正文含实验、消融和失败分析。
 
 **成员 B 的 Part 2 主实验已完成：11,520 条测试预测。** 8-shot 的六类图像 AUROC 为 **96.62±0.57%**，pixel AUROC 为 **98.21±0.02%**（三个 seed）。A 的 Part 1 全量也已完成，8-shot 图像/像素 AUROC 为 **60.80±0.32% / 76.91±0.33%**。[Part 2 结果与交接](docs/10_part2_results.md)
 
@@ -69,13 +77,13 @@ B 的交付位于 **`codex/part2-anomalydino`**；A 的首个里程碑在其基�
 configs/             课程设置与方法配置
 manifests/           校准图、参考图、测试图名单（可提交 JSON）
 requirements/        本项目轻量依赖；模型环境另外配置
-scripts/             名单、Part 2 推理/评价/汇总/演示工具
-src/                 Part 2 实现；Part 1 和联合接口待 A 接入
-demo/                已验证的 Part 2 单图样例；联合界面待完成
+scripts/             数据名单、批量推理、评价、单图演示和打包
+src/                 RGB 模板、冻结特征与多尺度匹配
+demo/                实测代表输出和演示说明
 results/             可提交的指标表与精选可视化
 docs/                详细操作文档
 presentation/        Pre 讲稿与导出文件说明
-report/              最终报告预留
+report/              CVPR 报告草稿、LaTeX 源稿和配图
 tests/               数据隔离、Part 2 数值、异常图与评价检查
 .github/             Issue 和 PR 模板
 ```
