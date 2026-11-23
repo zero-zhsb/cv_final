@@ -1,0 +1,16 @@
+{
+  "study": "multiscale_oas_v1",
+  "variant": "oas",
+  "baseline": "part3_fusion448_672_v1",
+  "backbone": "frozen DINOv2 ViT-S/14 final layer",
+  "fusion": "Preserve 448+672 aligned equal-weight concatenation and one common reference patch",
+  "metric": "Automatic OAS shrinkage covariance fitted only on the assigned reference bank; full-rank centered whitening divided by sqrt(768); no L2 renormalization after whitening; exact squared distance / 2",
+  "unchanged": "Original reference rotation/background handling, fine-scale PCA mask, top-1-percent score, original-resolution sigma-4 map rendering",
+  "categories": ["candle", "capsules", "cashew", "chewinggum", "fryum", "pipe_fryum"],
+  "shots": [1, 2, 4, 8],
+  "seeds": [0, 1, 2],
+  "calibration": "Original 20 held-out normal images only for the 95th-percentile threshold; excluded from metric fitting and bank; restore NumPy RNG after calibration",
+  "evaluation": "Image and exact original-resolution pixel AUROC including normal tests; category macro per seed then mean/population SD. Report image/pixel tradeoff and all categories.",
+  "selection": "User selected OAS after exploratory ablations on the same test set; not independent confirmation. No parameter grid or extra normal training images.",
+  "measured_source": "19de944, original orthogonal-module runner; this PR extracts the numerically identical OAS-only path without rerunning the matrix"
+}

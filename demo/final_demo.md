@@ -24,6 +24,8 @@ For a product image of your own, substitute its path after `--image` and select 
 
 ## Rebuild the package
 
+An optional OAS metric add-on is available as `--method fusion448_672_oas --device cuda:0`. It refits its covariance only on the selected normal references and recalibrates with the same 20 held-out normal images. It improves aggregate pixel AUROC while reducing aggregate image AUROC; see [OAS results and reproduction](../docs/25_multiscale_oas.md). The existing packaged video and representative outputs above contain the original four methods and have not been regenerated for OAS.
+
 ```bash
 python scripts/package_final_demo.py --output runs/final_demo_export
 ```
