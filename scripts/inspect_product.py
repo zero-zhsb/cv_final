@@ -15,7 +15,7 @@ for name in ("OMP_NUM_THREADS", "MKL_NUM_THREADS", "OPENBLAS_NUM_THREADS"):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--method", choices=("template", "part2_448", "scale672", "fusion448_672"),
+    parser.add_argument("--method", choices=("template", "part2_448", "scale672", "fusion448_672", "fusion448_672_oas"),
                         default="fusion448_672")
     parser.add_argument("--image", type=Path, nargs="+", required=True)
     parser.add_argument("--category", required=True)
@@ -25,6 +25,8 @@ def main():
     parser.add_argument("--device", choices=("cpu", "cuda:0"), default="cpu")
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args()
+    if args.method == "fusion448_672_oas" and args.device != "cuda:0":
+        parser.error("The measured OAS implementation requires --device cuda:0")
     manifest = json.loads((ROOT / "manifests/visa_1cls.json").read_text())
     if args.category not in manifest["categories"]:
         parser.error("Choose a category in the VisA manifest")
@@ -53,14 +55,14 @@ def main():
         backend = "cpu_template"
     else:
         import torch
-        from scripts.run_part3 import digest, git_commit
+        from scripts.run_oas import digest, git_commit
         from src.part2.inspector import AnomalyDINOInspector
 
         upstream = ROOT / "third_party/AnomalyDINO"
         dinov2 = ROOT / "third_party/dinov2"
         weights = ROOT / "weights/dinov2_vits14_pretrain.pth"
         sources = json.loads((ROOT / "results/tables/part3_multiscale/sources.json").read_text())
-        source = sources[args.method]
+        source = sources["fusion448_672" if args.method == "fusion448_672_oas" else args.method]
         if not weights.is_file() or not upstream.is_dir() or not dinov2.is_dir():
             parser.error("Set up the pinned DINOv2 weights and source repositories first")
         if (digest(weights) != source["weights_sha256"]
@@ -70,8 +72,12 @@ def main():
         if args.device.startswith("cuda"):
             torch.cuda.set_per_process_memory_fraction(.15, args.device)
         backend = "torch-gpu" if args.device.startswith("cuda") else "cpu-faiss"
-        inspector = AnomalyDINOInspector(upstream, dinov2, weights, args.device,
-                                         resolution=source["resolution"], knn_backend=backend)
+        if args.method == "fusion448_672_oas":
+            from src.part3.oas import OASInspector
+            inspector = OASInspector(upstream, dinov2, weights, args.device, knn_backend=backend)
+        else:
+            inspector = AnomalyDINOInspector(upstream, dinov2, weights, args.device,
+                                             resolution=source["resolution"], knn_backend=backend)
         inspector.backbone.model.requires_grad_(False)
         if args.method == "fusion448_672":
             from src.part3.multiscale import attach_multiscale
