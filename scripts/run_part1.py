@@ -102,6 +102,7 @@ def main():
                         thresholds[key] = {"threshold": threshold, "references": references, "calibration": entry["calibration"]}
                         for index, sample in enumerate(entry["tests"]):
                             prediction = inspector.predict(checked(sample["image_path"]), render_map=False)
+                            nearest = references[inspector.references.index(prediction["nearest_reference"])]
                             map_path = Path("maps") / key / Path(sample["image_path"]).parent.name / (Path(sample["image_path"]).stem + ".npz")
                             (args.output / map_path).parent.mkdir(parents=True, exist_ok=True)
                             np.savez_compressed(args.output / map_path, template_map=prediction["template_map"],
@@ -112,7 +113,7 @@ def main():
                                 "map_path": map_path.as_posix(), "threshold": threshold,
                                 "decision": "NG" if prediction["score"] > threshold else "OK",
                                 "inference_ms": prediction["inference_ms"],
-                                "nearest_reference": Path(prediction["nearest_reference"]).relative_to(data).as_posix()})
+                                "nearest_reference": nearest})
                             if index % 25 == 0:
                                 print(f"PREDICT {key}: {index+1}/{len(entry['tests'])}", flush=True)
                         handle.flush()
